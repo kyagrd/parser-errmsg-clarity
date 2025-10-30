@@ -1,0 +1,55 @@
+\documentclass[a4paper,11pt]{article}
+
+% Korean language support
+\usepackage{kotex}
+
+% Fullpage layout (minimal margins)
+\usepackage{fullpage}
+
+% Minted package for code highlighting
+\usepackage{minted}
+
+% Other useful packages
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{amsmath}
+\usepackage{amssymb}
+
+% Document metadata
+\title{문서 제목}
+\author{저자명}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+여기에 초록을 작성하세요.
+\end{abstract}
+
+\section{서론}
+
+여기에 서론을 작성하세요.
+
+\section{본론}
+
+여기에 본론을 작성하세요.
+
+\subsection{코드 예제}
+
+minted 패키지를 사용한 코드 하이라이팅 예제입니다:
+
+\begin{minted}{python}
+def hello_world():
+    print("안녕하세요, 세계!")
+    
+if __name__ == "__main__":
+    hello_world()
+\end{minted}
+
+\section{결론}
+
+여기에 결론을 작성하세요.
+
+\end{document}
