@@ -1,6 +1,10 @@
 module Main (main) where
 
-import Lib
+import Lexer
+import Parser
 
 main :: IO ()
-main = someFunc
+main = do
+  input <- getContents
+  let toks = lexer input
+  print $ parser toks

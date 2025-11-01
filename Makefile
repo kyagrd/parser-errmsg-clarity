@@ -1,7 +1,7 @@
 # Makefile for building LaTeX documents
 
 # Main target
-.PHONY: paper clean
+.PHONY: paper clean parser
 
 # Build the paper using latexmk
 # -pdf: use pdflatex
@@ -16,3 +16,6 @@ clean:
 	latexmk -C draft.tex
 	rm -rf _minted-draft
 	rm -f *.bbl *.run.xml
+
+parser:
+	cd parser-exp && stack build 
