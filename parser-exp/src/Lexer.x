@@ -33,6 +33,7 @@ data TokenType
   | TokenTimes
   | TokenLParen
   | TokenRParen
+  | TokenEOF
   deriving (Show)
 
 -- 토큰 생성 헬퍼
@@ -40,6 +41,8 @@ tok :: (String -> TokenType) -> AlexPosn -> String -> Token
 tok f p s = Token p (f s)
 
 -- 위치 정보 추출
-posLineCol :: AlexPosn -> (Int, Int)
-posLineCol (AlexPn _ l c) = (l, c)
+-- posLineCol :: AlexPosn -> (Int, Int)
+-- posLineCol (AlexPn _ l c) = (l, c)
+
+tokenize = alexScanTokens
 }

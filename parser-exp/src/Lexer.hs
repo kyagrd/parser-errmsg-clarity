@@ -2848,8 +2848,8 @@ alex_actions = array (0 :: Int, 16)
   ]
 
 alex_action_1 = tok (const TokenIf)
-alex_action_2 = tok TokenThen
-alex_action_3 = tok TokenElse
+alex_action_2 = tok (const TokenThen)
+alex_action_3 = tok (const TokenElse)
 alex_action_4 = tok TokenID
 alex_action_5 = tok (TokenNum . read)
 alex_action_6 = tok (const TokenPlus)
@@ -3113,6 +3113,7 @@ data TokenType
   | TokenTimes
   | TokenLParen
   | TokenRParen
+  | TokenEOF
   deriving (Show)
 
 -- 토큰 생성 헬퍼
@@ -3120,5 +3121,7 @@ tok :: (String -> TokenType) -> AlexPosn -> String -> Token
 tok f p s = Token p (f s)
 
 -- 위치 정보 추출
-posLineCol :: AlexPosn -> (Int, Int)
-posLineCol (AlexPn _ l c) = (l, c)
+-- posLineCol :: AlexPosn -> (Int, Int)
+-- posLineCol (AlexPn _ l c) = (l, c)
+
+tokenize = alexScanTokens
