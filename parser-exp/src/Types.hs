@@ -13,7 +13,9 @@ data Expr
 data Stmt
   = ExprStmt Expr
   | VarDecl String
-  | FunDecl String [String] [Stmt] Expr
+  | FunDecl String [String] [Stmt]
   | Block [Stmt]
   | IfStmt Expr Stmt Stmt
   deriving (Show, Eq)
+
+type Prog = [Stmt]

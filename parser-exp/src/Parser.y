@@ -8,6 +8,7 @@ import System.IO
 
 %name stmt
 %name expr
+%name prog Stmts
 %tokentype { Token }
 %error { parseError }
 %monad { Either String }
@@ -34,7 +35,7 @@ import System.IO
 Stmt :: { Stmt }
 Stmt : Expr ';'          { ExprStmt $1 }
      | 'var' ID ';'      { VarDecl $2 }
-     | 'fun' ID '(' Params ')' '{' Stmts Expr '}'  { FunDecl $2 $4 $7 $8 }
+     | 'fun' ID '(' Params ')' '{' Stmts '}'  { FunDecl $2 $4 $7 }
      | 'if' Expr 'then' Stmt 'else' Stmt      { IfStmt $2 $4 $6 }
      | '{' Stmts '}'     { Block $2 }
 
