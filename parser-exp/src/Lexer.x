@@ -1,27 +1,48 @@
 -- Lexer.x
 {
 module Lexer where
+
+{-
+tokens :-
+  $white+                 ;
+  \+                      { tok (const TokenPlus) }
+  \*                      { tok (const TokenTimes) }
+  \(                      { tok (const TokenLParen) }
+  \)                      { tok (const TokenRParen) }
+  if                      { tok (const TokenIf) }
+  then                    { tok (const TokenThen) }
+  else                    { tok (const TokenElse) }
+  var                     { tok (const TokenVar) }
+  fun                     { tok (const TokenFun) }
+  \{                      { tok (const TokenLBrace) }
+  \}                      { tok (const TokenRBrace) }
+  \;                      { tok (const TokenSemicolon) }
+  \,                      { tok (const TokenComma) }
+  [a-zA-Z][a-zA-Z0-9]*    { tok TokenID }
+  [0-9]+                  { tok (TokenNum . read) }
+-}
+
 }
 
 %wrapper "posn"
 
 tokens :-
   $white+                 ;
-  if                      { tok (const TokenIf) }
-  then                    { tok (const TokenThen) }
-  else                    { tok (const TokenElse) }
-  var                     { tok (const TokenVar) }
-  fun                     { tok (const TokenFun) }
+  \!\!                    { tok (const TokenPlus) }
+  \@\@                    { tok (const TokenTimes) }
+  \#\#                    { tok (const TokenLParen) }
+  \$\$                    { tok (const TokenRParen) }
+  \%\%                    { tok (const TokenIf) }
+  \^\^                    { tok (const TokenThen) }
+  \&\&                    { tok (const TokenElse) }
+  \*\*                    { tok (const TokenVar) }
+  \(\(                    { tok (const TokenFun) }
+  \)\)                    { tok (const TokenLBrace) }
+  \+\+                    { tok (const TokenRBrace) }
+  \-\-                    { tok (const TokenSemicolon) }
+  \=\=                    { tok (const TokenComma) }
   [a-zA-Z][a-zA-Z0-9]*    { tok TokenID }
   [0-9]+                  { tok (TokenNum . read) }
-  \+                      { tok (const TokenPlus) }
-  \*                      { tok (const TokenTimes) }
-  \(                      { tok (const TokenLParen) }
-  \)                      { tok (const TokenRParen) }
-  \{                      { tok (const TokenLBrace) }
-  \}                      { tok (const TokenRBrace) }
-  \;                      { tok (const TokenSemicolon) }
-  \,                      { tok (const TokenComma) }
 
 {
 -- 토큰 타입

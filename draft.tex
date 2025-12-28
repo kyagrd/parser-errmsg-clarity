@@ -1,13 +1,13 @@
 \documentclass[a4paper,11pt]{article}
 
 % Korean language support
-\usepackage{kotex}
+% \usepackage{kotex}
 
 % Fullpage layout (minimal margins)
 \usepackage{fullpage}
 
 % Minted package for code highlighting
-\usepackage{minted}
+% \usepackage{minted}
 
 % Other useful packages
 \usepackage{graphicx}
@@ -16,10 +16,8 @@
 \usepackage{amssymb}
 
 % Document metadata
-\title{Can LLMs Judge Parser Error Clarity? A Minimal Viable Experiment with Happy and Megaparsec}
-% 다른 제목 후보 예시:
-% LLM-as-a-Judge for Parser Error Clarity: A Controlled Validation with LR and LL Parsing Strategies
-\author{저자명}
+\title{LLM-as-a-Judge for Parser Error Clarity: A Controlled Study with Obfuscated Inputs}
+\author{Ki Yung Ahn}
 \date{\today}
 
 \begin{document}
@@ -27,32 +25,69 @@
 \maketitle
 
 \begin{abstract}
-여기에 초록을 작성하세요.
+Abstract here
 \end{abstract}
 
-\section{서론}
-여기에 서론을 작성하세요.
+\section{Introduction}
 
-LLM을 심판으로 파서 오류의 명확성 평가 방법에 대한 연구입니다.
+We have good qualitative understanding why top-down parsers
+tend to produce clearer error messages than bottom-up parsers.
+Quantitative analysis on this aspect, however, has been limited
+due to the difficulty of performing controlled studies.
+Human survey tends to be costly and time-consuming.
+More crucially, it is extremely difficult to select
+appropriate participants for the purpose of the study.
+Mashup of beginning programmers and expert programmers
+would likely lead to noisy results. Even if we can select participants
+with similar years of programming experience, there could be bias from
+the different exposure to the specific programming language syntax
+and compiler implementations.
 
-\section{본론}
+In this work, we propose to use LLM-as-a-judge approach to perform a controlled study.
+Using LLMs clearly reduces the cost and time. More importantly,
+we can ensure that the judge has uniform experience on every experiment.
+However, there could still be bias from the exposure to
+existing programming language syntax and compiler implementations.
+To mitigate this bias, we propose to use obfuscated inputs, replacing
+the terminal symbols in the grammar with arbitrary symbols, while
+keeping the grammar structure intact.
 
-여기에 본론을 작성하세요.
+Why LLMs are suitable for this task?
+LLMs are desinged to process and produce text, which is a sequence of tokens.
+Code a sninppet and an error message along with instructions to output
+the corrected code snippet, where the syntax error is fixed.
 
-\subsection{코드 예제}
+\section{Background}
+Top-down parsers are known to be better at producing clearer error messages
+compared to bottom-up parsers \cite{AhoSethiUllman2006}.
+Qualitative explanations for why it is easier for
+top-down parsers to produce clearer error messages include
+\begin{itemize}
+    \item earlier detection of errors due to predictive nature of top-down parsers where unexpected next input token immediately raises an error, in contrast to bottom-up parsers that may need a lot more input to decide whether parsing could continue or not,
+    \item easier to associate the error with the relevant grammar rule in top-down parsers, in contrast to table-driven bottom-up parsers where the error may arise from a combination of multiple reductions and shifts internal parsing states.
+\end{itemize}
 
-minted 패키지를 사용한 코드 하이라이팅 예제입니다:
 
-\begin{minted}{python}
+
+\section{Main Body}
+Write the main body here.
+
+\subsection{Code Example}
+
+This is an example of code highlighting using the minted package:
+\begin{verbatim}
 def hello_world():
-    print("안녕하세요, 세계!")
+    print("Hello, world!")
     
 if __name__ == "__main__":
     hello_world()
-\end{minted}
+\end{verbatim}
 
-\section{결론}
+\section{Conclusion}
 
-여기에 결론을 작성하세요.
+Write the conclusion here.
+
+\bibliographystyle{plain}
+\bibliography{references}
 
 \end{document}

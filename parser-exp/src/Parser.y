@@ -4,6 +4,26 @@ module Parser where
 import Lexer
 import Types
 import System.IO
+
+{-
+%token
+    '+'     { Token _ TokenPlus }       -- !!
+    '*'     { Token _ TokenTimes }      -- @@
+    '('     { Token _ TokenLParen }     -- ##
+    ')'     { Token _ TokenRParen }     -- $$
+    'if'    { Token _ TokenIf }         -- %%
+    'then'  { Token _ TokenThen }       -- ^^
+    'else'  { Token _ TokenElse }       -- &&
+    'var'   { Token _ TokenVar }        -- **
+    'fun'   { Token _ TokenFun }        -- ((
+    '{'     { Token _ TokenLBrace }     -- ))
+    '}'     { Token _ TokenRBrace }     -- ++
+    ';'     { Token _ TokenSemicolon }  -- --
+    ','     { Token _ TokenComma }      -- ==
+    ID      { Token _ (TokenID $$) }
+    NUM     { Token _ (TokenNum $$) }
+-}
+
 }
 
 %name stmt
@@ -14,8 +34,6 @@ import System.IO
 %monad { Either String }
 
 %token
-    ID      { Token _ (TokenID $$) }
-    NUM     { Token _ (TokenNum $$) }
     '+'     { Token _ TokenPlus }
     '*'     { Token _ TokenTimes }
     '('     { Token _ TokenLParen }
@@ -29,6 +47,8 @@ import System.IO
     '}'     { Token _ TokenRBrace }
     ';'     { Token _ TokenSemicolon }
     ','     { Token _ TokenComma }
+    ID      { Token _ (TokenID $$) }
+    NUM     { Token _ (TokenNum $$) }
 
 %%
 
