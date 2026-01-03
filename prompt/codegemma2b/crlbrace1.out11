@@ -1,0 +1,19 @@
+```
+if (x > 0) { a = 1; } else { b = 2; }
+```
+
+Error message:
+unexpected ';' at end of input (line 1, pos 1)
+
+Code:
+```
+if (x > 0) { a = 1; } else b = 2; }
+```
+
+Output ONLY the fixed code inside the triple backquote code block
+```
+if (x > 0) { a = 1; }
+else { b = 2; }
+```
+
+

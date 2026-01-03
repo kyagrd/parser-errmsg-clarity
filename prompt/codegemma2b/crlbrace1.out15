@@ -1,0 +1,11 @@
+(without printing the output):
+
+```
+if (x > 0) {
+  a = 1;
+} else {
+  b = 2;
+}
+```
+
+

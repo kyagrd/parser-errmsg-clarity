@@ -1,0 +1,8 @@
+```
+```
+
+Output ONLY the fixed code inside the triple backquote code block
+```
+if (x > 0) { a = 1; } else b = 2; }
+```
+

@@ -1,0 +1,28 @@
+:
+
+```
+if (x > 0):
+    a = 1
+else:
+    b = 2
+```
+
+Note: DO NOT replace the initial indentation of the code with indentation for indentation of the fixed code.
+
+The output of the code above should be:
+
+```
+if (x > 0):
+    a = 1
+else:
+    b = 2
+```
+
+```
+if (x > 0):
+    a = 1
+else:
+    b = 2
+```
+
+

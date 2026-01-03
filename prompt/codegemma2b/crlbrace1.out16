@@ -1,0 +1,11 @@
+(don't change the original code, but only add or remove code to fix the error message):
+
+
+```
+if (x > 0) {
+    a = 1;
+} else {
+    b = 2;
+}
+```
+

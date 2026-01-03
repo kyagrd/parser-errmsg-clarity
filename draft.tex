@@ -7,7 +7,7 @@
 \usepackage{fullpage}
 
 % Minted package for code highlighting
-% \usepackage{minted}
+\usepackage{minted}
 
 % Other useful packages
 \usepackage{graphicx}
@@ -16,7 +16,7 @@
 \usepackage{amssymb}
 
 % Document metadata
-\title{LLM-as-a-Judge for Parser Error Clarity: A Controlled Study with Obfuscated Inputs}
+\title{Towards LLM-as-a-Judge for Parser Error Clarity: A Controlled Baseline Study with Obfuscated Inputs}
 \author{Ki Yung Ahn}
 \date{\today}
 
@@ -30,42 +30,191 @@ Abstract here
 
 \section{Introduction}
 
-We have good qualitative understanding why top-down parsers
-tend to produce clearer error messages than bottom-up parsers.
+It is widely accepted that top-down parsers
+(LL-based, recursive descent) tend to produce
+clearer error messages than bottom-up parsers
+(LR-based, table-driven).  Qualitative explanation
+why this is the case can be found in many college level textbooks
+\cite{AhoSethiUllman2006,CooperTorczon2011,Louden1997};
+errors are detected earlier and have clearer syntactic context
+in top-down parsers than in bottom-up parsers.
+
 Quantitative analysis on this aspect, however, has been limited
 due to the difficulty of performing controlled studies.
-Human survey tends to be costly and time-consuming.
-More crucially, it is extremely difficult to select
-appropriate participants for the purpose of the study.
-Mashup of beginning programmers and expert programmers
-would likely lead to noisy results. Even if we can select participants
-with similar years of programming experience, there could be bias from
+Traditional approach would involve human surveys where
+participants are shown code snippets with syntax errors
+along with error messages produced by different parsers.
+Human survey tends to be costly and time-consuming. More crucially,
+it is extremely difficult to select appropriate participants
+for the purpose of the study. Mashup of beginners and experts would
+likely lead to noisy results. Even if we can select participants with
+similar years of programming experience, there could still be bias from
 the different exposure to the specific programming language syntax
 and compiler implementations.
 
-In this work, we propose to use LLM-as-a-judge approach to perform a controlled study.
-Using LLMs clearly reduces the cost and time. More importantly,
-we can ensure that the judge has uniform experience on every experiment.
-However, there could still be bias from the exposure to
-existing programming language syntax and compiler implementations.
-To mitigate this bias, we propose to use obfuscated inputs, replacing
-the terminal symbols in the grammar with arbitrary symbols, while
+In this work, we consider an LLM-as-a-judge approach to perform
+a controlled study to evaluate the clarity of error messages
+produced by different parsers.  Using LLMs clearly reduces
+the cost and time compared to human surveys.  More importantly,
+we can ensure that the judge has uniform experience on every experiment
+because what LLM has learned is fixed at the time of training.
+However, LLMs are also biased from the exposure to existing
+programming language syntax and compiler implementations.
+This bias of LLMs could be even more problematic for the evaluation
+than human participants, because of LLM's tendency of ``best guessing''.
+To mitigate this bias, we propose to use obfuscated inputs,
+replacing the terminal symbols with arbitrary symbols, while
 keeping the grammar structure intact.
 
-Why LLMs are suitable for this task?
-LLMs are desinged to process and produce text, which is a sequence of tokens.
-Code a sninppet and an error message along with instructions to output
-the corrected code snippet, where the syntax error is fixed.
-
 \section{Background}
-Top-down parsers are known to be better at producing clearer error messages
-compared to bottom-up parsers \cite{AhoSethiUllman2006}.
-Qualitative explanations for why it is easier for
-top-down parsers to produce clearer error messages include
+In this section, we discuss two subcategories of
+the LLM-as-a-judge approach, and which one is suitable for
+evaluating parser error message clarity.
+
+\subsection{LLM-as-a-judge by the rule book}
+The idea of using LLMs as judges \cite{zheng2023judging}
+for various tasks has been gaining popularity recently,
+expanding to different application areas, including UI/UX evaluation
+\cite{duan2024generating,duan2024uicrit,lee2024applying}.
+In a typical LLM-as-a-judge approach, the ``common sense'' of
+an LLM is exploited, along with careful prompting, so that
+the LLM judge is likely to produce similar results to human evaluations.
+
+For example, the judging rules (or, grading policies) may be explained
+through prompt to an LLM, as they are explained to human judges.
+Then, the LLM judge is asked to evaluate the target artifacts
+according to the explained rules.  Majority of LLM-as-a-judge approach
+is based on this rule book setting.  This rule book setting, however,
+is not suitable for evaluating error message clarity, because
+such rules for error message clarity are not well-defined.
+Top-down and bottom-up parsers are compared qualitatively with
+some examples, but formal rubric for evaluation is rarely provided.
+
+Relying on the ``common sense'' of LLMs whithout well-defined rules
+would only likely to fulfill self-prophecy for our case.
+The training data regarding parsing error messages are
+likey to include standard textbooks on compilers and parsing.
+Thus, if it looks like an error message from a top-down parser,
+the ``common sesne'' of LLMs would judge them it to be clearer.
+This is no more than parroting what LLMs have seen during training.
+
+\subsection{LLM-as-a-judge by task performance}
+Some judgements need to be made by observing the performance of
+the participants on specific tasks. For example, judging which
+prompt works better for the LLM to perform a specific task is not
+suitable for the rule book setting.  Instead, one needs to measure
+objective metrics such as the accuracy or processing time of
+the specific task performed by an LLM for different prompts.
+Such idea has been explored in automated prompt optimizations
+\cite{zhou2023large,fernando2023promptbreeder}.
+
+In our case, prompt should include a code snippet and an error message,
+and the task for the LLM judge would be to fix the syntax error
+to output corrected code.  Then, the clarity of error messages
+may be benchmarked by the accuracy of the fixed code.  Parsers producing
+error messages that lead to higher accuracy in fixing syntax errors
+for the LLM judge would be considered to produce clearer error messages.
+
+\subsection{Setting the baseline with obfuscated inputs}
+When evaluating error message clarity, there is an obvious baseline for
+the worst, that is, the most unclear error message, which provides
+information no other than the fact that there exists an error.
+For LLMs, the baseline for this evaluation is corrupted
+in the sense that they can fix wide range of syntax errors
+for those worst possible error messages, even for newly invented
+programming language syntax.
+
+When a human participant is asked fix a syntax error for
+a code of unknown syntax, she would most likely to ask
+what programming language it is.  Unlike a human participant,
+an LLM typically answers to the prompt as best as it can,
+according to the `knowledge' obtained during training,
+which includes the syntax of various programming languages,
+The LLM would apply similar patterns for syntax errors and
+their fixes commonly found in its training data, even without
+any useful information from the error message.  
+
+
+\section{Experiment}
+
+Our experiment with GPT-5.2 Instant\footnote{GPT 5.2 Instant as of
+Jan 2026 via \texttt{chagpt.com} website, provided as a legacy model.}
+with the prompts based on Figure \ref{fig:prompt-template}
+illustrates this problem and a possible solution by obfuscation.
+
+\begin{figure}[h]
+\begin{quote}
+\begin{minted}{text}
+Fix the syntax error in the code below using ONLY the error message,
+without using the pre-trained knowledge.
+
+Error message:
+{{syntax error message here}}
+
+Code:
+```
+{{code snippet with syntax error here}}
+```
+
+Output only the fixed code inside the tirple quote code block.
+\end{minted}
+\end{quote}
+\caption{Prompt template for asking an LLM to fix a syntax error.}
+\label{fig:prompt-template}
+\end{figure}
+
+
+The code snippets and their corresponding intended corrections are
+as follows:
 \begin{itemize}
-    \item earlier detection of errors due to predictive nature of top-down parsers where unexpected next input token immediately raises an error, in contrast to bottom-up parsers that may need a lot more input to decide whether parsing could continue or not,
-    \item easier to associate the error with the relevant grammar rule in top-down parsers, in contrast to table-driven bottom-up parsers where the error may arise from a combination of multiple reductions and shifts internal parsing states.
+\item \mintinline{text}|if (x > 0) [ a = 1; ] else b = 2; }|
+\item \mintinline{text}|if (x > 0) [ a = 1; ] else b = 2; ]|
+\item \mintinline{text}|if (x > 0) @ a = 1; # else b = 2; #|
 \end{itemize}
+where the intended correct output is either
+(1) removing the extraneous closing
+(\mintinline{text}|}|, \mintinline{text}|]|, or \mintinline{text}|#|)
+on the else-branch, or
+(2) adding an opening 
+(\mintinline{text}|{|, \mintinline{text}|[|, or \mintinline{text}|@|)
+to match the extraneous opening on the else-branch.
+The former (1) is the most intended correction according to
+the informative error message, while the latter (2) is
+an acceptable alternative.
+
+GPT-4o performed
+% https://chatgpt.com/c/6956ae0f-7768-8323-8ddc-eaecbac59868
+50/50 correct fixes for \emph{curly-brace-lang} with the informative error message, % (2) 17
+% https://chatgpt.com/c/6956ae60-5c44-8322-b9ef-ace41246701f
+50/50 correct fixes for \emph{curly-brace-lang} with the worst error message, % (2) 36
+23/50 correct fixes for \emph{square-bracket-lang} with the informative error message,
+4/50 correct fixes for \emph{square-bracket-lang} with the worst error message,
+??/50 correct fixes for \emph{gibberish-lang},
+
+%% Qualitative explanations for why it is easier for
+%% top-down parsers to produce clearer error messages include
+%% \begin{itemize}
+%%     \item earlier detection of errors due to predictive nature of top-down parsers where unexpected next input token immediately raises an error, in contrast to bottom-up parsers that may need a lot more input to decide whether parsing could continue or not,
+%%     \item easier to associate the error with the relevant grammar rule in top-down parsers, in contrast to table-driven bottom-up parsers where the error may arise from a combination of multiple reductions and shifts internal parsing states.
+%% \end{itemize}
+
+\begin{figure}[h]
+\begin{minted}{text}
+prog    ::= { stmt }
+stmt    ::= expr ';'
+          | 'var' ID ';'
+          | 'fun' ID '(' [params] ')' '{' { stmt } '}'
+          | 'if' expr 'then' stmt 'else' stmt
+          | '{' { stmt } '}'
+params  ::= ID { ',' ID }
+args    ::= expr { ',' expr }
+expr    ::= term { '+' term }
+term    ::= factor { '*' factor }
+factor  ::= ID | NUM | '(' expr ')' | ID '(' [args] ')'
+\end{minted}
+\caption{The grammar (EBNF) for our example language.}
+\label{fig:core-grammar}
+\end{figure}
 
 
 
@@ -75,13 +224,13 @@ Write the main body here.
 \subsection{Code Example}
 
 This is an example of code highlighting using the minted package:
-\begin{verbatim}
+\begin{minted}{python}
 def hello_world():
     print("Hello, world!")
-    
+
 if __name__ == "__main__":
     hello_world()
-\end{verbatim}
+\end{minted}
 
 \section{Conclusion}
 
