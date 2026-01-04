@@ -10,10 +10,14 @@
 \usepackage{minted}
 
 % Other useful packages
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
 \usepackage{graphicx}
 \usepackage{hyperref}
 \usepackage{amsmath}
 \usepackage{amssymb}
+\usepackage{enumerate}
+\usepackage{lipsum} % For generating dummy text
 
 % Document metadata
 \title{Towards LLM-as-a-Judge for Parser Error Clarity: A Controlled Baseline Study with Obfuscated Inputs}
@@ -39,7 +43,7 @@ why this is the case can be found in many college level textbooks
 errors are detected earlier and have clearer syntactic context
 in top-down parsers than in bottom-up parsers.
 
-Quantitative analysis on this aspect, however, has been limited
+Quantitative analysis on such aspect, however, has been limited
 due to the difficulty of performing controlled studies.
 Traditional approach would involve human surveys where
 participants are shown code snippets with syntax errors
@@ -53,18 +57,48 @@ the different exposure to the specific programming language syntax
 and compiler implementations.
 
 In this work, we consider an LLM-as-a-judge approach to perform
-a controlled study to evaluate the clarity of error messages
-produced by different parsers.  Using LLMs clearly reduces
-the cost and time compared to human surveys.  More importantly,
-we can ensure that the judge has uniform experience on every experiment
-because what LLM has learned is fixed at the time of training.
-However, LLMs are also biased from the exposure to existing
-programming language syntax and compiler implementations.
-This bias of LLMs could be even more problematic for the evaluation
-than human participants, because of LLM's tendency of ``best guessing''.
-To mitigate this bias, we propose to use obfuscated inputs,
-replacing the terminal symbols with arbitrary symbols, while
-keeping the grammar structure intact.
+a controlled study to evaluate the clarity of error messages.
+Using LLMs clearly reduces the cost and time compared to
+human surveys. More importantly, we can ensure that the judge have
+uniform experience on every experiment because what LLM has learned
+is fixed at the time of training. However, LLMs are also biased
+from the exposure to existing programming language syntax and
+compiler implementations. This bias of LLMs could be
+even more problematic for the evaluation than human participants,
+because the tendency to ``best guess'' from the trained knowledge
+often seems to dominate the behavior LLMs exhibit.
+To mitigate this bias, we propose to obfuscate the inputs by
+replacing the terminal symbols of the language with some other symbols,
+in order to reduce the effect of prior knowledge of the LLM judge.
+
+Our thesis is that by reducing the effect of prior knowledge,
+the clarity of error messages could have more impact on
+the performance of the LLM judge in fixing syntax errors.
+We design and perform an experiment to show that there exist
+an LLM judge where our thesis holds, for the very baseline case
+of error message clarity, that is, distinguishing between
+an informative error message and the worst uninformative error message.
+More specifically, our experiment demonstrates that well-chosen
+obfuscation could enable an LLM judge to distinguish the difference
+in error message clarity, at least for the baseline case.
+
+Our contributions are as follows:
+\begin{itemize}
+\item
+We identify the prior-knowledge dominance problem of using
+LLMs as judges for evaluating parser error message clarity,
+and propose obfuscation of input code snippets to mitigate the problem.
+\item
+We design a controlled experiment to prove the concept
+that an LLM judge can evaluate the clarity of error messages,
+by comparing the performance of the LLM judge for the baseline case
+of distinguishing informative and uninformative error messages.
+\item
+We perform the designed experiment with smaller LLM models
+that could run in stand-alone local environments,
+which makes our results highly reproducible
+even on ordinary personal computing resources.
+\end{itemize}
 
 \section{Background}
 In this section, we discuss two subcategories of
@@ -111,9 +145,13 @@ Such idea has been explored in automated prompt optimizations
 In our case, prompt should include a code snippet and an error message,
 and the task for the LLM judge would be to fix the syntax error
 to output corrected code.  Then, the clarity of error messages
-may be benchmarked by the accuracy of the fixed code.  Parsers producing
+may be benchmarked by the rate of correctly fixed code.
+If our thesis holds, that is, the clarity of error messages
+could have impact on the behavior of LLM judges, we would expect
+to use such LLM judges to evaluate the clarity of error messages
+between different parsers.  More specifically, parsers producing
 error messages that lead to higher accuracy in fixing syntax errors
-for the LLM judge would be considered to produce clearer error messages.
+for the LLM judge would be considered to provide clearer error messages.
 
 \subsection{Setting the baseline with obfuscated inputs}
 When evaluating error message clarity, there is an obvious baseline for
@@ -125,24 +163,63 @@ for those worst possible error messages, even for newly invented
 programming language syntax.
 
 When a human participant is asked fix a syntax error for
-a code of unknown syntax, she would most likely to ask
+a code of an unknown syntax, she would most likely to ask
 what programming language it is.  Unlike a human participant,
 an LLM typically answers to the prompt as best as it can,
 according to the `knowledge' obtained during training,
 which includes the syntax of various programming languages,
 The LLM would apply similar patterns for syntax errors and
 their fixes commonly found in its training data, even without
-any useful information from the error message.  
+any useful information from the error message.
+It is not possible to evaluate which error message is clearer
+when the judge's behavior is independent against error messages.
 
+Our idea is to replace the terminal symbols, which are related to
+the cause of the syntax error, with less commonly used symbols,
+while keeping the grammar structure intact. For example, when
+the code snippet has a syntax error for a mismatched parentheses, 
+\texttt{(} and \texttt{)} may be replaced with
+\texttt{begin} and \texttt{end}, provided that
+they are not keywords of the programming language
+in which the code snippet is written.
 
-\section{Experiment}
+% TODO provide some hints, with forward references, what kind of obfuscation
+% we are going to use for the experiment.
 
-Our experiment with GPT-5.2 Instant\footnote{GPT 5.2 Instant as of
-Jan 2026 via \texttt{chagpt.com} website, provided as a legacy model.}
-with the prompts based on Figure \ref{fig:prompt-template}
-illustrates this problem and a possible solution by obfuscation.
+\section{Experiment Design}
 
-\begin{figure}[h]
+The aim for our experiment is to establish baseline
+for the syntax error message reporting a mismatched closing curly brace.
+Consider the code snippet below
+\begin{quote}
+    \mintinline{text}|if (x > 0) { a = 1; } else b = 2; }|
+\end{quote}
+of an imaginary programming language,
+which we will call \emph{brace-lang}, with a C-like syntax
+for the conditional statement.
+An informative error message for this code snippet would be
+\begin{quote}
+    \mintinline{text}|unexpected ']' after else clause (if statement already closed)|
+\end{quote}
+whereas the worst uninformative error message would simply be
+``\texttt{syntax error}''.
+
+For each error message quality (informative vs. uninformative),
+we ask an LLM to fix the syntax error in the code snippet above,
+with the prompt template shown in Figure \ref{fig:prompt-template}.
+The correct fix should either
+(1) remove the extraneous closing curly brace
+    (\mintinline{text}|}|) at the end
+or
+(2) add an opening curly brace (\mintinline{text}|{|) after
+    \mintinline{text}|else| to match the closing curly brace.
+That is, the intended correct output is either one of the following:
+\begin{enumerate}[(1)]
+\item \mintinline{text}|if (x > 0) { a = 1; } else b = 2;| or
+\item \mintinline{text}|if (x > 0) { a = 1; } else { b = 2; }|.
+\end{enumerate}
+
+\begin{figure}
 \begin{quote}
 \begin{minted}{text}
 Fix the syntax error in the code below using ONLY the error message,
@@ -156,81 +233,246 @@ Code:
 {{code snippet with syntax error here}}
 ```
 
-Output only the fixed code inside the tirple quote code block.
+Output only the fixed code inside the tirple backquote code block.
 \end{minted}
 \end{quote}
 \caption{Prompt template for asking an LLM to fix a syntax error.}
 \label{fig:prompt-template}
 \end{figure}
 
+For this original language variant \emph{brace-lang},
+designed to work as a control group, we expect the LLM judge
+fail to distinguish the quality error messages, because
+it could rely on the prior knowledge of C-like syntax
+to fix the syntax error even with the worst error message.
 
-The code snippets and their corresponding intended corrections are
-as follows:
+We apply two different obfuscation schemes to the code snippet above,
+to create two additional language variants, namely,
+\emph{bracket-lang} and \emph{gibberish-lang},
+as summarized below.
+\begin{center}
+\begin{tabular}{|l|l|p{5cm}|}
+\hline
+\textbf{Language} & \textbf{Code Snippet} & \textbf{Intended Corrections} \\
+\hline
+brace-lang &
+\mintinline{text}|if (x > 0) { a = 1; } else b = 2; }| &
+(1) remove \mintinline{text}|}| at the end ~or
+
+(2) add \mintinline{text}|{| before \mintinline{text}|b = 2;|
+\\
+\hline
+bracket-lang &
+\mintinline{text}|if (x > 0) [ a = 1; ] else b = 2; ]| &
+(1) remove \mintinline{text}|]| at the end ~or
+
+(2) add \mintinline{text}|[| before \mintinline{text}|b = 2;|
+\\
+\hline
+gibberish-lang &
+\mintinline{text}|if (x > 0) @ a = 1; # else b = 2; #| &
+(1) remove \mintinline{text}|#| at the end ~or
+
+(2) add \mintinline{text}|@| before \mintinline{text}|b = 2;|
+\\
+\hline
+\end{tabular}
+\end{center}
+In \emph{bracket-lang}, curly braces
+\mintinline{text}|{| and \mintinline{text}|}| are replaced with
+square brackets \mintinline{text}|[| and \mintinline{text}|]|.
+In \emph{gibberish-lang}, curly braces
+\mintinline{text}|{| and \mintinline{text}|}| are replaced with
+rather arbitrary symbols \mintinline{text}|@| and \mintinline{text}|#|.
+The informative error message and the intended corrections are
+also adjusted accordingly for each language variant.
+
+
+\section{Experiment Execution and Results}
+
+For each prompt, 50 trials are performed. There is one prompt for
+each combination of language variant and error message quality.
+That is, 100 trials for each language variant, 50 with informative
+error message and 50 with the worst error message, are performed.
+For each LLM model, total of 300 trials are performed for
+the three language variants.
+
+\paragraph{}
+We ran experiments over several variants of
+Gemma 3 models (4B, 12B, and 27B) and
+CodeGemma models (2B, 7B, and 7B-instruct)
+using the Ollama framework.
+Among them, only Gemma 3 12B model behaved to distinguish the clarity
+between the informative and uninformative error messages
+for the \emph{bracket-lang} variant, as summarized below:
 \begin{itemize}
-\item \mintinline{text}|if (x > 0) [ a = 1; ] else b = 2; }|
-\item \mintinline{text}|if (x > 0) [ a = 1; ] else b = 2; ]|
-\item \mintinline{text}|if (x > 0) @ a = 1; # else b = 2; #|
+\item 50/50 correct fixes for \emph{brace-lang} with the worst error message,
+\item 
+50/50 correct fixes for \emph{brace-lang} with the informative error message,
+\item 0/50 correct fixes for \emph{bracket-lang} with the worst error message,
+% (producing same output as for \emph{brace-lang}),
+\item 50/50 correct fixes for \emph{bracket-lang} with the informative error message,
+\item 0/50 correct fixes for \emph{gibberish-lang} with the worst error message,
+\item 0/50 correct fixes for \emph{gibberish-lang} with the informative error message.
 \end{itemize}
-where the intended correct output is either
-(1) removing the extraneous closing
-(\mintinline{text}|}|, \mintinline{text}|]|, or \mintinline{text}|#|)
-on the else-branch, or
-(2) adding an opening 
-(\mintinline{text}|{|, \mintinline{text}|[|, or \mintinline{text}|@|)
-to match the extraneous opening on the else-branch.
-The former (1) is the most intended correction according to
-the informative error message, while the latter (2) is
-an acceptable alternative.
+For the \emph{brace-lang} and \emph{bracket-lang} variants,
+the outputs were always exactly the same for the same prompt settings
+(that is, for the same language variant and same error message quality)
+across 50 trials. For the \emph{gibberish-lang} variant,
+there were some different outputs for the same prompt setting
+across 50 trials, but none of them were correct fixes.
 
-GPT-4o performed
+The other Gemma 3 models (2B and 7B) were not able to distinguish
+the clarity of error messages for any language variants including
+\emph{bracket-lang}. None of the CodeGemma models were able to
+distinguish the clarity of error messages for the \emph{brace-lang}
+variant either. They simply could not produce correct fixes.
+
+\paragraph{}
+We also tried with GPT-5.2 Instant and Thinking \footnote{GPT 5.2 as of
+early Jan 2026 via \texttt{chagpt.com} website} with the same prompts.
+In general, GPT-5.2 models produced more diverse outputs
+across 50 trials for the same prompt settings,
+compared to the Gemma 3 12B model.\\
+
+GPT-5.2 Instant performed as follows:
+\begin{itemize}
+\item
 % https://chatgpt.com/c/6956ae0f-7768-8323-8ddc-eaecbac59868
-50/50 correct fixes for \emph{curly-brace-lang} with the informative error message, % (2) 17
 % https://chatgpt.com/c/6956ae60-5c44-8322-b9ef-ace41246701f
-50/50 correct fixes for \emph{curly-brace-lang} with the worst error message, % (2) 36
-23/50 correct fixes for \emph{square-bracket-lang} with the informative error message,
-4/50 correct fixes for \emph{square-bracket-lang} with the worst error message,
-??/50 correct fixes for \emph{gibberish-lang},
+50/50 correct fixes for \emph{brace-lang} with the worst error message,
+\item
+50/50 correct fixes for \emph{brace-lang} with the informative error message,
+\item
+12/50 correct fixes for \emph{bracket-lang} with the worst error message,
+\item
+50/50 correct fixes for \emph{bracket-lang} with the informative error message,
+\item
+0/50 correct fixes for \emph{gibberish-lang} with the worst message,
+\item
+19/50 correct fixes for \emph{gibberish-lang} with the informative error message,
+\end{itemize}
+These results using GPT-5.2 Instant aligns with
+our results using the Gemma 3 12B model, where
+the distinction of error message clarity is most apparent
+for the \emph{bracket-lang} variant. But unlike the Gemma 3 12B model,
+GPT-5.2 Instant was also able to show some distinction
+for the \emph{gibberish-lang} variant as well.\\
 
-%% Qualitative explanations for why it is easier for
-%% top-down parsers to produce clearer error messages include
-%% \begin{itemize}
-%%     \item earlier detection of errors due to predictive nature of top-down parsers where unexpected next input token immediately raises an error, in contrast to bottom-up parsers that may need a lot more input to decide whether parsing could continue or not,
-%%     \item easier to associate the error with the relevant grammar rule in top-down parsers, in contrast to table-driven bottom-up parsers where the error may arise from a combination of multiple reductions and shifts internal parsing states.
-%% \end{itemize}
+GPT-5.2 Thinking performed as follows:
+\begin{itemize}
+\item
+% https://chatgpt.com/c/6956ae0f-7768-8323-8ddc-eaecbac59868
+% https://chatgpt.com/c/6956ae60-5c44-8322-b9ef-ace41246701f
+50/50 correct fixes for \emph{brace-lang} with the worst error message,
+\item
+50/50 correct fixes for \emph{brace-lang} with the informative error message,
+\item
+21/50 correct fixes for \emph{bracket-lang} with the worst error message,
+\item
+36/50 correct fixes for \emph{bracket-lang} with the informative error message,
+\item
+0/50 correct fixes for \emph{gibberish-lang} with the worst message,
+\item
+27/50 correct fixes for \emph{gibberish-lang} with the informative error message,
+\end{itemize}
+What is interesting about the results using GPT-5.2 Thinking is that
+baseline performance for the worst error message for the \emph{bracket-lang} variant
+is corrupted because of thinking more about other possibilities for syntax error,
+rather than quickly parroting the prior knowledge of C-like syntax, which sometimes
+leads to correct fixes even with the worst error message.
+For the \emph{gibberish-lang} variant, GPT-5.2 Thinking was able to produce
+more correct fixes with the informative error message compared to GPT-5.2 Instant.\\
+
+Note that the reproducibility of results using the GPT model
+may be limited as the underlying model is likely to be
+continuously fine-tuned and updated frequently,
+as being current version of serviced online GPT models.
+
+
+
+% GPT-5 Thinking
+% 21/50 correct fixes for bracket-lang with the worst uninformative error message,
+% 36/50 correct fixes for bracket-lang with the informative error message,
+% 0/50 correct fixes for gibberish-lang with the worst uninformative error message,
+% 27/50 correct fixes for gibberish-lang with the informative error message,
+
+The ratio of difference in correct fixes
+between informative and uninformative error messages
+relative to the total number of trials for each language variant
+is summarized in Figure \ref{fig:results-summary}.
 
 \begin{figure}[h]
-\begin{minted}{text}
-prog    ::= { stmt }
-stmt    ::= expr ';'
-          | 'var' ID ';'
-          | 'fun' ID '(' [params] ')' '{' { stmt } '}'
-          | 'if' expr 'then' stmt 'else' stmt
-          | '{' { stmt } '}'
-params  ::= ID { ',' ID }
-args    ::= expr { ',' expr }
-expr    ::= term { '+' term }
-term    ::= factor { '*' factor }
-factor  ::= ID | NUM | '(' expr ')' | ID '(' [args] ')'
-\end{minted}
-\caption{The grammar (EBNF) for our example language.}
-\label{fig:core-grammar}
+\centering
+
+\begin{tikzpicture}
+\begin{axis}[
+  xlabel={Language Variant},
+  ylabel={Clarity Distinction (\%)},
+  ymax=110,
+  width=13cm,
+  height=6cm,
+  xtick={1,2,3},
+  xticklabels={brace-lang, bracket-lang, gibberish-lang},
+  ybar,
+  bar width=0.3cm,
+  legend pos=north west,
+]
+\addplot[fill=blue] coordinates {(0.9,0) (1.9,100) (2.9,0)};
+\addplot[fill=orange] coordinates {(1.0,0) (2.0,76) (3.0,38)};
+\addplot[fill=green] coordinates {(1.1,0) (2.1,30) (3.1,54)};
+\legend{Gemma 3 12B, GPT-5.2 Instant, GPT-5.2 Thinking}
+\end{axis}
+\end{tikzpicture}
+
+\caption{Summary of the experiment results. The height of each bar
+indicates the difference in correct fixes between informative
+and uninformative error messages relative to the total number of trials
+for each language variant, showing Gemma 3 12B and GPT-5.2 Instant models only,
+which were able to distinguish the clarity of error messages.}
+\label{fig:results-summary}
 \end{figure}
 
+%% %% Qualitative explanations for why it is easier for
+%% %% top-down parsers to produce clearer error messages include
+%% %% \begin{itemize}
+%% %%     \item earlier detection of errors due to predictive nature of top-down parsers where unexpected next input token immediately raises an error, in contrast to bottom-up parsers that may need a lot more input to decide whether parsing could continue or not,
+%% %%     \item easier to associate the error with the relevant grammar rule in top-down parsers, in contrast to table-driven bottom-up parsers where the error may arise from a combination of multiple reductions and shifts internal parsing states.
+%% %% \end{itemize}
+
+%% \begin{figure}[h]
+%% \begin{minted}{text}
+%% prog    ::= { stmt }
+%% stmt    ::= expr ';'
+          %% | 'var' ID ';'
+          %% | 'fun' ID '(' [params] ')' '{' { stmt } '}'
+          %% | 'if' expr 'then' stmt 'else' stmt
+          %% | '{' { stmt } '}'
+%% params  ::= ID { ',' ID }
+%% args    ::= expr { ',' expr }
+%% expr    ::= term { '+' term }
+%% term    ::= factor { '*' factor }
+%% factor  ::= ID | NUM | '(' expr ')' | ID '(' [args] ')'
+%% \end{minted}
+%% \caption{The grammar (EBNF) for our example language.}
+%% \label{fig:core-grammar}
+%% \end{figure}
 
 
-\section{Main Body}
-Write the main body here.
 
-\subsection{Code Example}
+%% \section{Main Body}
+%% Write the main body here.
 
-This is an example of code highlighting using the minted package:
-\begin{minted}{python}
-def hello_world():
-    print("Hello, world!")
+%% \subsection{Code Example}
 
-if __name__ == "__main__":
-    hello_world()
-\end{minted}
+%% This is an example of code highlighting using the minted package:
+%% \begin{minted}{python}
+%% def hello_world():
+    %% print("Hello, world!")
+
+%% if __name__ == "__main__":
+    %% hello_world()
+%% \end{minted}
 
 \section{Conclusion}
 
