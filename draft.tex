@@ -103,7 +103,7 @@ participants are shown code snippets with syntax errors
 along with error messages produced by different parsers.
 Human survey tends to be costly and time-consuming. More crucially,
 it is extremely difficult to select appropriate participants
-for the purpose of the study. Mashup of beginners and experts would
+for the purpose of the study. A mixture of beginners and experts would
 likely lead to noisy results. Even if we can select participants with
 similar years of programming experience, there could still be bias from
 the different exposure to the specific programming language syntax
@@ -190,7 +190,7 @@ The training data regarding parsing error messages are
 likely to include standard textbooks on compilers and parsing.
 Thus, if it looks like an error message from a top-down parser,
 the ``common sense'' of LLMs would judge them to be clearer.
-This is no more than parroting what LLMs have seen during training.
+This is no more than reproducing memorized patterns from the training data.
 
 \subsection{LLM-as-a-judge by Task Performance}
 Some judgements need to be made by observing the performance of
@@ -314,7 +314,7 @@ Output ONLY the fixed code inside the triple backquote code block.
 
 For this original language variant \emph{brace-lang},
 designed to work as a control group, we expect the LLM judge
-fail to distinguish the quality error messages, because
+fail to distinguish the quality of error messages, because
 it is likely to lean heavily on the prior knowledge of C-like syntax
 to fix the syntax error even with the worst error message ``\verb|syntax error|''. 
 This language variant is to act as a control group, because
@@ -378,6 +378,7 @@ That is, 100 trials for each language variant, 50 with informative
 error message and 50 with the worst error message, are performed.
 For each LLM model variants, total of 300 trials are performed for
 the three language variants.
+We note that preliminary experiments with 25 trials per condition yielded proportionally consistent results, suggesting that the 50-trial sample size is adequate to capture the clarity distinction metric reliably.
 
 We ran experiments over several variants of
 Gemma 3 \cite{gemma2025} models (4B, 12B, and 27B)
@@ -501,8 +502,8 @@ as being current version of serviced online GPT models.
 \caption{Summary of the experiment results. The height of each bar
 indicates the difference in correct fixes between informative
 and uninformative error messages relative to the total number of trials
-for each language variant, showing Gemma 3 12B and GPT-5.2 Instant models only,
-which were able to distinguish the clarity of error messages.}
+for each language variant. Shown are model variants that exhibited meaningful
+distinction in clarity of error messages: Gemma 3 12B, GPT-5.2 Instant, and GPT-5.2 Thinking.}
 \label{fig:results-summary}
 \end{figure}
 
@@ -550,10 +551,10 @@ That is, the intended correct output is:
 We call this original language variant \emph{semi-lang}.
 
 Missing delimiter is another common syntax error across many programming languages.
-This is in a way more simple than parenthesis-matching type of syntax errors
+This is simpler than parenthesis-matching type of syntax errors
 in our previous experiment. There could only be one intended correct fix and
 the only terminal symbol related to the syntax error is the semicolon (\verb|;|).
-We create an two obfuscated variant of this code snippet by replacing
+We create two obfuscated variants of this code snippet by replacing
 the semicolon with a dot (\verb|.|) or  a sharp (\verb|#|), as follows:
 \begin{quote}
     \verb|int x = 5 int y = 6.|\\
@@ -657,7 +658,7 @@ Note the syntax of the code above may be DIFFERENT from C-like languages.
 So do not fix the code assuming it is a C-like language, unless you are
 very sure, from the error message and the code above, it is actually
 a C-like syntax. Make MINIMAL CHANGES to the code to fix the syntax error
-and make it a TOP PRIOROTY to use the information of the the error message.
+and make it a TOP PRIORITY to use the information from the error message.
 FIRST try to fix the error only using symbols that either directly appear
 or suggested in the error message.
 VERY IMPORTANT: DO NOT USE symbols from C-like syntax to fix the syntax error
@@ -704,7 +705,7 @@ various models and settings for an established method.
 
 \subsubsection{Why 12B variant of Gemma 3 model performed better than others?}
 Our speculations on why only the mid-sized 12B variant performed well
-in our experiment is that it happen to strike a good balance between
+in our experiment is that it happens to strike a good balance between
 model capacity and granularity of prior-knowledge.
 We think that the smaller 4B variant may not have sufficient capacity
 to effectively reason about probable fixes according to the information
@@ -860,6 +861,9 @@ the provided error message becomes the primary signal.
 The last direction of model-editing work suggests a complementary path
 if parser-facing LLM judges must operate without input obfuscation.
 
+% TODO re confirm and revise may be needed
+Beyond prior-knowledge mitigation, recent studies have examined the reliability and robustness of LLM-as-a-judge methodologies across domains. Anghel et al. diagnose bias and instability in LLM evaluators and propose a scalable pairwise meta-evaluator \cite{anghel2025diagnosing}. Vasilev et al. validate LLM-as-a-judge workflows for medical text summarization \cite{vasilev2026llmasjudge}, while Keith analyzes coherence judgments made by LLMs \cite{keith2025llmjudge}. Zhang et al. introduce multi-model judgment frameworks for safety-centered evaluation without ground truth \cite{zhang2026multimodel}. Anghel et al. also present rubric-guided procedures to improve transparency and consistency in LLM evaluation \cite{anghel2025courseevalai}. Complementary compiler-front-end work such as BoostPolyGlot highlights diagnostic behaviors under fuzz testing \cite{liu2025boostpolyglot}, motivating our emphasis on obfuscation and prompt-control when assessing parser error-message clarity with LLMs.
+
 \section{Conclusion and Future Work}
 Our work demonstrates that 
 LLM-as-a-judge approach could be used to evaluate clarity of parser error messages,
@@ -874,7 +878,7 @@ as only the mid-sized 12B variant of Gemma 3 model exhibited the desired behavio
 while both smaller 8B and larger 32B variants did not.
 Overly sophisticated and overly specialized models, as well as overly small models,
 seem to struggle with mitigating the prior-knowledge dominance problem.
-Human analogy may be novices may have hard time understanding the information
+By analogy to human participants, novices may have difficulty understanding the information
 provided by the error message, while extremely knowledgeable experts
 do not even need to read error messages to fix syntax errors. Therefore,
 our conjecture is that there may be a sweet spot in model capacity for
@@ -903,7 +907,7 @@ Even in our simple code snippets different obfuscation schemes affected the resu
 in clarity distinction metrics. Good obfuscation schemes and prompt designs
 may vary depending on the code snippets and types of syntax errors.
 Automating these steps would make our approach more practical
-or real-world applications, where a wide variety of code snippets
+for real-world applications, where a wide variety of code snippets
 and error messages need to be evaluated efficiently.
     
 Overall, our work opens up new possibilities for leveraging LLMs
