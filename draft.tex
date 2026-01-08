@@ -861,8 +861,20 @@ the provided error message becomes the primary signal.
 The last direction of model-editing work suggests a complementary path
 if parser-facing LLM judges must operate without input obfuscation.
 
-% TODO re confirm and revise may be needed
-Beyond prior-knowledge mitigation, recent studies have examined the reliability and robustness of LLM-as-a-judge methodologies across domains. Anghel et al. diagnose bias and instability in LLM evaluators and propose a scalable pairwise meta-evaluator \cite{anghel2025diagnosing}. Vasilev et al. validate LLM-as-a-judge workflows for medical text summarization \cite{vasilev2026llmasjudge}, while Keith analyzes coherence judgments made by LLMs \cite{keith2025llmjudge}. Zhang et al. introduce multi-model judgment frameworks for safety-centered evaluation without ground truth \cite{zhang2026multimodel}. Anghel et al. also present rubric-guided procedures to improve transparency and consistency in LLM evaluation \cite{anghel2025courseevalai}. Complementary compiler-front-end work such as BoostPolyGlot highlights diagnostic behaviors under fuzz testing \cite{liu2025boostpolyglot}, motivating our emphasis on obfuscation and prompt-control when assessing parser error-message clarity with LLMs.
+\subsection{LLM-as-a-Judge Reliability and Evaluation Frameworks}
+Beyond prior-knowledge mitigation, recent studies have examined the reliability and robustness of LLM-as-a-judge methodologies across domains.
+Anghel et al.~\cite{anghel2025diagnosing} diagnose bias and instability in LLM evaluators, identifying positional bias and ranking inconsistencies that are critical when using LLMs to assess parser diagnostics.
+Their scalable pairwise meta-evaluator framework provides validation techniques applicable to our clarity distinction metric.
+Vasilev et al.~\cite{vasilev2026llmasjudge} validate LLM-as-a-judge workflows for medical text summarization, demonstrating that such approaches can produce reliable assessments when properly controlled—a finding that supports our task-performance-based evaluation strategy.
+Keith~\cite{keith2025llmjudge} analyzes coherence judgments made by LLMs, addressing concerns about whether LLM judges truly understand semantic content or merely pattern-match, which is directly relevant to our obfuscation strategy.
+Zhang et al.~\cite{zhang2026multimodel} introduce multi-model judgment frameworks for safety-centered evaluation without ground truth, suggesting that ensemble approaches could further improve robustness of parser error message assessment.
+Anghel et al.~\cite{anghel2025courseevalai} present rubric-guided procedures to improve transparency and consistency in LLM evaluation, though our work deliberately avoids explicit rubrics due to the lack of well-defined clarity criteria for parser error messages.
+
+\subsection{Compiler Diagnostics and Input Robustness}
+Complementary work on compiler front-ends and LLM robustness provides context for our obfuscation approach.
+Liu et al.~\cite{liu2025boostpolyglot} develop BoostPolyGlot, a fuzz testing framework for GCC compiler frontend that highlights how parsers behave under malformed and obfuscated inputs, motivating our emphasis on obfuscation as a control mechanism.
+Their work demonstrates that compiler diagnostic quality varies significantly with input complexity, supporting our hypothesis that obfuscation can reveal differences in error message informativeness.
+This connection between adversarial input testing and diagnostic quality assessment reinforces our methodological choice to use obfuscated syntax when evaluating parser error-message clarity with LLMs.
 
 \section{Conclusion and Future Work}
 Our work demonstrates that 
