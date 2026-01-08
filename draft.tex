@@ -45,10 +45,9 @@
 
 % Author Orchid ID: enter ID or remove command
 \newcommand{\orcidauthorA}{0000-0002-7171-7979} % Add \orcidA{} behind the author's name
-%\newcommand{\orcidauthorB}{0000-0000-0000-000X} % Add \orcidB{} behind the author's name
 
 % Authors, for the paper (add full first names)
-\Author{Ki Yung Ahn $^{1}$\orcidA{}, Firstname Lastname $^{2}$ and Firstname Lastname $^{2,}$*}
+\Author{Ki Yung Ahn $^{1}$\orcidA{}}
 
 %\longauthorlist{yes}
 
@@ -57,11 +56,10 @@
 
 % Affiliations / Addresses (Add [1] after \address if there is only one affiliation.)
 \address{%
-$^{1}$ \quad Affiliation 1; kya@hnu.kr\\
-$^{2}$ \quad Affiliation 2; e-mail@e-mail.com}
+$^{1}$ \quad Hannam University, Daejeon, Republic of Korea; kya@hnu.kr}
 
 % Contact information of the corresponding author
-\corres{Correspondence: kya@hnu.kr; Tel.: (optional; include country code; if there are multiple corresponding authors, add author initials) +xx-xxxx-xxx-xxxx (K.Y.A.)}
+\corres{Correspondence: kya@hnu.kr; Tel.: +82-10-2287-3608 (KY.A.)}
 
 % Current address and/or shared authorship
 %\firstnote{Current address: Affiliation.}  
@@ -90,9 +88,9 @@ $^{2}$ \quad Affiliation 2; e-mail@e-mail.com}
 It is widely accepted that top-down parsers
 (LL-based, recursive descent) tend to produce
 clearer error messages than bottom-up parsers
-(LR-based, table-driven).  Qualitative explanation
-why this is the case can be found in many college level textbooks
-\cite{AhoSethiUllman2006,CooperTorczon2011,Louden1997};
+(LR-based, table-driven).  Qualitative explanation on the difference
+in error message clarity can be found in many college level textbooks
+\cite{AhoSethiUllman2006,CooperTorczon2011,Louden1997}:
 errors are detected earlier and have clearer syntactic context
 in top-down parsers than in bottom-up parsers.
 
@@ -101,7 +99,7 @@ due to the difficulty of performing controlled studies.
 Traditional approach would involve human surveys where
 participants are shown code snippets with syntax errors
 along with error messages produced by different parsers.
-Human survey tends to be costly and time-consuming. More crucially,
+Human surveys tend to be costly and time-consuming. More crucially,
 it is extremely difficult to select appropriate participants
 for the purpose of the study. A mixture of beginners and experts would
 likely lead to noisy results. Even if we can select participants with
@@ -140,22 +138,22 @@ Our contributions are as follows:
 \item
 We identify the prior-knowledge dominance problem of using
 LLMs as judges for evaluating parser error message clarity,
-and propose obfuscation of input code snippets to mitigate the problem.
+and propose obfuscation of input code snippets to mitigate the problem (see Section~\ref{subsec:baseline-obfuscation}).
 \item
 We design a controlled experiment to prove the concept
 that an LLM judge can evaluate the clarity of error messages,
-by comparing the performance of the LLM judge for the baseline case
-of distinguishing informative and uninformative error messages.
+by comparing the performance of the LLM judge for
+an informative error messages against
+the baseline performance for the worst error messages (see Section~\ref{sec:experiment-design}).
 \item
-We perform the designed experiment with smaller LLM models
-that could run in stand-alone local environments,
-which makes our results highly reproducible
-even on ordinary personal computing resources.
+We perform the designed experiment mainly using smaller LLM models
+that could run in stand-alone local environments, which makes our results
+highly reproducible on ordinary personal computing resources (see Section~\ref{subsec:gemma-codegemma}).
 \item
 We also performed the same experiment with GPT-5.2 models
 to compare the results with larger LLM models to see the effect of
 model size and advanced iterative thinking capability
-on the evaluation of error message clarity.
+on the evaluation of error message clarity (see Section~\ref{subsec:gpt52}).
 \end{itemize}
 
 \section{Background}
@@ -213,7 +211,7 @@ between different parsers.  More specifically, parsers producing
 error messages that lead to higher accuracy in fixing syntax errors
 for the LLM judge would be considered to provide clearer error messages.
 
-\subsection{Setting the Baseline with Obfuscated Inputs}
+\subsection{Setting the Baseline with Obfuscated Inputs}\label{subsec:baseline-obfuscation}
 When evaluating error message clarity, there is an obvious baseline for
 the worst, that is, the most unclear error message, which provides
 information no other than the fact that there exists an error.
@@ -251,7 +249,7 @@ By obfuscating the terminal symbols in this way,
 we expect that the LLM judge would be less likely to apply its prior knowledge
 and would rely more on the information provided in the error message.
 
-\section{Experiment Design}
+\section{Experiment Design}\label{sec:experiment-design}
 
 The aim for our experiment is to establish baseline
 for the syntax error message reporting a mismatched closing curly brace.
@@ -385,7 +383,7 @@ Gemma 3 \cite{gemma2025} models (4B, 12B, and 27B)
 and CodeGemma \cite{codegemma2024} models (2B, 7B, and 7B-instruct)
 using the Ollama \cite{ollama} framework. 
 
-\subsection{Experiments over Gemma 3 and CodeGemma Model Variants:}
+\subsection{Experiments over Gemma 3 and CodeGemma Model Variants:}\label{subsec:gemma-codegemma}
 We ran experiments over several variants of
 Gemma 3 models (4B, 12B, and 27B) and
 CodeGemma models (2B, 7B, and 7B-instruct)
@@ -416,7 +414,7 @@ the clarity of error messages for any language variants including
 distinguish the clarity of error messages for the \emph{brace-lang}
 variant either. They simply could not produce correct fixes.
 
-\subsection{Experiments over GPT-5.2 Model Variants}
+\subsection{Experiments over GPT-5.2 Model Variants}\label{subsec:gpt52}
 We also tried with GPT-5.2 Instant and Thinking
 (via \url{chatgpt.com} as of early Jan 2026) with the same prompts.
 In general, GPT-5.2 models produced more diverse outputs
