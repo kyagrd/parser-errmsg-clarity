@@ -9,12 +9,11 @@
 # -interaction=nonstopmode: don't stop on errors
 # draft.tex: the main LaTeX file
 paper:
-	latexmk -pdf -shell-escape -interaction=nonstopmode draft.tex
+	latexmk -pdf -shell-escape -interaction=nonstopmode -f draft.tex
 
 # Clean auxiliary files
 clean:
 	latexmk -C draft.tex
-	rm -rf _minted-draft
 	rm -f *.bbl *.run.xml
 
 parser:
