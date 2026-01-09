@@ -976,7 +976,7 @@ The shell script for running multiple trials with Ollama CLI is shown below.
 
 # ===================== CONFIGURATION =====================
 # Change the model here whenever needed
-MODEL="gemma3:12b"              # ← Modify this line (e.g. qwen2.5:32b, llama3.1:70b, etc)
+MODEL="gemma3:12b"              # Modify this line (e.g. qwen2.5:32b, llama3.1:70b, etc)
 
 OLLAMA_CMD="ollama run $MODEL"
 # =========================================================
@@ -1037,7 +1037,7 @@ for ((i=0; i<N; i++)); do
     echo "[${current}/${N}] Generating ${output_file}..."
 
     # Current setting: stderr is NOT redirected
-    # → ollama progress bars, loading animations, etc. will appear on the terminal screen
+    # ollama progress bars, loading animations, etc. will appear on the terminal screen
     $OLLAMA_CMD < "$INPUT_FILE" > "$output_file"
 
     # === Optional: ways to handle stderr ===
