@@ -1,0 +1,24 @@
+Dear Editor-in-Chief of Computers,
+
+We are submitting our manuscript entitled "Towards LLM-as-a-Judge for Parser Error Clarity: A Controlled Baseline Study with Obfuscated Inputs" for consideration for publication in Computers.
+
+This manuscript addresses a significant challenge in compiler diagnostics evaluation: how to objectively assess parser error message clarity without human bias or prior knowledge contamination. While it is widely accepted that top-down parsers produce clearer error messages than bottom-up parsers, quantitative analysis has been limited due to the difficulty of performing controlled studies. Traditional human surveys are costly, time-consuming, and suffer from participant bias related to their varying exposure to programming languages and compiler implementations.
+
+Our work proposes a novel LLM-as-a-judge approach with input obfuscation to mitigate the prior-knowledge dominance problem. We demonstrate that by obfuscating terminal symbols in code snippets, certain LLM models can effectively distinguish between informative and uninformative parser error messages based on their performance in fixing syntax errors. Our controlled experiments with multiple LLM variants (Gemma 3, CodeGemma, and GPT-5.2) establish a baseline methodology that is reproducible on ordinary personal computing resources.
+
+This research fits well within the scope of Computers, particularly in the areas of software engineering, programming languages, and artificial intelligence applications. The work bridges automated evaluation techniques with compiler diagnostics, offering practical implications for parser design and quality assessment. Our findings contribute to the growing body of research on LLM-as-a-judge methodologies while addressing a long-standing challenge in compiler evaluation.
+
+We confirm that this manuscript has not been previously submitted to any MDPI journals.
+
+We confirm that neither the manuscript nor any parts of its content are currently under consideration for publication with or published in another journal.
+
+All authors have approved the manuscript and agree with its submission to Computers.
+
+Thank you for considering our manuscript. We look forward to your response.
+
+Sincerely,
+
+Ki Yung Ahn
+Hannam University
+Daejeon, Republic of Korea
+kya@hnu.kr

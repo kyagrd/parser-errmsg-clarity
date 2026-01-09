@@ -72,7 +72,24 @@ $^{1}$ \quad Hannam University, Daejeon, Republic of Korea; kya@hnu.kr}
 
 %\conference{} % An extended version of a conference paper
 
-\abstract{We study the possibility of judging parser error-message clarity with LLMs despite their prior-knowledge bias that masks differences between informative and uninformative error messages. The problem matters because without controlling this bias, LLM-based evaluations over-credit parsers for more commonly used syntax even when messages are unclear. We obfuscate terminal symbols related to syntax errors and measure correction accuracy difference for the informative error message and the baseline uninformative error message, handled by several LLMs (Gemma 3 and CodeGemma variants, GPT-5.2 Instant/Thinking) under prompts pairing code snippets and their error messages. Only certain model variants (Gemma 3 12B and GPT 5.2 variants) were able to exhibit the desired clarity-driven performance differences for obfuscated inputs, indicating that input obfuscation could be a practical lever for LLM-as-judge assessments of parser diagnostics, but model selection is crucial.}
+\abstract{%
+We study the possibility of judging parser error-message clarity with LLMs
+despite their prior-knowledge bias that masks differences between
+informative and uninformative error messages. The problem matters because
+without controlling this bias, LLM-based evaluations over-credit parsers for
+more commonly used syntax even when messages are unclear.
+We obfuscate terminal symbols related to syntax errors and measure differences
+in correction accuracy for the informative error message and for the baseline
+uninformative error message. When the prompts pairing code snippets and their
+error messages are provided to several LLMs (Gemma 3 and CodeGemma variants,
+GPT-5.2 Instant/Thinking). Only certain model variants (Gemma 3 12B and
+GPT 5.2 variants) were able to exhibit the desired performance differences for
+obfuscated inputs, indicating that input obfuscation could be a practical lever
+for LLM-as-judge assessments of parser diagnostics; although, for practical
+tooling close to the push-button level user experience, room for future work
+is plentiful, including obfuscation strategy, prompt adjustment, and
+adequate LLM model selection.%
+}
 
 \keyword{LLM-as-a-judge; parser error messages; input obfuscation; compiler diagnostics; automated evaluation}
 
@@ -85,75 +102,81 @@ $^{1}$ \quad Hannam University, Daejeon, Republic of Korea; kya@hnu.kr}
 
 \section{Introduction}
 
-It is widely accepted that top-down parsers
-(LL-based, recursive descent) tend to produce
-clearer error messages than bottom-up parsers
-(LR-based, table-driven).  Qualitative explanation on the difference
-in error message clarity can be found in many college level textbooks
+It is widely accepted that top-down parsers (LL-based, recursive descent)
+tend to produce clearer error messages than bottom-up parsers (LR-based, table-driven).
+Qualitative explanation on the difference in error message clarity
+can be found in many college level textbooks
 \cite{AhoSethiUllman2006,CooperTorczon2011,Louden1997}:
 errors are detected earlier and have clearer syntactic context
 in top-down parsers than in bottom-up parsers.
 
-Quantitative analysis on this aspect, however, has been limited
-due to the difficulty of performing controlled studies.
-Traditional approach would involve human surveys where
-participants are shown code snippets with syntax errors
-along with error messages produced by different parsers.
-Human surveys tend to be costly and time-consuming. More crucially,
-it is extremely difficult to select appropriate participants
-for the purpose of the study. A mixture of beginners and experts would
-likely lead to noisy results. Even if we can select participants with
-similar years of programming experience, there could still be bias from
-the different exposure to the specific programming language syntax
+Quantitative analysis on such aspect, however, has been limited due to
+the difficulty of performing controlled studies. Evaluating which parser
+implementations produce clearer error messages for a specific language syntax
+may not always align with the general quantitative characteristics of parser types.
+Carefully crafted bottom-up parsers could produce clearer error messages than
+some poorly designed top-down parsers for specific implementations.
+Traditional evaluation approach would involve human surveys where participants
+are shown code snippets with syntax errors along with different sets of
+error messages produced by different parsers. Human surveys tend to be costly
+and time-consuming. More crucially, it is extremely difficult to select
+a group of appropriate participants for the purpose of the study. A mixture of
+beginners and experts would likely lead to noisy results. Even if we can select
+participants with similar years of programming experience, there could still be
+bias from the different exposure to the specific programming language syntax
 and compiler implementations.
 
 In this work, we consider an LLM-as-a-judge approach to perform
 a controlled study to evaluate the clarity of error messages.
-Using LLMs clearly reduces the cost and time compared to
-human surveys. More importantly, we can ensure that the judge has
-uniform experience on every experiment because what LLM has learned
-is fixed at the time of training. However, LLMs are also biased
-from the exposure to existing programming language syntax and
-compiler implementations. This bias of LLMs could be
-even more problematic for the evaluation than human participants,
-because the tendency to ``best guess'' from the trained knowledge
-often seems to dominate the behavior LLMs exhibit.
-To mitigate this bias, we propose to obfuscate the inputs by
-replacing the terminal symbols of the language with some other symbols,
+Using LLMs clearly reduces the cost and time compared to human surveys.
+More importantly, we can ensure that the judge has uniform experience on
+every experiment because what LLM has learned is fixed at the time of training.
+However, LLMs are also biased from the exposure to existing language and their
+implementations. This bias of LLMs could be even more problematic for evaluating
+clarity of error messages than the bias of human participants, because LLMs
+tend to ``best guess'' from the trained knowledge. In our work, we found that
+prior knowledge of LLMs often seem to dominate their behavior when they try to
+fix syntax errors. When the syntax of the code snippet is similar to
+existing programming languages, LLMs tend to fix syntax errors mostly by
+applying their prior knowledge, virtually ignoring the information provided
+in the error messages. To mitigate this bias, we propose to obfuscate the inputs
+by replacing the terminal symbols of the language with some other symbols,
 in order to reduce the effect of prior knowledge of the LLM judge.
 
-Our thesis is that by reducing the effect of prior knowledge,
-the clarity of error messages could have more impact on
-the performance of the LLM judge in fixing syntax errors.
-We design and perform an experiment to show that there exists
-an LLM judge where our thesis holds, for the very baseline case
-of error message clarity, that is, distinguishing between
+Our thesis is that by reducing the effect of prior knowledge, the clarity of
+error messages could have more impact on the performance of the LLM judge
+attempting to fix syntax errors. We design and perform an experiment
+to show that there exists an LLM judge where our thesis holds,
+for the most basic problem of error message clarity. What we consider as
+the most basic problem of error message clarity is the distinction between
 an informative error message and the worst uninformative error message.
-More specifically, our experiment demonstrates that well-chosen
-obfuscation could enable an LLM judge to distinguish the difference
-in error message clarity, at least for the baseline case.
+More specifically, our experiment demonstrates that well-chosen obfuscation
+could enable an LLM judge to distinguish the difference in error message clarity,
+at least for the most basic cases.
 
 Our contributions are as follows:
 \begin{itemize}
 \item
-We identify the prior-knowledge dominance problem of using
-LLMs as judges for evaluating parser error message clarity,
-and propose obfuscation of input code snippets to mitigate the problem (see Section~\ref{subsec:baseline-obfuscation}).
+We identify the prior-knowledge dominance problem of using LLMs as judges for
+evaluating parser error message clarity, and propose obfuscation of
+input code snippets to mitigate the problem
+(Section~\ref{subsec:baseline-obfuscation}).
 \item
-We design a controlled experiment to prove the concept
-that an LLM judge can evaluate the clarity of error messages,
-by comparing the performance of the LLM judge for
-an informative error messages against
-the baseline performance for the worst error messages (see Section~\ref{sec:experiment-design}).
+We design a controlled experiment to prove the concept that an LLM judge can
+evaluate the clarity of error messages, by comparing the performance of
+the LLM judge for handing an informative error messages against
+the baseline performance of handling the worst error messages
+(Section~\ref{sec:experiment-design}).
 \item
-We perform the designed experiment mainly using smaller LLM models
-that could run in stand-alone local environments, which makes our results
-highly reproducible on ordinary personal computing resources (see Section~\ref{subsec:gemma-codegemma}).
+We perform the designed experiment mainly using smaller LLM models that could
+run in stand-alone local environments, which makes our result highly
+reproducible on ordinary personal computing resources
+(Section~\ref{subsec:gemma-codegemma}).
 \item
 We also performed the same experiment with GPT-5.2 models
 to compare the results with larger LLM models to see the effect of
 model size and advanced iterative thinking capability
-on the evaluation of error message clarity (see Section~\ref{subsec:gpt52}).
+on the evaluation of error message clarity (Section~\ref{subsec:gpt52}).
 \end{itemize}
 
 \section{Background}
@@ -369,13 +392,13 @@ also adjusted accordingly for each language variant.
 \end{table}
 
 \section{Experiment Execution and Results}
-
 For each prompt, 50 trials are performed. There is one prompt for
 each combination of language variant and error message quality.
 That is, 100 trials for each language variant, 50 with informative
 error message and 50 with the worst error message, are performed.
 For each LLM model variants, total of 300 trials are performed for
 the three language variants.
+The shell script for running multiple trials with Ollama CLI is shown in Appendix~\ref{app:run-script}.
 We note that preliminary experiments with 25 trials per condition yielded proportionally consistent results, suggesting that the 50-trial sample size is adequate to capture the clarity distinction metric reliably.
 
 We ran experiments over several variants of
@@ -759,7 +782,14 @@ Such intermediate step of "thinking" is in fact observable
 when using GPT-5.2 Thinking model through the ChatGPT website.
 
 We suspect the reason for this is that the larger and sophisticated models
-are able to explore more possibilities for fixing syntax errors.
+are able to explore more possibilities for fixing syntax errors. As a result,
+they were able to consider various interpretations of the obfuscated symbols
+based on their usage in existing programming languages. This sometimes
+led to correct fixes even with the worst error message, raising the baseline
+performance. However, this also meant that they were more likely to
+be influenced by their prior knowledge when the obfuscated symbols
+had specific meanings in existing programming languages, leading to
+incorrect fixes even with informative error messages.
 
 \subsubsection{Why code-specialized CodeGemma model variants did not perform well?}
 One interesting aspect in our result is that the specialized models
@@ -860,19 +890,28 @@ The last direction of model-editing work suggests a complementary path
 if parser-facing LLM judges must operate without input obfuscation.
 
 \subsection{LLM-as-a-Judge Reliability and Evaluation Frameworks}
-Beyond prior-knowledge mitigation, recent studies have examined the reliability and robustness of LLM-as-a-judge methodologies across domains.
-Anghel et al.~\cite{anghel2025diagnosing} diagnose bias and instability in LLM evaluators, identifying positional bias and ranking inconsistencies that are critical when using LLMs to assess parser diagnostics.
-Their scalable pairwise meta-evaluator framework provides validation techniques applicable to our clarity distinction metric.
-Vasilev et al.~\cite{vasilev2026llmasjudge} validate LLM-as-a-judge workflows for medical text summarization, demonstrating that such approaches can produce reliable assessments when properly controlled—a finding that supports our task-performance-based evaluation strategy.
-Keith~\cite{keith2025llmjudge} analyzes coherence judgments made by LLMs, addressing concerns about whether LLM judges truly understand semantic content or merely pattern-match, which is directly relevant to our obfuscation strategy.
-Zhang et al.~\cite{zhang2026multimodel} introduce multi-model judgment frameworks for safety-centered evaluation without ground truth, suggesting that ensemble approaches could further improve robustness of parser error message assessment.
-Anghel et al.~\cite{anghel2025courseevalai} present rubric-guided procedures to improve transparency and consistency in LLM evaluation, though our work deliberately avoids explicit rubrics due to the lack of well-defined clarity criteria for parser error messages.
-
-\subsection{Compiler Diagnostics and Input Robustness}
-Complementary work on compiler front-ends and LLM robustness provides context for our obfuscation approach.
-Liu et al.~\cite{liu2025boostpolyglot} develop BoostPolyGlot, a fuzz testing framework for GCC compiler frontend that highlights how parsers behave under malformed and obfuscated inputs, motivating our emphasis on obfuscation as a control mechanism.
-Their work demonstrates that compiler diagnostic quality varies significantly with input complexity, supporting our hypothesis that obfuscation can reveal differences in error message informativeness.
-This connection between adversarial input testing and diagnostic quality assessment reinforces our methodological choice to use obfuscated syntax when evaluating parser error-message clarity with LLMs.
+Beyond prior-knowledge mitigation, recent studies have examined the reliability
+and robustness of LLM-as-a-judge methodologies across domains.
+Anghel et al.~\cite{anghel2025diagnosing} diagnose bias and instability in
+LLM evaluators, identifying positional bias and ranking inconsistencies
+that are critical when using LLMs to assess parser diagnostics.
+Their scalable pairwise meta-evaluator framework provides validation techniques
+that might be applicable to our clarity distinction metric.
+Vasilev et al.~\cite{vasilev2026llmasjudge} validate LLM-as-a-judge workflows
+for medical text summarization, demonstrating that such approaches can produce
+reliable assessments when properly controlled -- a finding that supports our
+task-performance-based evaluation strategy.
+Keith~\cite{keith2025llmjudge} analyzes coherence judgments made by LLMs,
+addressing concerns about whether LLM judges truly understand semantic content
+or merely pattern-match, which is directly relevant to our obfuscation strategy.
+Zhang et al.~\cite{zhang2026multimodel} introduce multi-model judgment frameworks
+for safety-centered evaluation without ground truth, suggesting that ensemble
+approaches could further improve robustness, but further study is needed for
+whether this would be applicable to parser error message assessment.
+Anghel et al.~\cite{anghel2025courseevalai} present rubric-guided procedures
+to improve transparency and consistency in LLM evaluation, though our work
+deliberately avoids explicit rubrics due to the lack of well-defined
+clarity criteria for parser error messages.
 
 \section{Conclusion and Future Work}
 Our work demonstrates that 
@@ -924,6 +963,96 @@ Overall, our work opens up new possibilities for leveraging LLMs
 in the domain of programming language tooling, particularly
 in enhancing the usability of parsers through better error messages.
 
+\appendixtitles{no} % Leave argument "no" if all appendix headings stay EMPTY (then no dot is printed after "Appendix A"). If the appendix sections contain a heading then change the argument to "yes".
+\appendixstart
+\appendix
+\section[\appendixname~\thesection]{}
+\label{app:run-script}
+The shell script for running multiple trials with Ollama CLI is shown below.
+\begin{lstlisting}[language=bash,breaklines=true]
+#!/bin/bash
+# File: run_manytimes.sh
+# Usage:  ./run_manytimes.sh  "input.txt"  "output_prefix"  50
+
+# ===================== CONFIGURATION =====================
+# Change the model here whenever needed
+MODEL="gemma3:12b"              # ← Modify this line (e.g. qwen2.5:32b, llama3.1:70b, etc)
+
+OLLAMA_CMD="ollama run $MODEL"
+# =========================================================
+
+# Check required arguments
+if [ $# -lt 3 ]; then
+    echo "Usage: $0  INPUT_FILE  OUTPUT_PREFIX  NUMBER_OF_RUNS"
+    echo ""
+    echo "  INPUT_FILE      : prompt file to feed to ollama"
+    echo "  OUTPUT_PREFIX   : prefix for output files (will add 00,01,02...)"
+    echo "  NUMBER_OF_RUNS  : how many times to run (1~100)"
+    echo ""
+    echo "Current model: $MODEL"
+    echo ""
+    echo "Examples:"
+    echo "  ./run_manytimes.sh  sqbracket1.txt          sqbracket1          50"
+    echo "  ./run_manytimes.sh  prompts/math.txt        math-result-v1      30"
+    exit 1
+fi
+
+INPUT_FILE="$1"
+OUTPUT_PREFIX="$2"
+N_INPUT="$3"
+
+# Force N to be a proper integer (fixes counter display issue)
+if ! [[ "$N_INPUT" =~ ^[0-9]+$ ]]; then
+    echo "Error: NUMBER_OF_RUNS must be a positive integer (got: '$N_INPUT')"
+    exit 1
+fi
+
+N=$((10#$N_INPUT))
+
+if [ "$N" -lt 1 ] || [ "$N" -gt 100 ]; then
+    echo "Error: NUMBER_OF_RUNS must be between 1 and 100"
+    exit 1
+fi
+
+# Check if input file exists
+if [ ! -f "$INPUT_FILE" ]; then
+    echo "Error: Input file '$INPUT_FILE' does not exist"
+    exit 1
+fi
+
+echo "Starting batch run:"
+echo "  Model           : $MODEL"
+echo "  Input file      : $INPUT_FILE"
+echo "  Output files    : ${OUTPUT_PREFIX}00 ~ ${OUTPUT_PREFIX}$(printf "%02d" $((N-1)))"
+echo "  Total runs      : $N times"
+echo "----------------------------------------"
+
+for ((i=0; i<N; i++)); do
+    num=$(printf "%02d" "$i")
+    output_file="${OUTPUT_PREFIX}${num}"
+
+    # Explicit integer calculation for current count (more reliable in some bash environments)
+    current=$((i + 1))
+
+    echo "[${current}/${N}] Generating ${output_file}..."
+
+    # Current setting: stderr is NOT redirected
+    # → ollama progress bars, loading animations, etc. will appear on the terminal screen
+    $OLLAMA_CMD < "$INPUT_FILE" > "$output_file"
+
+    # === Optional: ways to handle stderr ===
+    # 1. Suppress all stderr (no progress bars):    $OLLAMA_CMD < "$INPUT_FILE" > "$output_file" 2>/dev/null
+    # 2. Save stderr to file:                       $OLLAMA_CMD < "$INPUT_FILE" > "$output_file" 2>"${output_file}.err"
+    # 3. Capture everything:                        $OLLAMA_CMD < "$INPUT_FILE" &> "${output_file}.full"
+
+done
+
+echo "----------------------------------------"
+echo "Batch completed!"
+echo "Created $N files using model: $MODEL"
+echo "Files: ${OUTPUT_PREFIX}00 ~ ${OUTPUT_PREFIX}$(printf "%02d" $((N-1)))"
+echo "Quick check: ls -1 ${OUTPUT_PREFIX}*"
+\end{lstlisting}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %\isPreprints{}{% This command is only used for ``preprints''.
