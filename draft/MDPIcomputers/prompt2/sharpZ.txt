@@ -1,0 +1,21 @@
+Fix the syntax error in the code below using ONLY the error message, without using the pre-trained knowledge.
+
+Error message:
+syntax error
+
+Code:
+```
+int x = 5 int y = 6#
+```
+
+Output ONLY the fixed code inside the triple backquote code block.
+Note the syntax of the code above may be DIFFERENT from C-like languages.
+So do not fix the code assuming it is a C-like language, unless you are
+very sure, from the error message and the code above, it is actually
+a C-like syntax. Make MINIMAL CHANGES to the code to fix the syntax error
+and make it a TOP PRIOROTY to use the information of the the error message.
+FIRST try to fix the error only using symbols that either directly appear
+or suggested in the error message.
+VERY IMPORTANT: DO NOT USE symbols from C-like syntax to fix the syntax error
+unless it is suggested by the error message, or you have high confidence that
+the syntax of the code is definitively C-like.

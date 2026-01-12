@@ -1,0 +1,11 @@
+Fix the syntax error in the code below using ONLY the error message, without using the pre-trained knowledge.
+
+Error message:
+syntax error
+
+Code:
+```
+INT x = 5 INT y = 6.
+```
+
+Output ONLY the fixed code inside the triple backquote code block

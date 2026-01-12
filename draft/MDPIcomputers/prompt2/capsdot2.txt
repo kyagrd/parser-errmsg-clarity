@@ -1,0 +1,15 @@
+Fix the syntax error in the code below using ONLY the error message, without using the pre-trained knowledge.
+
+Error message:
+expected '.' after declaration
+
+Code:
+```
+INT x = 5 INT y = 6.
+```
+
+Output ONLY the fixed code inside the triple backquote code block.
+Note that the syntax of the code above may be different from C-like languages.
+So do not fix the code assuming it is a C-like language,
+unless you are very sure from the error message and the code above is actually a C-like syntax.
+Especialliy, do not use semicolons to fix the error message unless the error message suggests to do it.
