@@ -1,0 +1,17 @@
+Thinking...
+We have code: 
+```
+if (x > 0) 《 a = 1; 》 else b = 2; 》
+```
+We need to fix syntax error using only the error message: "syntax error". The message has no content. But we have symbols that appear: maybe the angle brackets 《 and 》, parentheses. The code seems to use 《 and 》 as braces for if block. But the else missing closing? They have 》 after else? Actually code: `if (x > 0) 《 a = 1; 》 else b = 2; 》`. There is an extra 》 at the end. The syntax likely expects matching 《 with 》. So remove the trailing 》. Also maybe else block should be wrapped with 《》? But maybe the else part can just be a single statement. So correct: 
+```
+if (x > 0) 《 a = 1; 》 else b = 2;
+```
+Also might need to close the if with 》. It's already closed. The extra 》 is removed. So output the fixed code.
+...done thinking.
+
+```
+if (x > 0) 《 a = 1; 》 else b = 2;
+```
+
+

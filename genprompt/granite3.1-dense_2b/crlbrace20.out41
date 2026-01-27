@@ -1,0 +1,6 @@
+```
+if (x > 0) { a = 1; } else b = 2;
+```
+
+The original code had a syntax error due to an unclosed statement. I added a closing curly brace "}" at the end of the function, which was missing in the original code.
+

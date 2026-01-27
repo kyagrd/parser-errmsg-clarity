@@ -1,0 +1,8 @@
+```
+if (x > 0) {
+  a = 1; // else statement closed here
+} else {
+  b = 2; // this 'else' statement is now correctly indented
+}
+```
+

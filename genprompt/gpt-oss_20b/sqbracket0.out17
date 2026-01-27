@@ -1,0 +1,21 @@
+Thinking...
+We need to fix syntax error. Code: 
+```
+if (x > 0) [ a = 1; ] else b = 2; ]
+```
+The correct syntax: if (x > 0) { a = 1; } else { b = 2; }
+Also remove extra closing bracket. So final code:
+
+```
+if (x > 0) { a = 1; } else { b = 2; }
+```
+
+Return only the code block.
+
+...done thinking.
+
+```
+if (x > 0) { a = 1; } else { b = 2; }
+```
+
+

@@ -1,0 +1,20 @@
+Thinking...
+We need to fix syntax error: unexpected ']' after else clause (if statement already closed). The code is:
+
+```
+if (x > 0) [ a = 1; ] else b = 2; ]
+```
+
+In C-like syntax, should use braces { } not brackets [ ]. Also closing bracket after else? The else part should be a block if using braces. Let's rewrite:
+
+```
+if (x > 0) { a = 1; } else { b = 2; }
+```
+
+Also remove stray closing ']' at end. So output code.
+...done thinking.
+
+```
+if (x > 0) { a = 1; } else { b = 2; }
+```
+

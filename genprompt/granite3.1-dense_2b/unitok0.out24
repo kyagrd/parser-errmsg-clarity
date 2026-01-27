@@ -1,0 +1,10 @@
+Here is the corrected code using only the provided error message and without pre-trained knowledge:
+
+```
+if (x > 0) {
+  a = 1;
+} else {
+  b = 2;
+}
+```
+

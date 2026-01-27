@@ -1,0 +1,31 @@
+Thinking...
+We need to fix the syntax error. The code:
+
+```
+if (x > 0) [ a = 1; ] else b = 2; ]
+```
+
+Observations: It uses brackets [ ] instead of curly braces or nothing. Also unmatched bracket at end. Should be:
+
+```
+if (x > 0) { a = 1; } else { b = 2; }
+```
+
+But maybe the original intention was simple single statements: `if (x > 0) a = 1; else b = 2;`. Without braces. And remove stray bracket.
+
+Thus fixed code:
+
+```
+if (x > 0) a = 1; else b = 2;
+```
+
+Or if braces needed: `if (x > 0) { a = 1; } else { b = 2; }`. Use minimal change: remove brackets and stray ].
+
+Thus answer: output code block.
+
+...done thinking.
+
+```c
+if (x > 0) a = 1; else b = 2;
+```
+

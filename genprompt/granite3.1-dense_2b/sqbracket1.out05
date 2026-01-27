@@ -1,0 +1,12 @@
+Here is the corrected code:
+
+```
+if (x > 0) {
+  a = 1;
+} else {
+  b = 2;
+}
+```
+
+The correction involves removing the extra closing bracket ']' that was present outside the if statement. In JavaScript, you need to use curly braces {} to indicate the start and end of an if block, so I replaced the [ brackets with {} instead.
+

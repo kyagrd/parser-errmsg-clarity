@@ -1,0 +1,24 @@
+Thinking...
+We need to fix syntax error using only error message. But we have code: 
+```
+if (x > 0) [ a = 1; ] else b = 2; ]
+```
+In C-like languages, if condition uses parentheses, then statement block uses braces {} not brackets []. Also missing braces after else? The code has mismatched brackets: uses [ and ]. Also stray closing bracket at end. Should use braces and semicolons properly: 
+```
+if (x > 0) { a = 1; } else { b = 2; }
+```
+But they might allow single statements without braces. But still bracket usage is wrong. So fix: replace [ with { and ] with } accordingly. Also remove extra closing bracket at end. So final code:
+```
+if (x > 0) { a = 1; } else { b = 2; }
+```
+Yes.
+
+Return only code block.
+
+...done thinking.
+
+```
+if (x > 0) { a = 1; } else { b = 2; }
+```
+
+

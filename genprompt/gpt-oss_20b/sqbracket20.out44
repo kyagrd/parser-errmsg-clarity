@@ -1,0 +1,39 @@
+Thinking...
+We need to fix syntax error. Code:
+
+```
+if (x > 0) [ a = 1; ] else b = 2; ]
+```
+
+There's mismatched brackets and semicolons. Probably we should use parentheses and braces or correct brackets. Use error message syntax? The error message is just "syntax error". We cannot use pre-trained knowledge. We can try to correct by replacing [ ] with { } or parentheses.
+
+Given code uses parentheses for condition: if (x > 0) [ a = 1; ] else b = 2; ]
+
+We need to remove the last bracket. So final code:
+
+```
+if (x > 0) [ a = 1; ] else b = 2;
+```
+
+But also mismatched brackets: opening [ before a, closing ] after a ; but then else b = 2; then a stray ]. The stray at end. So remove final ]. Also maybe need semicolon after else part? else b = 2; is fine. So final:
+
+```
+if (x > 0) [ a = 1; ] else b = 2;
+```
+
+But maybe also need closing bracket for the if block? There's opening [ before a and closing ] after a ; so that matches. So okay.
+
+Thus answer is:
+
+```
+if (x > 0) [ a = 1; ] else b = 2;
+```
+
+But they said use symbols that appear in error message? error message just "syntax error" no symbols. We can just fix. Provide code.
+
+...done thinking.
+
+``` 
+if (x > 0) [ a = 1; ] else b = 2;
+```
+

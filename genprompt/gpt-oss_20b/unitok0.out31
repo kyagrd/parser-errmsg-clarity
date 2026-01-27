@@ -1,0 +1,19 @@
+Thinking...
+We have a code snippet with syntax errors. They used some non-standard brackets (like 《 and 》). The error message is "syntax error". We need to fix the syntax error using only the error message, without pre-trained knowledge. That means we cannot rely on knowledge of languages but only the error message "syntax error" implies something wrong. We should produce a corrected code. The code is presumably in some language like C-like syntax. So correct code should be:
+
+if (x > 0) a = 1; else b = 2;
+
+Thus inside triple backticks. The instructions: Output ONLY the fixed code inside triple backquote code block. So I will output:
+
+```
+if (x > 0) a = 1; else b = 2;
+```
+
+That's it.
+...done thinking.
+
+```
+if (x > 0) a = 1; else b = 2;
+```
+
+

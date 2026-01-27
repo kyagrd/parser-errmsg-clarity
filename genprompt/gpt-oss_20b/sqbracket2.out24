@@ -1,0 +1,20 @@
+Thinking...
+We need to output only the fixed code. The error: unexpected ']' after else clause (if statement already closed). The code: 
+```
+if (x > 0) [ a = 1; ] else b = 2; ]
+```
+We need to fix by removing the unexpected ']' at the end, or correct syntax. The instruction: use only error message, without using pre-trained knowledge. Use symbols that appear in error message. The error message says 'unexpected ']' after else clause (if statement already closed)'. So remove the last ']' after else clause. Probably also need correct braces? But we only remove last bracket.
+
+Original: if (x > 0) [ a = 1; ] else b = 2; ]
+
+Remove last bracket: 
+```
+if (x > 0) [ a = 1; ] else b = 2;
+```
+That seems to be the fixed code. No need to modify else part. Output code in triple backticks.
+...done thinking.
+
+```
+if (x > 0) [ a = 1; ] else b = 2;
+```
+

@@ -1,0 +1,10 @@
+```
+if (x > 0) @ a = 1; # else b = 2; #
+```
+
+The error message suggests that there is an unexpected "#" after the "else" clause, which indicates that the if statement is already closed. In this context, there's no closing semicolon for the if condition and the following line should be a standalone statement or the end of an expression, not part of another conditional block. Therefore, I've removed the hash symbol to fix the syntax error:
+
+```
+if (x > 0) @ a = 1; else b = 2; #
+```
+

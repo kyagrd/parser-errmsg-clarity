@@ -1,0 +1,20 @@
+Thinking...
+We need to fix syntax error using only the error message? "syntax error" is not helpful. But we can just provide a fixed code. The code has an if with parentheses but uses brackets for block. In Python, if expects a colon and indentation. But it's probably JavaScript? It uses parentheses for condition and braces for block. But uses square brackets incorrectly. Also mismatched brackets. The correct code in JavaScript: 
+```
+if (x > 0) { a = 1; } else { b = 2; }
+```
+If Python: 
+```
+if x > 0:
+    a = 1
+else:
+    b = 2
+```
+Given the original uses parentheses and semicolons, likely JavaScript. Provide fixed code in triple backticks.
+...done thinking.
+
+```javascript
+if (x > 0) { a = 1; } else { b = 2; }
+```
+
+

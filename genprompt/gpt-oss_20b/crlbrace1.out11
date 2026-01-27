@@ -1,0 +1,21 @@
+Thinking...
+We need to fix syntax error: unexpected '}' after else clause. Code:
+
+```
+if (x > 0) { a = 1; } else b = 2; }
+```
+
+The else clause is missing braces. Also there is an extra closing brace at end. So correct code: remove extra '}' or add braces. Usually:
+
+```
+if (x > 0) { a = 1; } else { b = 2; }
+```
+
+So output code only.
+...done thinking.
+
+```
+if (x > 0) { a = 1; } else { b = 2; }
+```
+
+

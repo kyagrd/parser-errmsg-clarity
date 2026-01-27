@@ -1,0 +1,14 @@
+Thinking...
+We need to fix syntax error. Provided code:
+
+```
+if (x > 0) [ a = 1; ] else b = 2; ]
+```
+
+They say syntax may differ. The error message is just "syntax error". We must use only the error message, without pre-trained knowledge. But we can fix obvious syntax: maybe the brackets are wrong. For many languages, if-else uses braces {} or parentheses. They used [ and ]. The syntax error likely due to mismatched brackets. We have if (x > 0) [ a = 1; ] else b = 2; ]. There's an extra closing bracket at end. Also the else part missing brackets or braces. Use matching brackets: if (x > 0) [ a = 1; ] else [ b = 2; ]. Also remove extra trailing bracket. So code: if (x > 0) [ a = 1; ] else [ b = 2; ]. That should fix. Let's output inside triple backquotes.
+...done thinking.
+
+``` 
+if (x > 0) [ a = 1; ] else [ b = 2; ]
+```
+

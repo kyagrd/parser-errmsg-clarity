@@ -1,0 +1,15 @@
+Thinking...
+We have code: `if (x > 0) [ a = 1; ] else b = 2; ]`. There's an unexpected ']' after else clause. Likely correct syntax would be: `if (x > 0) [ a = 1; ] else [ b = 2; ]`. We need to use symbols from error message: ']' after else clause, if statement already closed. So we remove extra ']' and add missing '[' before else. So output:
+
+```
+if (x > 0) [ a = 1; ] else [ b = 2; ]
+```
+
+No more.
+...done thinking.
+
+```
+if (x > 0) [ a = 1; ] else [ b = 2; ]
+```
+
+

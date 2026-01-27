@@ -1,0 +1,10 @@
+The error is caused by using a multi-line string as an expression, which cannot contain 'else' keyword. To fix this, remove the triple backticks and use a regular if statement:
+
+```
+if (x > 0) {
+  a = 1;
+} else {
+  b = 2;
+}
+```
+

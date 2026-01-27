@@ -1,0 +1,10 @@
+```python
+if (x > 0) {
+    a = 1;
+} else {
+    b = 2;
+}
+```  
+
+(Note: The solution assumes a C-like syntax due to the use of curly braces. Adjustments were made by adding an opening brace `{` after `else` and removing the extraneous closing brace `}` at the end.)
+

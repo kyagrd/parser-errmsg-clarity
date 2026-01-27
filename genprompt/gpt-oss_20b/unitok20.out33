@@ -1,0 +1,20 @@
+Thinking...
+We need to fix syntax error. The code:
+
+```
+if (x > 0) 《 a = 1; 》 else b = 2; 》
+```
+
+It uses symbols 《 and 》 to open and close statements? The error message just says "syntax error". They say use symbols that appear in the error message if available. But error message only says syntax error. We can change the symbols to match typical language. But they want using only error message? It's ambiguous. Probably we replace 《 and 》 with curly braces or parentheses. The code should be:
+
+```
+if (x > 0) { a = 1; } else { b = 2; }
+```
+
+Thus output the fixed code inside triple backticks.
+...done thinking.
+
+```
+if (x > 0) { a = 1; } else { b = 2; }
+```
+

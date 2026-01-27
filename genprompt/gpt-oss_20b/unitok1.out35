@@ -1,0 +1,31 @@
+Thinking...
+We have to fix syntax error. Code:
+
+```
+if (x > 0) 《 a = 1; 》 else b = 2; 》
+```
+
+We need to use only the error message. It says unexpected '》' after else clause (if statement already closed). The error indicates that the '》' characters are incorrect syntax, maybe they should be curly braces or parentheses. We likely need to replace 《 and 》 with { and }. So:
+
+```
+if (x > 0) { a = 1; } else b = 2;
+```
+
+But else clause usually needs braces for single statement: else { b = 2; }. But the original code had else b = 2; maybe that's okay. However braces are required for multiple statements but we have single statement, it's fine.
+
+The error message says unexpected '》' after else clause (if statement already closed). So we need to close else block properly. So use curly braces for both blocks. So final code:
+
+```
+if (x > 0) { a = 1; } else { b = 2; }
+```
+
+Make sure no other syntax errors.
+
+Return only fixed code block.
+...done thinking.
+
+```cpp
+if (x > 0) { a = 1; } else { b = 2; }
+```
+
+

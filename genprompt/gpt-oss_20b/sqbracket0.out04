@@ -1,0 +1,28 @@
+Thinking...
+The task: fix syntax error using ONLY the error message, without pre-trained knowledge. But we are ChatGPT; we have knowledge but we must not rely on pre-trained knowledge? The instruction says "using ONLY the error message, without using the pre-trained knowledge." This might mean we need to infer what error is. But we can still propose a fixed code.
+
+The code: 
+```
+if (x > 0) [ a = 1; ] else b = 2; ]
+```
+The syntax: In many languages like JavaScript/C/C++/Python? The snippet seems like C/C++/JavaScript. Should be:
+
+```
+if (x > 0) { a = 1; } else { b = 2; }
+```
+
+But original used square brackets and mismatched brackets. Also missing braces. Provide fixed code inside triple backticks.
+
+Thus answer: 
+```
+if (x > 0) { a = 1; } else { b = 2; }
+```
+
+Return only code block.
+...done thinking.
+
+```c
+if (x > 0) { a = 1; } else { b = 2; }
+```
+
+

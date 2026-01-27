@@ -1,0 +1,23 @@
+Thinking...
+We need to fix syntax error: "unexpected ']' after else clause (if statement already closed)". Code:
+
+```
+if (x > 0) [ a = 1; ] else b = 2; ]
+```
+
+We must fix. The syntax: typical C/Java/JavaScript uses braces { }, not brackets. So we need to replace [ ] with {} and adjust. Also the final ']' after else should be removed. So correct code: 
+
+```
+if (x > 0) { a = 1; } else { b = 2; }
+```
+
+Alternatively, we could keep else body on single line without braces: `else b = 2;`. But original used brackets. So fix: replace [ with { and ] with }. Also remove trailing ]. So final.
+
+We should output ONLY the fixed code inside triple backticks.
+...done thinking.
+
+```c
+if (x > 0) { a = 1; } else { b = 2; }
+```
+
+

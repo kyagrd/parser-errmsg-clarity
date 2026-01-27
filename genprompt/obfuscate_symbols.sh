@@ -112,18 +112,21 @@ validate_symbols SYMBOLS_FROM SYMBOLS_TO
 # Process the YAML file line by line
 in_errmsg=0
 in_code=0
+in_more=0
 
 while IFS= read -r line; do
     # Check for section markers
     if [[ "$line" == "---" ]]; then
         in_errmsg=0
         in_code=0
+        in_more=0
         echo "$line"
     elif [[ "$line" =~ ^[a-zA-Z_]+:.*$ ]]; then
         # Any field with colon (errmsg:, code:, more:, etc.)
         # Reset flags first
         in_errmsg=0
         in_code=0
+        in_more=0
         
         # Then set appropriate flag and replace if needed
         if [[ "$line" == "errmsg:"* ]]; then
@@ -138,11 +141,17 @@ while IFS= read -r line; do
             for i in "${!SYMBOLS_FROM[@]}"; do
                 line=$(echo "$line" | sed "s/${SYMBOLS_FROM[$i]}/${SYMBOLS_TO[$i]}/g")
             done
+        elif [[ "$line" == "more:"* ]]; then
+            in_more=1
+            # Apply all symbol replacements
+            for i in "${!SYMBOLS_FROM[@]}"; do
+                line=$(echo "$line" | sed "s/${SYMBOLS_FROM[$i]}/${SYMBOLS_TO[$i]}/g")
+            done
         fi
         echo "$line"
     else
-        # If we're inside errmsg or code section, replace symbols
-        if [ $in_errmsg -eq 1 ] || [ $in_code -eq 1 ]; then
+        # If we're inside errmsg, code, or more section, replace symbols
+        if [ $in_errmsg -eq 1 ] || [ $in_code -eq 1 ] || [ $in_more -eq 1 ]; then
             # Apply all symbol replacements
             for i in "${!SYMBOLS_FROM[@]}"; do
                 line=$(echo "$line" | sed "s/${SYMBOLS_FROM[$i]}/${SYMBOLS_TO[$i]}/g")

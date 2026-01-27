@@ -1,0 +1,22 @@
+Thinking...
+We need to fix syntax error: code shows:
+
+```
+if (x > 0) [ a = 1; ] else b = 2; ]
+```
+
+We need to use only error message to fix: unexpected ']' after else clause (if statement already closed). So we remove stray brackets and semicolons.
+
+Proper syntax in C-like: if (x > 0) { a = 1; } else { b = 2; }
+
+But maybe we want minimal changes: replace '[' with '{', ']' with '}'. Also the trailing ']' at end should be removed.
+
+So corrected code: `if (x > 0) { a = 1; } else { b = 2; }`. Provide inside triple backquotes.
+
+...done thinking.
+
+```c
+if (x > 0) { a = 1; } else { b = 2; }
+```
+
+

@@ -1,0 +1,20 @@
+Thinking...
+We have code snippet: 
+```
+if (x > 0) @ a = 1; # else b = 2; #
+```
+
+Goal: fix syntax error using only error message. The error message is "syntax error" (no details). So we need to make code syntactically correct. Use standard C/C++/Java? Looks like C-like syntax. The problematic characters: `@` and `#`. In C/C++, `#` starts a preprocessor directive, but here it's used inside code. Also `@` is not valid. So need to replace `@` with something. Maybe it should be `=` or `==`. The code is intended to set a or b. It might be a mistake: `if (x > 0) @ a = 1; # else b = 2; #`. We need a valid if statement: `if (x > 0) a = 1; else b = 2;`. That's correct. So remove `@` and `#`. Also remove trailing #. So final code: `if (x > 0) a = 1; else b = 2;`. But the code snippet shows a comment? If they intended comment, we can use `//`. But we are asked to fix syntax error only. So we output corrected code in triple backquotes.
+
+Thus output: 
+```
+if (x > 0) a = 1; else b = 2;
+```
+
+Return that only.
+...done thinking.
+
+```c
+if (x > 0) a = 1; else b = 2;
+```
+

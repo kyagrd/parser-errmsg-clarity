@@ -1,0 +1,8 @@
+```
+if (x > 0) {
+  a = 1; // else statement needs to be on the same line as its condition
+} else {
+  b = 2;
+}
+```
+

@@ -1,0 +1,29 @@
+Thinking...
+The user wants to fix syntax error. They want to use only the error message, but that's ambiguous. But we should output the fixed code. The code is:
+
+```
+if (x > 0) 《 a = 1; 》 else b = 2; 》
+```
+
+Looks like they used Chinese brackets 《 》 instead of braces or parentheses. In C-like syntax, should be:
+
+```
+if (x > 0) { a = 1; } else { b = 2; }
+```
+
+But maybe the original is JavaScript or Python? In Python if you want to do single-line then you'd use colon. But they used parentheses. This looks like a C/C++/Java style. So use braces.
+
+Thus final code:
+
+```
+if (x > 0) { a = 1; } else { b = 2; }
+```
+
+We output only code block.
+...done thinking.
+
+```c
+if (x > 0) { a = 1; } else { b = 2; }
+```
+
+

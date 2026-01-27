@@ -1,0 +1,20 @@
+Thinking...
+We need to fix syntax error using only error message? The error message is just "syntax error". The code is:
+
+```
+if (x > 0) 《 a = 1; 》 else b = 2; 》
+```
+
+It uses Chinese brackets "《" and "》". Replace with curly braces or proper syntax: `if (x > 0) { a = 1; } else { b = 2; }`. Or maybe use parentheses. The correct syntax:
+
+```
+if (x > 0) { a = 1; } else { b = 2; }
+```
+
+Yes. Provide output only fixed code inside triple backticks.
+...done thinking.
+
+```
+if (x > 0) { a = 1; } else { b = 2; }
+```
+

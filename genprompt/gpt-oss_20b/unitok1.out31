@@ -1,0 +1,21 @@
+Thinking...
+We need to fix syntax error using only the error message: "unexpected '》' after else clause (if statement already closed)". Code is:
+
+```
+if (x > 0) 《 a = 1; 》 else b = 2; 》
+```
+
+It uses Chinese brackets 《》 as tokens incorrectly. Should be if (x > 0) { a = 1; } else { b = 2; }? But error says else clause after if already closed. So the first '》' after a = 1; indicates closing bracket incorrectly. So we replace 《 with { and 》 with } accordingly. Also the trailing '》' after else b = 2; is an error. Should close the block. So final:
+
+```
+if (x > 0) { a = 1; } else { b = 2; }
+```
+
+We need output ONLY the fixed code inside triple backticks.
+...done thinking.
+
+```cpp
+if (x > 0) { a = 1; } else { b = 2; }
+```
+
+

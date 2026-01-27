@@ -1,0 +1,23 @@
+Thinking...
+We need to fix syntax error using only error message, but we can analyze. Code:
+
+```
+if (x > 0) @ a = 1; # else b = 2; #
+```
+
+Probably language is some C-like? Syntax error because of '@' and '#' comment char? In C, comment starts with // or /* */. '#' not comment. '@' not valid. So remove '@' and comments. Use proper else syntax:
+
+```
+if (x > 0) a = 1; else b = 2;
+```
+
+Add semicolons. So final code.
+
+We need to output only the fixed code inside triple backquotes.
+...done thinking.
+
+```c
+if (x > 0) a = 1; else b = 2;
+```
+
+

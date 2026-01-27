@@ -1,0 +1,23 @@
+Thinking...
+We need to fix syntax error using only the error message. But we can guess the error is that they used Chinese brackets 《 and 》 instead of braces or parentheses. Also they didn't use proper syntax for if statement. It should be:
+
+```
+if (x > 0) {
+  a = 1;
+} else {
+  b = 2;
+}
+```
+
+But we need to output only fixed code inside triple backquotes. Also they used a semicolon after a = 1; within the brackets. So final code: `if (x > 0) { a = 1; } else { b = 2; }`.
+
+Return only that inside triple backticks.
+
+Let's do.
+...done thinking.
+
+```
+if (x > 0) { a = 1; } else { b = 2; }
+```
+
+

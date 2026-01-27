@@ -1,0 +1,13 @@
+Thinking...
+We have to fix syntax error in code: "if (x > 0) { a = 1; } else b = 2; }". There's an extra closing brace at the end. Also maybe the else block missing braces? But that's okay; else b = 2; is fine. So remove last }.
+
+The fixed code: `if (x > 0) { a = 1; } else b = 2;`
+
+Return only code block.
+...done thinking.
+
+```c
+if (x > 0) { a = 1; } else b = 2;
+```
+
+

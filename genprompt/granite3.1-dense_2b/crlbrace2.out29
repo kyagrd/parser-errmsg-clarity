@@ -1,0 +1,6 @@
+```
+if (x > 0) { a = 1; } else b = 2;
+```
+
+The error occurred due to the unclosed parentheses in the original code. I've removed those, as they were not necessary and caused the syntax error. The corrected code is now properly formatted with an if statement that sets variable 'a' to 1 when condition 'x > 0' is true, and a separate block for 'else', which sets variable 'b' to 2.
+

@@ -1,0 +1,25 @@
+Thinking...
+We have a code snippet:
+
+```
+if (x > 0) 《 a = 1; 》 else b = 2; 》
+```
+
+They use some special characters: 《 and 》. In C-like syntax, if statement uses braces {}. So the error message: unexpected '》' after else clause (if statement already closed). We need to replace those symbols with proper braces.
+
+Thus correct code:
+
+```
+if (x > 0) { a = 1; } else { b = 2; }
+```
+
+That's it.
+
+We output ONLY the fixed code inside triple backquote code block. No explanation.
+...done thinking.
+
+```
+if (x > 0) { a = 1; } else { b = 2; }
+```
+
+

@@ -1,0 +1,30 @@
+Thinking...
+We have to fix syntax error using only the error message, without using pre-trained knowledge. The error message is "syntax error". Code:
+
+```
+if (x > 0) 《 a = 1; 》 else b = 2; 》
+```
+
+It uses some weird characters "《" "》". The correct syntax should be:
+
+```
+if (x > 0) { a = 1; } else { b = 2; }
+```
+
+Also parentheses. So the fixed code is that. The output should only be the fixed code inside triple backticks.
+
+Thus:
+
+```
+if (x > 0) { a = 1; } else { b = 2; }
+```
+
+Check: In C/Java style.
+
+Thus produce final.
+...done thinking.
+
+```c
+if (x > 0) { a = 1; } else { b = 2; }
+```
+

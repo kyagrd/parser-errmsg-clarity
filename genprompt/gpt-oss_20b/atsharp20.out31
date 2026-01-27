@@ -1,0 +1,8 @@
+Thinking...
+We need to fix syntax error using ONLY error message "syntax error". Can't use prior knowledge. But we need to produce corrected code. We don't know language; code uses parentheses, @ symbol, semicolons, comments. The syntax error likely due to "@" after condition. Perhaps correct is "if (x > 0) { a = 1; } else { b = 2; }". Use braces. Let's output that.
+...done thinking.
+
+```
+if (x > 0) { a = 1; } else { b = 2; }
+```
+

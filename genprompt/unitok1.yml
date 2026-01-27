@@ -1,0 +1,8 @@
+---
+errmsg: unexpected '》' after else clause (if statement already closed)
+---
+code: |
+  if (x > 0) 《 a = 1; 》 else b = 2; 》
+---
+more: 
+---

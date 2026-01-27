@@ -1,0 +1,21 @@
+Thinking...
+We have to fix syntax error. We see code: 
+```
+if (x > 0) [ a = 1; ] else b = 2; ]
+```
+We have stray brackets. Probably intended:
+```
+if (x > 0) { a = 1; } else { b = 2; }
+```
+or in C? Use braces. Also remove stray closing ]. So final code block: 
+```
+if (x > 0) { a = 1; } else { b = 2; }
+```
+Return that.
+...done thinking.
+
+```c
+if (x > 0) { a = 1; } else { b = 2; }
+```
+
+

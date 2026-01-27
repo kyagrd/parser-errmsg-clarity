@@ -1,0 +1,31 @@
+Thinking...
+We need to fix syntax error. The error message: unexpected ']' after else clause (if statement already closed). The code has mismatched brackets.
+
+Original code: 
+```
+if (x > 0) [ a = 1; ] else b = 2; ]
+```
+The syntax uses '[' instead of '{' and mismatched closing brackets. In JavaScript, if statements use {} or no braces if single statement. But the code uses [ ... ] incorrectly.
+
+Also the else clause missing braces. There's an extra ']' at end.
+
+We need to output only fixed code inside triple backticks. Use correct syntax.
+
+So we can rewrite as:
+
+```
+if (x > 0) { a = 1; } else { b = 2; }
+```
+
+That's the fixed code.
+
+Ensure we output only code block, nothing else.
+
+Let's produce.
+...done thinking.
+
+```javascript
+if (x > 0) { a = 1; } else { b = 2; }
+```
+
+

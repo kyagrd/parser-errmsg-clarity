@@ -1,0 +1,13 @@
+Thinking...
+We need to fix syntax error. The code uses Chinese brackets 《》. Also if syntax: `if (x > 0) a = 1; else b = 2;` but parentheses wrong? Should be `if (x > 0) a = 1; else b = 2;`. Actually assignment statements need semicolons. So code: 
+```
+if (x > 0) a = 1; else b = 2;
+```
+But maybe need curly braces? Not required. Just change brackets. So final answer inside triple backticks.
+
+...done thinking.
+
+```c
+if (x > 0) a = 1; else b = 2;
+```
+

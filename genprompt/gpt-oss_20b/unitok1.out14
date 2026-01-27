@@ -1,0 +1,12 @@
+Thinking...
+The task: fix syntax error. The code has Chinese brackets 《 》 used as delimiters instead of braces. The error says unexpected '》' after else clause (if statement already closed). So we need to rewrite with proper syntax using braces or just semicolons. Use if (x > 0) { a = 1; } else { b = 2; }.
+
+Return only fixed code inside triple backticks. No additional text.
+...done thinking.
+
+```
+if (x > 0) { a = 1; } else { b = 2; }
+```
+
+
+

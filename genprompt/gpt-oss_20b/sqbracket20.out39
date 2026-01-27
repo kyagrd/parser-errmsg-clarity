@@ -1,0 +1,22 @@
+Thinking...
+We need to fix syntax error. Code: 
+```
+if (x > 0) [ a = 1; ] else b = 2; ]
+```
+We must only use error message symbols? The error message is "syntax error". That contains no symbols. But maybe we can infer that brackets mismatched. The code uses '[' for if body and ']' at end. It should be using parentheses? Usually if (cond) { ... } else { ... }.
+
+So correct: if (x > 0) { a = 1; } else { b = 2; }.
+
+But we must only use symbols that appear in the error message? The error message has no symbols. So no restriction? Possibly we can use only symbols that appear in error message? But since none, we can use any. Let's just output corrected code.
+
+Thus:
+
+```
+if (x > 0) { a = 1; } else { b = 2; }
+```
+...done thinking.
+
+``` 
+if (x > 0) { a = 1; } else { b = 2; } 
+```
+

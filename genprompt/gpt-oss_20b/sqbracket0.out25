@@ -1,0 +1,29 @@
+Thinking...
+We need to fix syntax error in given code using only error message (syntax error). The code:
+
+```
+if (x > 0) [ a = 1; ] else b = 2; ]
+```
+
+We need to correct syntax. It's a typical if statement in many languages like C or Java. The correct syntax: if (x > 0) { a = 1; } else { b = 2; }
+
+But note that else part missing braces. Also the closing bracket ']' at end is wrong.
+
+So fix: if (x > 0) { a = 1; } else { b = 2; }
+
+Also need semicolons after assignments.
+
+Thus final code:
+
+```
+if (x > 0) { a = 1; } else { b = 2; }
+```
+
+Return only code inside triple backticks.
+...done thinking.
+
+```
+if (x > 0) { a = 1; } else { b = 2; }
+```
+
+

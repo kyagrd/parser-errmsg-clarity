@@ -1,0 +1,10 @@
+```
+if (x > 0) @a = 1; # else b = 2; #
+```
+
+The provided code does not contain a syntax error as indicated by the error message. The syntax appears to be correct for languages like C, Java, or Python. However, if we were to assume there was a missing colon (:) in the condition block due to the error message's context, the fixed code would be:
+
+```
+if (x > 0) { @a = 1; } else { b = 2; }
+```
+

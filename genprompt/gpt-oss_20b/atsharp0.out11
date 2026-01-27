@@ -1,0 +1,22 @@
+Thinking...
+We need to fix syntax error. We must use only error message? Actually instructions: "Fix the syntax error in the code below using ONLY the error message, without using the pre-trained knowledge." We just have error message: "syntax error". So we have to guess? They likely want to correct the syntax of a C-like code: `if (x > 0) @ a = 1; # else b = 2; #`. This is invalid. In C/C++ or similar languages, the syntax for if else: `if (x > 0) { a = 1; } else { b = 2; }`. The '@' and '#' are wrong. So we replace with braces and else clause.
+
+Thus the fixed code: 
+```
+if (x > 0) {
+    a = 1;
+} else {
+    b = 2;
+}
+```
+We need to output only the fixed code inside triple backticks. So let's do that.
+...done thinking.
+
+```
+if (x > 0) {
+    a = 1;
+} else {
+    b = 2;
+}
+```
+

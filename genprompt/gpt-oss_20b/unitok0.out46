@@ -1,0 +1,20 @@
+Thinking...
+We have a code snippet:
+
+```
+if (x > 0) 《 a = 1; 》 else b = 2; 》
+```
+
+The error message is "syntax error". They ask to fix the syntax error using ONLY the error message, without using pre-trained knowledge. So we must interpret that we cannot rely on external knowledge, only the error message? But we can still guess typical syntax issues. The snippet uses Chinese quotation marks 《 and 》, maybe that is wrong. Should use curly braces or parentheses? Probably the correct syntax in many languages (like JavaScript or C) is:
+
+```
+if (x > 0) { a = 1; } else { b = 2; }
+```
+
+So we can produce that. Use triple backticks. The answer: just the fixed code. Provide the fixed code inside triple backquotes. No explanation. Use the same code block formatting. Ok.
+...done thinking.
+
+```
+if (x > 0) { a = 1; } else { b = 2; }
+```
+

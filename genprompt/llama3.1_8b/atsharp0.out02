@@ -1,0 +1,11 @@
+```python
+if x > 0:
+    @a = 1 # else b = 2;
+else: 
+    b = 2
+
+# or if you want to use a conditional expression:
+
+result = 1 if x > 0 else 2
+```
+

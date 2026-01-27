@@ -1,0 +1,6 @@
+Here is the corrected code, assuming it's written in JavaScript:
+
+```javascript
+if (x > 0) { a = 1; } else { b = 2; }
+```
+

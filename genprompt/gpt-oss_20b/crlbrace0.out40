@@ -1,0 +1,29 @@
+Thinking...
+We need to fix syntax error. Code is:
+
+```
+if (x > 0) { a = 1; } else b = 2; }
+```
+
+We see mismatch braces. There is an extra '}' at end. Also else statement missing braces around 'b = 2'. Should be:
+
+```
+if (x > 0) { a = 1; } else { b = 2; }
+```
+
+Also we need to remove stray '}'.
+
+Thus final code:
+
+```
+if (x > 0) { a = 1; } else { b = 2; }
+```
+
+Return only that inside triple backticks.
+...done thinking.
+
+```c
+if (x > 0) { a = 1; } else { b = 2; }
+```
+
+

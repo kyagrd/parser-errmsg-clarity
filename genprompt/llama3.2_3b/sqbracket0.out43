@@ -1,0 +1,5 @@
+```c
+if (x > 0) {a = 1;} else b = 2;
+```
+Note: The error message "syntax error" suggests that the issue is with the semicolon after `x > 0`, and the closing bracket was misplaced, causing a syntax error.
+

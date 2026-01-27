@@ -1,0 +1,34 @@
+Thinking...
+The user wants to fix syntax error, using ONLY the error message (just "syntax error") and no pre-trained knowledge. They want output only the fixed code inside triple backquote code block. So we need to provide corrected code.
+
+Original code:
+```
+if (x > 0) 《 a = 1; 》 else b = 2; 》
+```
+We need to correct syntax. The angle brackets used incorrectly: Chinese angle brackets 《 》 used instead of parentheses or braces.
+
+We need to produce a proper if statement.
+
+Correct code could be:
+
+```
+if (x > 0) { a = 1; } else { b = 2; }
+```
+
+Alternatively could use single line: if (x > 0) a = 1; else b = 2;
+
+But they used brackets for grouping, so we need braces. So final code:
+
+```
+if (x > 0) { a = 1; } else { b = 2; }
+```
+
+We need to output only that inside triple backticks.
+
+Let's do that.
+...done thinking.
+
+```c
+if (x > 0) { a = 1; } else { b = 2; }
+```
+

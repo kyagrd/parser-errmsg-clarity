@@ -1,0 +1,21 @@
+Thinking...
+We need to correct syntax error. The original code: 
+```
+if (x > 0) [ a = 1; ] else b = 2; ]
+```
+Observations: Using square brackets instead of curly braces or parentheses. Also mismatched brackets. Also missing semicolons maybe. We need to produce correct syntax. Could be C style: `if (x > 0) { a = 1; } else { b = 2; }`. Provide fixed code block.
+
+Also note there's an extra closing bracket `]` at end. Remove it. So final code:
+
+```
+if (x > 0) { a = 1; } else { b = 2; }
+```
+
+Return only the fixed code inside triple backquotes.
+...done thinking.
+
+```c
+if (x > 0) { a = 1; } else { b = 2; }
+```
+
+

@@ -1,0 +1,32 @@
+Thinking...
+The user wants to fix a syntax error. The code:
+
+```
+if (x > 0) 《 a = 1; 》 else b = 2; 》
+```
+
+It uses weird brackets 《 and 》. Should be:
+
+```
+if (x > 0) { a = 1; } else { b = 2; }
+```
+
+But also the semicolons and braces. Likely the syntax is in some language like JavaScript or C. The error message just says "syntax error". We need to use only the error message, without pre-trained knowledge. But we can produce the corrected code.
+
+Thus final output: code block with fixed code.
+
+Let's output:
+
+```
+if (x > 0) { a = 1; } else { b = 2; }
+```
+
+That is all.
+...done thinking.
+
+```
+if (x > 0) { a = 1; } else { b = 2; }
+```
+
+
+

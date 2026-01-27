@@ -1,0 +1,10 @@
+```
+if (x > 0) a = 1; # else b = 2; #
+```
+
+The provided code has a syntax error due to the use of an undefined symbol (`@`). In this context, I will replace it with a colon (`:`) which is typically used for object literals or property assignments in languages like JavaScript. The fixed code is:
+
+```
+if (x > 0) a := 1; # else b := 2; #
+```
+

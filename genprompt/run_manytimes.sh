@@ -8,12 +8,14 @@ MODEL="gemma3:12b"              # Default model (e.g. qwen2.5:32b, llama3.1:70b,
 # =========================================================
 
 # Parse options
-while getopts "m:" opt; do
+FORCE=false
+while getopts "m:f" opt; do
     case $opt in
         m)
             MODEL="$OPTARG"
-            ;;
-        \?)
+            ;;        f)
+            FORCE=true
+            ;;        \?)
             echo "Invalid option: -$OPTARG" >&2
             exit 1
             ;;
@@ -31,10 +33,11 @@ OLLAMA_CMD="ollama run $MODEL"
 
 # Check required arguments
 if [ $# -lt 3 ]; then
-    echo "Usage: $0 [-m MODEL] INPUT_FILE  OUTPUT_PREFIX  NUMBER_OF_RUNS"
+    echo "Usage: $0 [-m MODEL] [-f] INPUT_FILE  OUTPUT_PREFIX  NUMBER_OF_RUNS"
     echo ""
     echo "Options:"
     echo "  -m MODEL        : specify model to use (default: gemma3:12b)"
+    echo "  -f              : force regeneration from scratch (ignore existing files)"
     echo ""
     echo "Arguments:"
     echo "  INPUT_FILE      : prompt file to feed to ollama"
@@ -77,9 +80,69 @@ echo "  Model           : $MODEL"
 echo "  Input file      : $INPUT_FILE"
 echo "  Output files    : ${OUTPUT_PREFIX}00 ~ ${OUTPUT_PREFIX}$(printf "%02d" $((N-1)))"
 echo "  Total runs      : $N times"
+if [ "$FORCE" = true ]; then
+    echo "  Force mode      : ON (regenerating all files)"
+fi
 echo "----------------------------------------"
 
+# Find starting point: check existing output files
+start_from=0
+
+if [ "$FORCE" = false ]; then
+# Get modification time of the input file (prompt)
+INPUT_MTIME=$(stat -c %Y "$INPUT_FILE" 2>/dev/null || stat -f %m "$INPUT_FILE" 2>/dev/null)
+existing_files=()
+last_uptodate_idx=-1
 for ((i=0; i<N; i++)); do
+    num=$(printf "%02d" "$i")
+    output_file="${OUTPUT_PREFIX}${num}"
+    if [ -f "$output_file" ]; then
+        existing_files+=("$output_file")
+        # Check if file is outdated (older than input file)
+        OUTPUT_MTIME=$(stat -c %Y "$output_file" 2>/dev/null || stat -f %m "$output_file" 2>/dev/null)
+        if [ "$OUTPUT_MTIME" -lt "$INPUT_MTIME" ]; then
+            echo "  File $output_file is outdated (older than input file)"
+            # Start from the last up-to-date file (which might be incomplete)
+            # If no up-to-date files exist, start from 0
+            if [ "$last_uptodate_idx" -ge 0 ]; then
+                start_from=$last_uptodate_idx
+                echo "  Restarting from last up-to-date file (might be incomplete)"
+            else
+                start_from=0
+            fi
+            break
+        else
+            # File is up-to-date, remember this index
+            last_uptodate_idx=$i
+        fi
+    else
+        # File doesn't exist, start from here (or from last up-to-date if exists)
+        if [ "$last_uptodate_idx" -ge 0 ]; then
+            start_from=$last_uptodate_idx
+            echo "  Missing file detected, restarting from last up-to-date file (might be incomplete)"
+        else
+            start_from=$i
+        fi
+        break
+    fi
+done
+
+# If all files exist and are up-to-date, restart from the last file
+# (last file might be incomplete)
+if [ "${#existing_files[@]}" -gt 0 ] && [ "$start_from" -eq 0 ] && [ "$last_uptodate_idx" -ge 0 ]; then
+    start_from=$last_uptodate_idx
+    last_file="${existing_files[$last_uptodate_idx]}"
+    echo "  Restarting from last file: $last_file (might be incomplete)"
+fi
+
+if [ "$start_from" -gt 0 ]; then
+    echo "  Resuming from index $start_from (skipping already completed files)"
+    echo "----------------------------------------"
+fi
+
+fi  # End of if [ "$FORCE" = false ]
+
+for ((i=start_from; i<N; i++)); do
     num=$(printf "%02d" "$i")
     output_file="${OUTPUT_PREFIX}${num}"
 

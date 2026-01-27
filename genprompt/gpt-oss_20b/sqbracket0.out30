@@ -1,0 +1,23 @@
+Thinking...
+We need to fix syntax error using only error message? They say use only error message, no pre-trained knowledge? But we must output fixed code.
+
+Original code:
+
+```
+if (x > 0) [ a = 1; ] else b = 2; ]
+```
+
+We need to produce correct syntax. Possibly C-like language? Use braces. So:
+
+```
+if (x > 0) { a = 1; } else { b = 2; }
+```
+
+Also remove trailing bracket. Provide code block.
+...done thinking.
+
+```
+if (x > 0) { a = 1; } else { b = 2; }
+```
+
+

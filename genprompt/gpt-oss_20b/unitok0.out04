@@ -1,0 +1,23 @@
+Thinking...
+We need to fix syntax error only using error message. The code:
+
+```
+if (x > 0) 《 a = 1; 》 else b = 2; 》
+```
+
+Looks like using wrong brackets: 《 》 instead of {} or parentheses. Also stray closing bracket.
+
+We need to produce code:
+
+```
+if (x > 0) { a = 1; } else { b = 2; }
+```
+
+Return only the fixed code inside triple backticks.
+...done thinking.
+
+```
+if (x > 0) { a = 1; } else { b = 2; }
+```
+
+

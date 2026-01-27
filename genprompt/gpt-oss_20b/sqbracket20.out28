@@ -1,0 +1,51 @@
+Thinking...
+We have to fix the syntax error in the code using only the error message, which is simply "syntax error". No other hints. The code:
+
+```
+if (x > 0) [ a = 1; ] else b = 2; ]
+```
+
+The code uses square brackets and a stray closing bracket at end. Likely need to replace brackets with parentheses or curly braces. We cannot use pre-trained knowledge, only error message. But we can guess that error is due to mismatched brackets. So change all brackets to parentheses and remove stray bracket at end. The code likely should be:
+
+```
+if (x > 0) ( a = 1; ) else b = 2;
+```
+
+But still parentheses around statement maybe not needed? Maybe we want:
+
+```
+if (x > 0) a = 1; else b = 2;
+```
+
+But then if we use parentheses we can do:
+
+```
+if (x > 0) (a = 1;) else (b = 2;);
+```
+
+But parentheses can group statements? Let's keep simple: use parentheses for condition and braces for block.
+
+But we cannot use braces? The error message suggests syntax error due to mismatched bracket.
+
+Given that we should use only symbols in error message, "syntax error" doesn't give any symbols. But maybe we can just output a fixed code.
+
+We choose:
+
+```
+if (x > 0) [ a = 1; ] else [ b = 2; ]
+```
+
+Add brackets around else. But the stray bracket at end removed. But there is still bracket mismatch? Original had '[' after if, ']' after a=1; then else b=2; ]. There was a closing bracket after else statement. So maybe missing opening bracket before else b=2; So fix by adding '[' before else b=2; So code:
+
+```
+if (x > 0) [ a = 1; ] else [ b = 2; ]
+```
+
+Now brackets match. That might be considered syntax correct in this invented language. Let's output that.
+
+...done thinking.
+
+``` 
+if (x > 0) [ a = 1; ] else [ b = 2; ] 
+```
+

@@ -1,0 +1,47 @@
+Thinking...
+We have error message: "syntax error". The code:
+
+```
+if (x > 0) 《 a = 1; 》 else b = 2; 》
+```
+
+They used some non-standard brackets 《 》 which is like Chinese bracket? That is causing syntax error. The correct syntax in most languages (probably C-like) would be:
+
+```
+if (x > 0) a = 1; else b = 2;
+```
+
+Alternatively include braces: `{ a = 1; } else { b = 2; }`.
+
+But we only have to fix syntax error using ONLY the error message, no pre-trained knowledge. That means we rely on error message "syntax error". We must replace 《 and 》 with standard brackets or remove them.
+
+The code block should output fixed code inside triple backticks.
+
+Probably they want:
+
+```
+if (x > 0) a = 1; else b = 2;
+```
+
+Or with braces. But they didn't use braces originally. So simplest: remove 《 and 》. The "else" part has no braces either. That is syntactically valid: a = 1; else b = 2; Wait that's not valid because you need an if statement body before else? Actually in C-like languages, you need a statement after if, then else followed by a statement. So you can have:
+
+```
+if (x > 0) a = 1; else b = 2;
+```
+
+That is valid. So just remove the special brackets.
+
+Thus output:
+
+```
+if (x > 0) a = 1; else b = 2;
+```
+
+Wrap in triple backticks.
+...done thinking.
+
+```c
+if (x > 0) a = 1; else b = 2;
+```
+
+

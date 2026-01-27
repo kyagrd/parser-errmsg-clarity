@@ -1,0 +1,10 @@
+```python
+if (x > 0) { 
+    a = 1; 
+} else { 
+    b = 2;
+}
+```  
+
+Note: Ensure to match `{` with `}` correctly and add the missing `{` after `else`.
+

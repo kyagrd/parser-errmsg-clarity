@@ -1,0 +1,17 @@
+Thinking...
+We need to fix syntax error. We only have error message 'syntax error'. The code:
+
+```
+if (x > 0) 《 a = 1; 》 else b = 2; 》
+```
+
+This seems like a non-English punctuation used instead of curly braces. The error is because the code uses 《 and 》 instead of braces. We should replace 《 and 》 with curly braces: { }. Also we need to have proper syntax: if (x > 0) { a = 1; } else { b = 2; }
+
+Thus final code block. Output ONLY the fixed code inside triple backquotes. Ensure no extra text.
+...done thinking.
+
+```
+if (x > 0) { a = 1; } else { b = 2; }
+```
+
+

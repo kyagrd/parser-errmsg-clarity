@@ -1,0 +1,29 @@
+Thinking...
+We need to fix syntax error, using only error message? It says "syntax error". We can't use pre-trained knowledge? Probably we can just provide corrected code. The code is:
+
+```
+if (x > 0) 《 a = 1; 》 else b = 2; 》
+```
+
+It seems using Chinese brackets 《 》 incorrectly. The proper syntax is:
+
+```
+if (x > 0) {
+    a = 1;
+} else {
+    b = 2;
+}
+```
+
+So output only fixed code inside triple backquotes.
+...done thinking.
+
+```cpp
+if (x > 0) {
+    a = 1;
+} else {
+    b = 2;
+}
+```
+
+

@@ -1,0 +1,12 @@
+Thinking...
+We need to produce fixed code. Problem: syntax error due to using Chinese angle brackets '《' and '》' instead of curly braces or proper block delimiters. The code: `if (x > 0) 《 a = 1; 》 else b = 2; 》`. It uses wrong punctuation. We need to correct to standard C syntax: `if (x > 0) { a = 1; } else { b = 2; }`. Use braces. Provide only the fixed code inside triple backticks. No extra commentary.
+
+Let's output: ```c
+if (x > 0) { a = 1; } else { b = 2; }
+``` Ensure no extra text.
+...done thinking.
+
+```c
+if (x > 0) { a = 1; } else { b = 2; }
+```
+

@@ -1,0 +1,28 @@
+Thinking...
+The user wants to fix syntax error using only the error message, without using pre-trained knowledge. But as ChatGPT, we should provide fixed code.
+
+The code:
+
+```
+if (x > 0) 《 a = 1; 》 else b = 2; 》
+```
+
+They used Chinese brackets 《 and 》 and a stray closing bracket. The correct syntax is:
+
+```
+if (x > 0) { a = 1; } else { b = 2; }
+```
+
+But maybe they want to just fix syntax, no curly braces? In many languages like C, Java, you need braces or single statements. Provided code uses `if (x > 0) 《 a = 1; 》 else b = 2; 》`. So just replace 《 and 》 with proper braces. Also remove the trailing `》` after else. So code:
+
+```
+if (x > 0) { a = 1; } else { b = 2; }
+```
+
+Let's output that inside triple backticks.
+...done thinking.
+
+```cpp
+if (x > 0) { a = 1; } else { b = 2; }
+```
+

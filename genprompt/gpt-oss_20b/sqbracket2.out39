@@ -1,0 +1,13 @@
+Thinking...
+We need to fix syntax error in code: `if (x > 0) [ a = 1; ] else b = 2; ]`
+
+Error: unexpected ']' after else clause (if statement already closed). The code uses brackets `[` and `]` maybe custom language uses `[` for block? The else clause likely shouldn't have `]` at the end. The if block is `[ a = 1; ]`, else block `b = 2;`. The trailing `]` after else is wrong. Also maybe missing else block brackets? But only need to remove extra bracket. So fixed code: `if (x > 0) [ a = 1; ] else b = 2;`
+
+Thus output only the fixed code inside triple backticks.
+
+...done thinking.
+
+```
+if (x > 0) [ a = 1; ] else b = 2;
+```
+

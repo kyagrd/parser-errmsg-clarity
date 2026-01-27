@@ -1,0 +1,37 @@
+Thinking...
+We need to fix syntax error. The code snippet:
+
+```
+if (x > 0) [ a = 1; ] else b = 2; ]
+```
+
+We must use only the error message to infer corrections. The error: "unexpected ']' after else clause (if statement already closed)". So there's an extra closing bracket ']' at end. Also the syntax uses square brackets incorrectly. Use curly braces or parentheses? For an if statement in many languages (C, Java, etc.) the syntax is:
+
+if (condition) statement else statement;
+
+Square brackets are not valid. So we need to replace square brackets with braces or just statements. Also remove the stray closing bracket. So corrected code could be:
+
+```
+if (x > 0) { a = 1; } else { b = 2; }
+```
+
+But if the intention is to have single statements without braces, then we could write:
+
+```
+if (x > 0) a = 1; else b = 2;
+```
+
+Better to use braces for clarity. Remove trailing ']'. So final code:
+
+```
+if (x > 0) { a = 1; } else { b = 2; }
+```
+
+The output should be only the fixed code inside triple backticks.
+...done thinking.
+
+```c
+if (x > 0) { a = 1; } else { b = 2; }
+```
+
+

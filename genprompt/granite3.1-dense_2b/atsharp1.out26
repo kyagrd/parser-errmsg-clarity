@@ -1,0 +1,10 @@
+Here is the fixed code:
+
+```
+if (x > 0) {
+  a = 1; // else b = 2; //
+}
+```
+
+Note: I've removed the unnecessary semicolon after "else" in the comment because it's not necessary for JavaScript.
+

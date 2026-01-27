@@ -1,0 +1,17 @@
+Fix the syntax error in the code below using ONLY the error message, without using the pre-trained knowledge.
+
+Error message:
+unexpected '》' after else clause (if statement already closed)
+
+Code:
+```
+if (x > 0) 《 a = 1; 》 else b = 2; 》
+
+```
+
+Output ONLY the fixed code inside the triple backquote code block.
+Note the syntax of the code above may be DIFFERENT from exsting languages,
+such as C, Java, Python, etc. Try to fix the error using symbols that
+appear in the error message, if available.
+DO NOT output your "thinking" process. ONLY output wat was asked.
+

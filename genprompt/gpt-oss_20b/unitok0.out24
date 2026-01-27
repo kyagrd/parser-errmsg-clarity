@@ -1,0 +1,17 @@
+Thinking...
+We need to fix syntax error. Provided code: 
+```
+if (x > 0) 《 a = 1; 》 else b = 2; 》
+```
+Looks like wrong brackets. Should be:
+```
+if (x > 0) { a = 1; } else { b = 2; }
+```
+We need to output only fixed code inside triple backquotes.
+...done thinking.
+
+```c
+if (x > 0) { a = 1; } else { b = 2; }
+```
+
+

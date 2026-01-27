@@ -1,0 +1,21 @@
+Thinking...
+We need to fix syntax error. Code:
+
+```
+if (x > 0) @ a = 1; # else b = 2; #
+```
+
+We only can use the error message? "syntax error" only. We must output only fixed code. The original code appears to be in a language like C? 'if (x > 0) @ a = 1; # else b = 2; #' contains invalid '@', and '#' is used as comments but incorrectly. Maybe we should use C syntax:
+
+```
+if (x > 0) a = 1; else b = 2;
+```
+
+But maybe the language is C++. So remove @ and # and put else properly. So fixed code: `if (x > 0) a = 1; else b = 2;`. Surround with triple backticks. Output only the fixed code.
+...done thinking.
+
+```c
+if (x > 0) a = 1; else b = 2;
+```
+
+

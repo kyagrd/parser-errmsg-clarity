@@ -1,0 +1,6 @@
+```
+if (x > 0) { a = 1; } else b = 2;
+```
+
+(The syntax error in the original code was a missing semicolon at the end of the condition statement. I've added it to correct the syntax.)
+

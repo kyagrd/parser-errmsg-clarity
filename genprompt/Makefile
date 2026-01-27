@@ -1,51 +1,103 @@
-.PHONY: all clean crlbrace sqbracket atsharp $(MODEL_TARGETS)
+.PHONY: all clean crlbrace sqbracket atsharp unitok
 
-# YAML 파일 목록 자동 탐색
+# Automatically find all YAML files
 YMLS := $(wildcard *.yml)
 
-# 생성할 TXT 파일 목록
+# List of TXT files to generate
 TXTS := $(YMLS:.yml=.txt)
 
 RUNS := 50
 
-# 모델 목록과 타겟 이름 매핑 (':'를 '_'로 치환해 타겟 이름으로 사용)
-MODEL_LIST := gemma3:12b gemma3:4b
+# Model list and target name mapping (replace ':' with '_' for target names)
+MODEL_LIST := \
+	codegemma:7b \
+	codegemma:7b-instruct \
+	deepseek-r1:7b \
+	gemma3:1b \
+	gemma3:4b \
+	gemma3:12b \
+	gemma3:12b-it-qat \
+	gemma3:27b-it-qat \
+	granite3.1-dense:2b \
+	granite3.1-dense:8b \
+	gpt-oss:20b \
+	llama3.2:3b \
+	llama3.1:8b \
+	mistral:7b \
+	mistral-nemo:12b \
+	phi4:14b \
+	phi4-mini:3.8b
 MODEL_TARGETS := $(subst :,_,$(MODEL_LIST))
 
-# 공통 규칙 템플릿: 각 모델별로 모든 .txt에 대해 run_manytimes 실행
+.PHONY: $(MODEL_TARGETS)
+
+# Common rule template: run run_manytimes for all .txt files per model
 define MAKE_MODEL_TARGET
+$(1)_TXTS := $(TXTS)
 $(1): MODEL_NAME := $(2)
 $(1): OUTPUT_DIR := $(1)
 $(1): $(TXTS)
 	@mkdir -p "$$(OUTPUT_DIR)"
-	@set -e; \
-	for f in $(TXTS); do \
-		base=$$$${f%.txt}; \
-		./run_manytimes.sh -m "$$(MODEL_NAME)" "$$$$f" "$$(OUTPUT_DIR)/$$$${base}.out" $(RUNS); \
-	done
-.PHONY: $(1)
+	@PARALLEL_JOBS=1; \
+	case "$$$$MAKEFLAGS" in \
+		*-j[0-9]*) PARALLEL_JOBS=$$$$(echo "$$$$MAKEFLAGS" | sed -n 's/.*-j\([0-9]\+\).*/\1/p') ;; \
+		*-j*) PARALLEL_JOBS=$$$$(nproc) ;; \
+	esac; \
+	all_pids=""; \
+	cleanup() { [ -n "$$$$all_pids" ] && kill $$$$all_pids 2>/dev/null || true; exit 1; }; \
+	trap cleanup INT TERM; \
+	set -e; \
+	if [ "$$$$PARALLEL_JOBS" -gt 1 ]; then \
+		pids=""; \
+		count=0; \
+		for f in $$($(1)_TXTS); do \
+			base=$$$${f%.txt}; \
+			./run_manytimes.sh -m "$$(MODEL_NAME)" "$$$$f" "$$(OUTPUT_DIR)/$$$${base}.out" $(RUNS) & \
+			pid=$$$$!; \
+			pids="$$$$pids $$$$pid"; \
+			all_pids="$$$$all_pids $$$$pid"; \
+			count=$$$$((count + 1)); \
+			if [ $$$$count -ge $$$$PARALLEL_JOBS ]; then \
+				wait $$$$pids || cleanup; \
+				pids=""; \
+				count=0; \
+			fi; \
+		done; \
+		[ -n "$$$$pids" ] && wait $$$$pids; \
+	else \
+		for f in $$($(1)_TXTS); do \
+			base=$$$${f%.txt}; \
+			./run_manytimes.sh -m "$$(MODEL_NAME)" "$$$$f" "$$(OUTPUT_DIR)/$$$${base}.out" $(RUNS); \
+		done; \
+	fi
 endef
 
-# 위 템플릿을 MODEL_LIST 전부에 대해 전개
+# Expand the template for all models in MODEL_LIST
 $(foreach model,$(MODEL_LIST),$(eval $(call MAKE_MODEL_TARGET,$(subst :,_,$(model)),$(model))))
 
-# 기본 타겟: 모든 txt 파일 생성
-all: $(TXTS)
+# Generate all txt files
+txt: $(TXTS)
 
-# 패턴 규칙: yml -> txt 변환
+# Default target: run make for all models in MODEL_LIST
+all: txt $(MODEL_TARGETS)
+
+# Pattern rule: yml -> txt conversion
 %.txt: %.yml template.prompt
 	mustache $< template.prompt > $@
 
-# clean 타겟
+# clean target
 clean:
 	rm -f $(TXTS)
 
-# crlbrace는 { } 기호를 그대로 사용하는 기본 타겟 yml 생성 필요없음
-crlbrace: crlbrace0.txt crlbrace1.txt
-# sqbracket 타겟: { } -> [ ] 변환 후 txt 생성
-sqbracket: sqbracket0.txt sqbracket1.txt
-# atsharp 타겟: { } -> @ # 변환 후 txt 생성
-atsharp: atsharp0.txt atsharp1.txt
+# crlbrace: use { } symbols as-is, no yml conversion needed
+crlbrace: crlbrace0.txt crlbrace1.txt crlbrace2.txt crlbrace20.txt
+# sqbracket: convert { } -> [ ] then generate txt
+sqbracket: sqbracket0.txt sqbracket1.txt sqbracket2.txt sqbracket20.txt
+# atsharp: convert { } -> @ # then generate txt
+atsharp: atsharp0.txt atsharp1.txt atsharp2.txt atsharp20.txt
+# unitok: convert { } -> 《 》 then generate txt
+unitok: unitok0.txt unitok1.txt unitok2.txt unitok20.txt
+
 
 sqbracket0.yml: crlbrace0.yml obfuscate_symbols.sh
 	./obfuscate_symbols.sh crlbrace0.yml sqbracket0.yml -s '{' '[' -s '}' ']'
@@ -53,8 +105,32 @@ sqbracket0.yml: crlbrace0.yml obfuscate_symbols.sh
 sqbracket1.yml: crlbrace1.yml obfuscate_symbols.sh
 	./obfuscate_symbols.sh crlbrace1.yml sqbracket1.yml -s '{' '[' -s '}' ']'
 
+sqbracket2.yml: crlbrace2.yml obfuscate_symbols.sh
+	./obfuscate_symbols.sh crlbrace2.yml sqbracket2.yml -s '{' '[' -s '}' ']'
+
+sqbracket20.yml: crlbrace20.yml obfuscate_symbols.sh
+	./obfuscate_symbols.sh crlbrace20.yml sqbracket20.yml -s '{' '[' -s '}' ']'
+
 atsharp0.yml: crlbrace0.yml obfuscate_symbols.sh
 	./obfuscate_symbols.sh crlbrace0.yml atsharp0.yml -s '{' '@' -s '}' '#'
 
 atsharp1.yml: crlbrace1.yml obfuscate_symbols.sh
 	./obfuscate_symbols.sh crlbrace1.yml atsharp1.yml -s '{' '@' -s '}' '#'
+
+atsharp2.yml: crlbrace2.yml obfuscate_symbols.sh
+	./obfuscate_symbols.sh crlbrace2.yml atsharp2.yml -s '{' '@' -s '}' '#'
+
+atsharp20.yml: crlbrace20.yml obfuscate_symbols.sh
+	./obfuscate_symbols.sh crlbrace20.yml atsharp20.yml -s '{' '@' -s '}' '#'
+
+unitok0.yml: crlbrace0.yml obfuscate_symbols.sh
+	./obfuscate_symbols.sh crlbrace0.yml unitok0.yml -s '{' '《' -s '}' '》'
+
+unitok1.yml: crlbrace1.yml obfuscate_symbols.sh
+	./obfuscate_symbols.sh crlbrace1.yml unitok1.yml -s '{' '《' -s '}' '》'
+
+unitok2.yml: crlbrace2.yml obfuscate_symbols.sh
+	./obfuscate_symbols.sh crlbrace2.yml unitok2.yml -s '{' '《' -s '}' '》'
+
+unitok20.yml: crlbrace20.yml obfuscate_symbols.sh
+	./obfuscate_symbols.sh crlbrace20.yml unitok20.yml -s '{' '《' -s '}' '》'

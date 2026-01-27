@@ -1,0 +1,14 @@
+Thinking...
+We have to fix syntax error using ONLY the error message, not pre-trained knowledge. Error: "unexpected '》' after else clause (if statement already closed)". So the code: 
+```
+if (x > 0) 《 a = 1; 》 else b = 2; 》
+```
+We need to replace brackets. The original code uses "《" and "》" instead of proper braces. So correct code: if (x > 0) { a = 1; } else { b = 2; }.
+
+Thus output the fixed code in triple backticks.
+...done thinking.
+
+```
+if (x > 0) { a = 1; } else { b = 2; }
+```
+
