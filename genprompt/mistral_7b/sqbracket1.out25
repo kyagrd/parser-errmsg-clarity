@@ -1,0 +1,8 @@
+ Here is the corrected version of your code:
+
+```
+if (x > 0) [ a = 1; ] else [ b = 2; ];
+```
+
+By enclosing each conditional statement in square brackets `[]`, we ensure that both blocks are properly closed. This should resolve the syntax error you encountered.
+

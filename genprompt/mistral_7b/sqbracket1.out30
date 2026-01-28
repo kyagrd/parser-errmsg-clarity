@@ -1,0 +1,8 @@
+ Here is the corrected code with the syntax error fixed:
+
+```
+if (x > 0) [ a = 1; ] else [ b = 2; ]
+```
+
+In this example, I've added square brackets around `b = 2` to make it a complete block, like the one for `a = 1`. This way, both conditions have a consistent structure.
+

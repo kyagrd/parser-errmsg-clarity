@@ -1,0 +1,8 @@
+ Here's the corrected version of your code:
+
+```
+if (x > 0) { a = 1; } else { b = 2; }
+```
+
+By wrapping both parts of the if-else statement with curly braces, we have created proper blocks that can contain multiple statements. The 'unexpected "》"' issue should now be resolved.
+

@@ -1,0 +1,8 @@
+ Here is the corrected code:
+
+```
+if (x > 0) { a = 1; } else { b = 2; }
+```
+
+The issue with the original code was that it should have been using curly braces `{}` to group statements within an if-else block, as opposed to the angle brackets `《 》`.
+

@@ -1,0 +1,8 @@
+ Here's the corrected code:
+
+```
+if (x > 0) { a = 1; } else { b = 2; }
+```
+
+The issue in your original code was that you forgot to wrap the 'else' statement with curly braces. The corrected code now includes proper indentation and syntactically correct use of both '{' and '}'.
+

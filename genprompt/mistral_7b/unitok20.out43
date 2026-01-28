@@ -1,0 +1,8 @@
+ Here's the corrected code:
+
+```
+if (x > 0) a = 1; else b = 2;
+```
+
+I removed the extra semicolon after the opening parenthesis and before the `a` assignment to fix the syntax error. The rest of the code seems fine.
+

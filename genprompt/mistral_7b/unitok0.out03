@@ -1,0 +1,8 @@
+ Here is the corrected version of your code with the syntax error fixed:
+
+```
+if (x > 0) { a = 1; } else { b = 2; }
+```
+
+The issue was that the opening and closing curly braces `{ ... }` were missing around the conditional statements, causing the syntax error.
+

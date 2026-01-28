@@ -1,0 +1,8 @@
+ Here's the corrected code:
+
+```
+if (x > 0) { a = 1; } else { b = 2; }
+```
+
+I added curly braces `{}` around the statements for both the if and else conditions, to correctly define blocks in C/C++/JavaScript. The code should now execute without any syntax errors.
+

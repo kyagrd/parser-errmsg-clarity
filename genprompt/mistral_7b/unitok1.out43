@@ -1,0 +1,8 @@
+ Here's the corrected version of your code:
+
+```
+if (x > 0) { a = 1; } else { b = 2; }
+```
+
+I used curly braces to enclose the statements for both the `if` and `else` clauses. This corrects the syntax error by grouping together related code lines, allowing the compiler to understand where each block starts and ends.
+

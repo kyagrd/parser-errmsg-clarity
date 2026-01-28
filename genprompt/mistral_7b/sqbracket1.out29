@@ -1,0 +1,8 @@
+ Here is the corrected version of the code, as requested:
+
+```
+if (x > 0) [ a = 1; ] else [ b = 2; ]
+```
+
+In the original code, the `else` statement had an extra closing bracket, which caused the syntax error. To fix this issue, I removed the unnecessary closing bracket and added another set of brackets around the code for `b = 2`.
+

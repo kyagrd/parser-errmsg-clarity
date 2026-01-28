@@ -1,0 +1,8 @@
+ Here's the corrected code:
+
+```
+if (x > 0) { a = 1 } else { b = 2 };
+```
+
+I added curly braces `{}` around the if statement to enclose both branches, and removed unnecessary characters like '》'.
+

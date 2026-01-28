@@ -1,0 +1,12 @@
+ Here's the corrected code:
+
+```
+if (x > 0) {
+    a = 1;
+} else {
+    b = 2;
+}
+```
+
+I replaced the `》` with curly braces `{}` and indentated the statements within each block using proper indentation, as well as adding a semicolon before the closing `》`. This code should now be syntactically correct.
+

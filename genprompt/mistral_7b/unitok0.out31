@@ -1,0 +1,8 @@
+ Here is the corrected code with the syntax error fixed based on the provided error message:
+
+```
+if (x > 0) { a = 1; } else { b = 2; }
+```
+
+The error was caused by missing curly braces `{}` in the if-else statement to correctly group the lines of code inside each branch.
+

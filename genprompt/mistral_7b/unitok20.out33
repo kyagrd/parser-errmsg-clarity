@@ -1,0 +1,8 @@
+ Here's the fixed code:
+
+```
+if (x > 0) { a = 1; } else { b = 2; }
+```
+
+The issue was that curly braces `{}` were missing to enclose the statements for each conditional branch.
+

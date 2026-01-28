@@ -1,0 +1,8 @@
+ Here is the corrected code:
+
+```
+if (x > 0) [ a = 1; ] else [ b = 2; ]
+```
+
+The issue was that you needed to enclose both the code blocks for if and else conditions with square brackets `[]`.
+

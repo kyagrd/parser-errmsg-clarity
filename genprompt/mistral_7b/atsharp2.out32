@@ -1,0 +1,11 @@
+ ```
+if (x > 0) @ a = 1; # else b = 2
+```
+
+To fix the code, we need to separate the 'else' and its corresponding block, as follows:
+
+```
+if (x > 0) @ a = 1;
+# else b = 2;
+```
+

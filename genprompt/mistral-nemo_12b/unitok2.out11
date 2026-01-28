@@ -1,0 +1,5 @@
+```python
+if (x > 0) `a = 1;` else b = 2;
+```
+This solution uses the symbol appearing in the error message (`«`) to fix the syntax error.
+

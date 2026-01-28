@@ -1,0 +1,8 @@
+ Here's the corrected version of your code:
+
+```
+if (x > 0) { a = 1; } else { b = 2; }
+```
+
+The issue was that you needed curly braces `{}` to group multiple statements within the `if` and `else` blocks.
+

@@ -1,0 +1,8 @@
+ Here is the corrected code:
+
+```
+if (x > 0) { a = 1; } else { b = 2; }
+```
+
+The issue in the original code was that there should be curly braces around both the if and else blocks, and there should be a colon at the end of the else line. The corrected code fixes these issues.
+

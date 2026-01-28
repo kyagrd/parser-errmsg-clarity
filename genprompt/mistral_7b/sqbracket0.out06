@@ -1,0 +1,8 @@
+ Here's the corrected version of your code:
+
+```
+if (x > 0) { a = 1; } else { b = 2; }
+```
+
+The main issue in your original code was missing curly braces `{}` to enclose the statements for both conditions in the if-else block.
+

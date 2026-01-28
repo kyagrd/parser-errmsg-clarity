@@ -1,0 +1,8 @@
+ Here's the corrected code:
+
+```
+if (x > 0) { a = 1; } else { b = 2; }
+```
+
+I added curly braces `{}` to enclose the statements for each branch of the if-else statement, and placed semicolons `;` before the closing braces to maintain proper syntax.
+

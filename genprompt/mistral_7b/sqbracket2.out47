@@ -1,0 +1,12 @@
+ ```
+if (x > 0) [ a = 1; ] else b = 2;
+```
+
+The corrected code should be:
+
+```
+if (x > 0) [ a = 1; ] else b = 2
+```
+
+I removed the extra ']' at the end of the if statement.
+

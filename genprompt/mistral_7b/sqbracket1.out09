@@ -1,0 +1,7 @@
+ Here is the corrected code:
+
+```
+if (x > 0) [ a = 1; ] else [ b = 2; ]
+```
+In this corrected version, I enclosed the `else` statement in square brackets as well to maintain the correct syntax for the multi-line if-else block.
+

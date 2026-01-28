@@ -1,0 +1,6 @@
+ ```
+if (x > 0) @ a = 1; # else b = 2;
+```
+
+The fix would be to remove the hash symbol `#` from before `else b = 2`, as it is causing a syntax error by being used outside of a comment block.
+

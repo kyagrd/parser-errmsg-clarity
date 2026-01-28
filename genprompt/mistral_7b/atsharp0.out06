@@ -1,0 +1,8 @@
+ Here's the corrected version of your code with the syntax error fixed:
+
+```
+if (x > 0) { a = 1; } else { b = 2; }
+```
+
+The main change made was to wrap the blocks of code using curly braces `{}`, as is required in C-like languages when multiple statements are inside an if or else block.
+

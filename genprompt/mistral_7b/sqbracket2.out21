@@ -1,0 +1,10 @@
+ ```
+if (x > 0) [ a = 1; ] else b = 2;
+```
+
+To fix the error, the closing bracket `]` should be removed from outside the if statement. The corrected code is:
+
+```
+if (x > 0) [ a = 1; ] else b = 2
+```
+

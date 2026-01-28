@@ -1,0 +1,8 @@
+ Here's the fixed code:
+
+```
+if (x > 0) { a = 1; } else { b = 2; }
+```
+
+The issue in the original code was missing curly braces `{}` to enclose the actions for each conditional statement, making it difficult to understand where the blocks begin and end. By adding these braces, we ensure that the syntax is correct.
+

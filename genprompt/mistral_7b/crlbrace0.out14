@@ -1,0 +1,5 @@
+ ```
+if (x > 0) { a = 1; } else { b = 2; }
+```
+In this correction, I added curly braces around `else` to group its statement and made sure that there is no semicolon after the opening brace in the if statement. This makes it syntactically correct.
+

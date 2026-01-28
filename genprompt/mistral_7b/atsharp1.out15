@@ -1,0 +1,8 @@
+ Here is the corrected code:
+
+```
+if (x > 0) @ a = 1; else b = 2;
+```
+
+The issue was that the semicolon after the 'else' keyword was causing the '#' comment to be interpreted as part of the syntax. By removing the semicolon, the error is resolved.
+

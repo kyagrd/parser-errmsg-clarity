@@ -1,0 +1,8 @@
+ Here is the corrected code:
+
+```
+if (x > 0) { a = 1; } else { b = 2; }
+```
+
+The issue was that there was no curly brace closing the if statement, and also the semicolon after `else` which is not needed.
+

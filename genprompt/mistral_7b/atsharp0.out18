@@ -1,0 +1,9 @@
+ Here is the corrected version of your code, where I have removed the extra semicolons and added proper indentation:
+
+```
+if (x > 0)
+    a = 1;
+else
+    b = 2;
+```
+

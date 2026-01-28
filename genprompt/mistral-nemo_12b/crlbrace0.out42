@@ -1,0 +1,12 @@
+```python
+if (x > 0):
+    {
+        a = 1;
+    }
+else:
+    {
+        b = 2;
+    }
+```
+Note: I assumed that `x` is defined and has a value greater than or equal to zero. If not, you may need to add an initial condition check before the given code.
+

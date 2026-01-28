@@ -1,0 +1,6 @@
+ Here's the corrected version of your code, fixing the syntax error by assigning `b` within the correct `else` clause:
+
+```
+if (x > 0) { a = 1; } else { b = 2; }
+```
+

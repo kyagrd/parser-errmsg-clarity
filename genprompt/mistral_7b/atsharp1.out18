@@ -1,0 +1,9 @@
+ Here is the fixed version of your code:
+
+```
+if (x > 0) @ a = 1;
+else b = 2;
+```
+
+In your original code, the '#' symbol was causing an issue because it is used as a comment marker in some programming languages. By removing it from the else clause, the syntax error should be resolved.
+

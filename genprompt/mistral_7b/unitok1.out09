@@ -1,0 +1,8 @@
+ Here is the corrected code with the syntax error fixed:
+
+```
+if (x > 0) { a = 1; } else { b = 2; }
+```
+
+In this correction, the braces `{}` were added to enclose both the `a = 1` statement when the condition is true and the `b = 2` statement when it's false. This ensures that the if-else statement is correctly structured with proper syntax.
+

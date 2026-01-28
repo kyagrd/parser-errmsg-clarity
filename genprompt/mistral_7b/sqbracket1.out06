@@ -1,0 +1,6 @@
+ ```
+if (x > 0) [ a = 1; ] else b = 2;
+```
+
+I removed the extra `]` at the end of your code snippet, which caused the syntax error as indicated in the message you provided.
+

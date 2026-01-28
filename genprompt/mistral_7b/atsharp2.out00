@@ -1,0 +1,10 @@
+ ```
+if (x > 0) @ a = 1; # else b = 2
+```
+
+To fix the error, we need to move the `#` symbol before the `else` clause. Here's the corrected code:
+
+```
+if (x > 0) @ a = 1; # if (x <= 0) b = 2;
+```
+

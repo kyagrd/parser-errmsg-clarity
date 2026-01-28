@@ -1,0 +1,8 @@
+ Here's the corrected code:
+
+```
+if (x > 0) { a = 1; } else { b = 2; }
+```
+
+I removed the extra `}` that was causing the syntax error, and added braces to enclose the `else` statement, as it requires them in JavaScript.
+

@@ -1,0 +1,8 @@
+ Here is the corrected code with the error resolved:
+
+```
+if (x > 0) { a = 1 } else { b = 2 };
+```
+
+I added curly braces to group the statements for each branch of the `if` statement and replaced the unusual angle brackets '》' with standard curly braces. This should resolve the syntax error in your code.
+

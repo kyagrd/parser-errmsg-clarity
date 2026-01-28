@@ -1,0 +1,10 @@
+ ```
+if (x > 0) [ a = 1; ] else b = 2
+```
+
+The closing bracket `]` after the `else` clause is not needed and causing the syntax error. So removing it will fix the issue:
+
+```
+if (x > 0) [ a = 1; ] else b = 2;
+```
+

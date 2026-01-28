@@ -1,0 +1,10 @@
+ ```
+if (x > 0) @ a = 1; # else b = 2
+```
+
+The '#' symbol is being used as a comment in the code and should be removed from the else statement. So, the corrected code would be:
+
+```
+if (x > 0) @ a = 1; else b = 2;
+```
+

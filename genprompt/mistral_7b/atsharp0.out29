@@ -1,0 +1,10 @@
+ Here's the corrected version of your code:
+
+```
+if (x > 0) { a = 1; } else { b = 2; }
+```
+
+I made two changes to your original code:
+1. Enclosed the entire conditional statement in curly braces `{}`.
+2. Removed the semicolons (`;`) before and after the condition blocks, as they are not necessary in this context.
+

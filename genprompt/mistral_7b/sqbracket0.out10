@@ -1,0 +1,8 @@
+ Here's the corrected version of your code:
+
+```
+if (x > 0) { a = 1; } else { b = 2; }
+```
+
+The issue in your original code was that both statements `a = 1;` and `b = 2;` were not enclosed within the proper curly braces `{}`. This leads to syntax errors. In C-like languages, when using `if`, `else`, or other control flow structures, it's important to use matching curly braces to define blocks of code.
+

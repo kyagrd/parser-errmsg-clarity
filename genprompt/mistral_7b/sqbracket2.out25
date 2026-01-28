@@ -1,0 +1,8 @@
+ Here's the fixed code:
+
+```
+if (x > 0) [ a = 1; ] else b = 2;
+```
+
+The closing square bracket `]` after the `else` clause should be removed.
+

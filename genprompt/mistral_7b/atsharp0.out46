@@ -1,0 +1,6 @@
+ Here's the corrected version of your code with the syntax error fixed:
+
+```
+if (x > 0) { a = 1; } else { b = 2; }
+```
+

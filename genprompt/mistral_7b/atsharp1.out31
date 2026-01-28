@@ -1,0 +1,9 @@
+ Here is the corrected code with the syntax error fixed:
+
+```
+if (x > 0) @ a = 1;
+else b = 2;
+```
+
+The issue was that the `#` symbol should not have been used after the `else` clause as it is not a valid syntax construct for if statements. Instead, the semicolon (`;`) should be used to separate different statements on the same line in C-like languages.
+

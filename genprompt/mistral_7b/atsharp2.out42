@@ -1,0 +1,11 @@
+ ```
+if (x > 0) @ a = 1; # else b = 2
+```
+
+For this code to be valid and avoid the syntax error, you should move the `else b = 2` to be indented under the `else` clause. Here is the corrected version:
+
+```
+if (x > 0) @ a = 1;
+else        b = 2;
+```
+

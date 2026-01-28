@@ -1,0 +1,8 @@
+ Here is the corrected version of your code:
+
+```
+if (x > 0) @ a = 1; else b = 2;
+```
+
+In the original code, the `#` symbol was causing a syntax error as it was not recognized within the `if` statement. By removing the `#` symbol and placing the condition for `b` directly after the `else`, the corrected code should now execute without any errors.
+

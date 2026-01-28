@@ -1,0 +1,9 @@
+ ```
+if (x > 0) { a = 1; } else { b = 2; }
+```
+
+Here's what I did to fix the syntax error:
+
+1. Added curly braces `{}` after the `else` statement, as it is required when there are multiple statements inside the `if` and `else` blocks.
+2. Corrected the indentation to match the opening `if` statement for readability purposes.
+

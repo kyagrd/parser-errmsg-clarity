@@ -1,0 +1,6 @@
+ ```
+if (x > 0) { a = 1; } else { b = 2; }
+```
+
+In this corrected version, I added curly braces to enclose the `else` statement, which was missing in the original code and causing the syntax error.
+

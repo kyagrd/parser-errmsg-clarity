@@ -1,0 +1,8 @@
+ Here's the fixed code:
+
+```
+if (x > 0) a = 1; else b = 2;
+```
+
+The issue in the original code was that an extra '》' symbol was added after the `else` clause, which is not needed. The corrected code only contains semicolons and assignment operators.
+

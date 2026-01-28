@@ -1,0 +1,8 @@
+ Here's the corrected version of your code:
+
+```
+if (x > 0) { a = 1 } else { b = 2 };
+```
+
+The main change is to enclose the statements within `{}` and remove the semicolon at the end of the first line. This ensures that both the 'if' condition and the 'else' block are properly defined.
+

@@ -1,0 +1,8 @@
+ Here is the fixed code:
+
+```
+if (x > 0) [ a = 1; ] else b = 2;
+```
+
+By removing the extra closing bracket at the end, the syntax error is resolved.
+

@@ -1,0 +1,6 @@
+ Here's the corrected version of the code:
+
+```
+if (x > 0) { a = 1 } else { b = 2 };
+```
+

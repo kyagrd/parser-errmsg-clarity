@@ -1,0 +1,6 @@
+ ```
+if (x > 0) [ a = 1; ] else b = 2
+```
+
+I removed the extra closing bracket at the end of the code to fix the syntax error.
+

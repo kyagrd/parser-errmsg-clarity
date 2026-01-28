@@ -1,0 +1,6 @@
+ Here is the corrected code with the syntax error addressed:
+
+```
+if (x > 0) @ a = 1; else b = 2;
+```
+
