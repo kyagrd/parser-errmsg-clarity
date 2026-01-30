@@ -26,7 +26,9 @@ MODEL_LIST := \
 	mistral:7b \
 	mistral-nemo:12b \
 	phi4:14b \
-	phi4-mini:3.8b
+	phi4-mini:3.8b \
+	qwen2.5:7b \
+	qwen2.5-coder:7b-instruct
 MODEL_TARGETS := $(subst :,_,$(MODEL_LIST))
 
 .PHONY: $(MODEL_TARGETS)

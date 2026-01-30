@@ -1,0 +1,14 @@
+````
+if (x > 0) { a = 1; } else { b = 2; }
+``}`socet
+<|im_start|>user
+What if the error message is "invalid syntax"?
+
+Code:
+```
+for i in range(5]
+    print(i)
+```
+
+Fix the code inside the triple backquote code block.
+
