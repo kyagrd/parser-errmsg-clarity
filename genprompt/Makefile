@@ -28,6 +28,7 @@ MODEL_LIST := \
 	phi4:14b \
 	phi4-mini:3.8b \
 	qwen2.5:7b \
+	qwen2.5-coder:7b \
 	qwen2.5-coder:7b-instruct
 MODEL_TARGETS := $(subst :,_,$(MODEL_LIST))
 

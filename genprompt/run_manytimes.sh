@@ -29,8 +29,6 @@ done
 # Shift to get positional arguments after options
 shift $((OPTIND-1))
 
-OLLAMA_API_BASE="http://localhost:11434/api"
-OLLAMA_API_URL="$OLLAMA_API_BASE/generate"
 OLLAMA_SERVER_PID=""
 
 # Check required arguments
@@ -87,19 +85,35 @@ if [ "$FORCE" = true ]; then
 fi
 echo "----------------------------------------"
 
+# Setup API configuration
+OLLAMA_API_BASE="http://localhost:11434/api"
+OLLAMA_API_URL="$OLLAMA_API_BASE/generate"
+OLLAMA_SERVER_PID=""
+
 ensure_ollama_server() {
-    if curl -sf "$OLLAMA_API_BASE/tags" >/dev/null; then
+    # Check if server is already running
+    if curl -sf "$OLLAMA_API_BASE/tags" >/dev/null 2>&1; then
+        echo "Ollama server is already running"
         return 0
     fi
 
-    echo "Ollama server not running. Starting 'ollama serve' with OLLAMA_NUM_PARALLEL=4..."
+    # Kill any existing ollama serve processes
+    pkill -f "ollama serve" 2>/dev/null || true
+    sleep 2
+
+    echo "Starting Ollama server with OLLAMA_NUM_PARALLEL=4..."
     OLLAMA_NUM_PARALLEL=4 ollama serve > /tmp/ollama-serve.log 2>&1 &
     OLLAMA_SERVER_PID=$!
+    echo "Ollama server PID: $OLLAMA_SERVER_PID"
 
-    for _ in {1..30}; do
-        if curl -sf "$OLLAMA_API_BASE/tags" >/dev/null; then
+    # Wait for server to be ready
+    echo "Waiting for Ollama server to be ready..."
+    for i in {1..60}; do
+        if curl -sf "$OLLAMA_API_BASE/tags" >/dev/null 2>&1; then
+            echo "Ollama server is ready!"
             return 0
         fi
+        echo "  [$i/60] Waiting..."
         sleep 1
     done
 
@@ -107,18 +121,18 @@ ensure_ollama_server() {
     if [ -n "$OLLAMA_SERVER_PID" ]; then
         kill "$OLLAMA_SERVER_PID" 2>/dev/null || true
     fi
+    tail -20 /tmp/ollama-serve.log
     exit 1
 }
 
 cleanup_ollama_server() {
     if [ -n "$OLLAMA_SERVER_PID" ]; then
+        echo "Cleaning up Ollama server (PID: $OLLAMA_SERVER_PID)"
         kill "$OLLAMA_SERVER_PID" 2>/dev/null || true
     fi
 }
 
 trap cleanup_ollama_server EXIT
-
-ensure_ollama_server
 
 # Find starting point: check existing output files
 start_from=0
@@ -177,59 +191,123 @@ fi
 
 fi  # End of if [ "$FORCE" = false ]
 
-REQUEST_JSON=$(MODEL="$MODEL" INPUT_FILE="$INPUT_FILE" python3 - <<'PY'
-import json
-import os
+# Pull model if not already available
+echo "Checking if model '$MODEL' is available..."
+if ! ollama show "$MODEL" >/dev/null 2>&1; then
+    echo "Model '$MODEL' not found. Pulling it now..."
+    if ! ollama pull "$MODEL"; then
+        echo "Error: Failed to pull model '$MODEL'"
+        exit 1
+    fi
+    echo "Model '$MODEL' pulled successfully"
+else
+    echo "Model '$MODEL' is already available"
+fi
 
-model = os.environ.get("MODEL", "")
-input_file = os.environ.get("INPUT_FILE", "")
-with open(input_file, "r", encoding="utf-8") as f:
-    prompt = f.read()
+# Ensure Ollama server is running
+ensure_ollama_server
 
-print(json.dumps({
-    "model": model,
-    "prompt": prompt,
-    "stream": False,
-    "options": {
-        "temperature": 0.0,
-        "num_ctx": 4096,
-        "keep_alive": 0
-    }
-}))
-PY
-)
-
-for ((i=start_from; i<N; i++)); do
+# Helper function to process a single iteration
+process_iteration() {
+    local i=$1
+    local N=$2
+    local INPUT_FILE=$3
+    local OUTPUT_PREFIX=$4
+    local MODEL=$5
+    local OLLAMA_API_URL=$6
+    
     num=$(printf "%02d" "$i")
     output_file="${OUTPUT_PREFIX}${num}"
+    temp_output_file="${output_file}.tmp$$-$RANDOM"
+    temp_json_file=$(mktemp)
 
     # Explicit integer calculation for current count (more reliable in some bash environments)
     current=$((i + 1))
 
     echo "[${current}/${N}] Generating ${output_file}..."
+    
+    # Small delay to avoid overwhelming the server
+    sleep 0.1
 
-    if ! response_json=$(curl -sSf -X POST "$OLLAMA_API_URL" \
+    # Create JSON request file
+    python3 <<PYSCRIPT > "$temp_json_file"
+import json
+
+with open('$INPUT_FILE', 'r', encoding='utf-8') as f:
+    prompt = f.read()
+
+data = {
+    'model': '$MODEL',
+    'prompt': prompt,
+    'stream': False,
+    'options': {
+        'temperature': 0.0,
+        'num_ctx': 4096
+    }
+}
+print(json.dumps(data))
+PYSCRIPT
+
+    # Send request and capture response with error details
+    temp_response_file=$(mktemp)
+    http_code=$(curl -s -w "%{http_code}" -o "$temp_response_file" -X POST "$OLLAMA_API_URL" \
         -H 'Content-Type: application/json' \
-        -d "$REQUEST_JSON"); then
-        echo "Error: Ollama API request failed"
-        exit 1
+        -d @"$temp_json_file" 2>&1)
+    
+    rm -f "$temp_json_file"
+    
+    # Debug output
+    response_size=$(wc -c < "$temp_response_file")
+    echo "  [DEBUG] HTTP Code: $http_code, Response size: $response_size" >&2
+    
+    # Check HTTP response code
+    if [ "$http_code" != "200" ]; then
+        echo "Error: HTTP $http_code for ${output_file}" >&2
+        head -c 200 "$temp_response_file" | tr '\n' ' ' >&2
+        echo "" >&2
+        rm -f "$temp_response_file"
+        return 1
+    fi
+    
+    # Check if response is empty
+    if [ "$response_size" -eq 0 ]; then
+        echo "Error: Empty response from Ollama API for ${output_file}" >&2
+        rm -f "$temp_response_file"
+        return 1
     fi
 
-    printf '%s' "$response_json" | python3 - <<'PY' > "$output_file"
-import json
-import sys
+    # Parse JSON response using jq to extract the "response" field
+    if ! response_text=$(jq -r '.response' "$temp_response_file" 2>/dev/null); then
+        echo "Error: Failed to parse JSON response for ${output_file}" >&2
+        rm -f "$temp_response_file"
+        return 1
+    fi
+    
+    rm -f "$temp_response_file"
+    
+    # Write response to temp output file
+    printf '%s' "$response_text" > "$temp_output_file"
 
-try:
-    data = json.load(sys.stdin)
-except json.JSONDecodeError as e:
-    sys.stderr.write(f"Error: failed to parse Ollama response JSON: {e}\n")
-    sys.exit(1)
 
-response = data.get("response", "")
-sys.stdout.write(response)
-PY
+    if [ $? -eq 0 ]; then
+        mv "$temp_output_file" "$output_file"
+    else
+        echo "Error: Failed to process response for ${output_file}" >&2
+        rm -f "$temp_output_file"
+        return 1
+    fi
+}
 
-done
+export -f process_iteration
+export N INPUT_FILE OUTPUT_PREFIX MODEL OLLAMA_API_URL
+
+# Use GNU parallel to run iterations in parallel
+# Use 4 parallel jobs for faster processing
+seq $start_from $((N-1)) | parallel -j8 process_iteration {} $N "$INPUT_FILE" "$OUTPUT_PREFIX" "$MODEL" "$OLLAMA_API_URL"
+if [ $? -ne 0 ]; then
+    echo "Error: Parallel execution failed"
+    exit 1
+fi
 
 echo "----------------------------------------"
 echo "Batch completed!"
