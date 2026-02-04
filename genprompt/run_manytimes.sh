@@ -101,8 +101,8 @@ ensure_ollama_server() {
     pkill -f "ollama serve" 2>/dev/null || true
     sleep 2
 
-    echo "Starting Ollama server with OLLAMA_NUM_PARALLEL=4..."
-    OLLAMA_NUM_PARALLEL=4 ollama serve > /tmp/ollama-serve.log 2>&1 &
+    echo "Starting Ollama server with OLLAMA_NUM_PARALLEL=5..."
+    OLLAMA_NUM_PARALLEL=5 ollama serve > /tmp/ollama-serve.log 2>&1 &
     OLLAMA_SERVER_PID=$!
     echo "Ollama server PID: $OLLAMA_SERVER_PID"
 
@@ -134,62 +134,42 @@ cleanup_ollama_server() {
 
 trap cleanup_ollama_server EXIT
 
-# Find starting point: check existing output files
-start_from=0
+# Build list of files that need to be generated
+files_to_generate=()
 
 if [ "$FORCE" = false ]; then
-# Get modification time of the input file (prompt)
-INPUT_MTIME=$(stat -c %Y "$INPUT_FILE" 2>/dev/null || stat -f %m "$INPUT_FILE" 2>/dev/null)
-existing_files=()
-last_uptodate_idx=-1
-for ((i=0; i<N; i++)); do
-    num=$(printf "%02d" "$i")
-    output_file="${OUTPUT_PREFIX}${num}"
-    if [ -f "$output_file" ]; then
-        existing_files+=("$output_file")
-        # Check if file is outdated (older than input file)
-        OUTPUT_MTIME=$(stat -c %Y "$output_file" 2>/dev/null || stat -f %m "$output_file" 2>/dev/null)
-        if [ "$OUTPUT_MTIME" -lt "$INPUT_MTIME" ]; then
-            echo "  File $output_file is outdated (older than input file)"
-            # Start from the last up-to-date file (which might be incomplete)
-            # If no up-to-date files exist, start from 0
-            if [ "$last_uptodate_idx" -ge 0 ]; then
-                start_from=$last_uptodate_idx
-                echo "  Restarting from last up-to-date file (might be incomplete)"
-            else
-                start_from=0
+    # Get modification time of the input file (prompt)
+    INPUT_MTIME=$(stat -c %Y "$INPUT_FILE" 2>/dev/null || stat -f %m "$INPUT_FILE" 2>/dev/null)
+    
+    for ((i=0; i<N; i++)); do
+        num=$(printf "%02d" "$i")
+        output_file="${OUTPUT_PREFIX}${num}"
+        
+        if [ -f "$output_file" ]; then
+            # Check if file is outdated (older than input file)
+            OUTPUT_MTIME=$(stat -c %Y "$output_file" 2>/dev/null || stat -f %m "$output_file" 2>/dev/null)
+            if [ "$OUTPUT_MTIME" -lt "$INPUT_MTIME" ]; then
+                files_to_generate+=($i)
             fi
-            break
         else
-            # File is up-to-date, remember this index
-            last_uptodate_idx=$i
+            # File doesn't exist, needs to be generated
+            files_to_generate+=($i)
         fi
-    else
-        # File doesn't exist, start from here (or from last up-to-date if exists)
-        if [ "$last_uptodate_idx" -ge 0 ]; then
-            start_from=$last_uptodate_idx
-            echo "  Missing file detected, restarting from last up-to-date file (might be incomplete)"
-        else
-            start_from=$i
-        fi
-        break
-    fi
-done
-
-# If all files exist and are up-to-date, restart from the last file
-# (last file might be incomplete)
-if [ "${#existing_files[@]}" -gt 0 ] && [ "$start_from" -eq 0 ] && [ "$last_uptodate_idx" -ge 0 ]; then
-    start_from=$last_uptodate_idx
-    last_file="${existing_files[$last_uptodate_idx]}"
-    echo "  Restarting from last file: $last_file (might be incomplete)"
+    done
+else
+    # Force mode: generate all files
+    for ((i=0; i<N; i++)); do
+        files_to_generate+=($i)
+    done
 fi
 
-if [ "$start_from" -gt 0 ]; then
-    echo "  Resuming from index $start_from (skipping already completed files)"
-    echo "----------------------------------------"
+if [ ${#files_to_generate[@]} -eq 0 ]; then
+    echo "All files are up-to-date. Nothing to do."
+    exit 0
 fi
 
-fi  # End of if [ "$FORCE" = false ]
+echo "Files to generate: ${#files_to_generate[@]} out of $N"
+echo "----------------------------------------"
 
 # Pull model if not already available
 echo "Checking if model '$MODEL' is available..."
@@ -302,8 +282,8 @@ export -f process_iteration
 export N INPUT_FILE OUTPUT_PREFIX MODEL OLLAMA_API_URL
 
 # Use GNU parallel to run iterations in parallel
-# Use 4 parallel jobs for faster processing
-seq $start_from $((N-1)) | parallel -j8 process_iteration {} $N "$INPUT_FILE" "$OUTPUT_PREFIX" "$MODEL" "$OLLAMA_API_URL"
+# Use 8 parallel jobs for faster processing
+printf '%s\n' "${files_to_generate[@]}" | parallel -j8 process_iteration {} $N "$INPUT_FILE" "$OUTPUT_PREFIX" "$MODEL" "$OLLAMA_API_URL"
 if [ $? -ne 0 ]; then
     echo "Error: Parallel execution failed"
     exit 1
@@ -311,6 +291,6 @@ fi
 
 echo "----------------------------------------"
 echo "Batch completed!"
-echo "Created $N files using model: $MODEL"
+echo "Generated ${#files_to_generate[@]} files using model: $MODEL"
 echo "Files: ${OUTPUT_PREFIX}00 ~ ${OUTPUT_PREFIX}$(printf "%02d" $((N-1)))"
 echo "Quick check: ls -1 ${OUTPUT_PREFIX}*"
