@@ -1,0 +1,15 @@
+```python
+
+if x > 0:
+
+    a = 1
+
+
+else:
+
+    b = 2
+
+```
+
+Explanation: In Python, you cannot use `#` to comment code or start and end comments with symbols like in some other languages (e.g., Ruby). The error message indicates there was an issue likely related to using characters that don't belong (`@`). The solution uses proper indentation instead of the erroneous symbol.
+

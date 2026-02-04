@@ -1,0 +1,13 @@
+```python
+
+if x > 0:
+
+    a = 1
+
+
+else:  # Corrected indentation for alignment with if statement's closing brace
+
+    b = 2
+
+```
+

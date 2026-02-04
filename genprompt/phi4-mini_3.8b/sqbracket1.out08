@@ -1,0 +1,21 @@
+```python
+
+def process_number(x):
+
+    if x > 0:
+
+        return True
+
+    else:
+
+        return False
+
+
+# Example usage of function with correct syntax and indentation
+
+if __name__ == "__main__":
+
+    print(process_number(10))
+
+```
+

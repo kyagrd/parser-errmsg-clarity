@@ -1,0 +1,12 @@
+```python
+# Fixed syntax errors in provided pseudocode snippet:
+
+def check_value(x):
+    if x > 0:
+        return "a = 1"
+    else:
+        return "b = 2"
+
+print(check_value(5)) # Example usage, replace with actual value of 'x'
+```
+

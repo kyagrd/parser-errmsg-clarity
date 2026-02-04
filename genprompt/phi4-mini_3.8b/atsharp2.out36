@@ -1,0 +1,6 @@
+```
+if (x > 0) {
+    @ a = 1;
+} else b = 2; # else block commented out or removed to fix syntax issue caused by '#' after 'else'
+```
+

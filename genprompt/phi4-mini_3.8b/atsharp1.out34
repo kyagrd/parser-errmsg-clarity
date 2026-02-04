@@ -1,0 +1,15 @@
+```python
+
+if x > 0: 
+
+    a = 1 
+
+else: 
+
+    b = 2
+
+
+# Code outside of if-statement remains unchanged
+
+```
+

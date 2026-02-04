@@ -1,0 +1,4 @@
+```python
+a = 1 if x > 0 else b = 2;
+```
+

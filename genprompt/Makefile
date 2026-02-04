@@ -12,7 +12,6 @@ RUNS := 50
 MODEL_LIST := \
 	codegemma:7b \
 	codegemma:7b-instruct \
-	deepseek-r1:7b \
 	gemma3:1b \
 	gemma3:4b \
 	gemma3:12b \

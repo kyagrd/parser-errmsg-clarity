@@ -1,0 +1,33 @@
+``` 
+
+if (x > 0) { @ a = 1;} else {b = 2;}
+```
+
+
+Note: In Lua, semicolons are used to terminate lines. However, it was not mentioned if this is meant for another language or context; hence the above correction assumes it's in an environment where semicolon use convention differs from typical languages like C-style syntax that uses a semicolon after each statement including else clauses.
+
+
+Secondly:
+
+The original code seems incomplete and contains multiple statements on one line. If we are strictly fixing just based upon the given error message, assuming this is part of a larger language construct (like an if-else block in Python), it would look like:
+
+
+```
+
+if x > 0: 
+
+    @a = 1; # else b = 2;
+
+```
+
+
+However, it's important to note that using '@' as the variable name for assigning values may imply usage of some languages where 'at symbol' is a keyword (like Ruby), but this could also be an error since variables are conventionally named with letters.
+
+
+Without knowledge on context or language specifics beyond what has been provided in your instruction, it's challenging to correct syntax errors accurately. The example above assumes the original code had more content which was omitted and only focused upon correcting according to Python's typical use of indentation for blocks like if-else statements combined into a single line with comments.
+
+
+Please clarify on context or language you want me to fix this in so I can provide an accurate correction.
+
+
+

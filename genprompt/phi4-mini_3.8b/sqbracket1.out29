@@ -1,0 +1,19 @@
+```c
+if (x > 0)
+    { a = 1; }
+else
+    { b = 2; } // corrected brackets to curly braces for proper scoping in C language
+
+```
+Note: This assumes that `a` and `b` are variables defined outside the scope of this snippet. The original code had incorrect closing square bracket after an else statement, which should have been a semicolon instead.
+
+```c
+if (x > 0) {
+    a = 1;
+} else {
+    b = 2; }
+```
+
+Note: This is assuming that `a` and `b` are variables defined outside the scope of this snippet. The original code had incorrect closing square bracket after an else statement, which should have been curly braces instead.
+
+
