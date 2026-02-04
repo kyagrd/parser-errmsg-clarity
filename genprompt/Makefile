@@ -40,38 +40,11 @@ $(1): MODEL_NAME := $(2)
 $(1): OUTPUT_DIR := $(1)
 $(1): $(TXTS)
 	@mkdir -p "$$(OUTPUT_DIR)"
-	@PARALLEL_JOBS=1; \
-	case "$$$$MAKEFLAGS" in \
-		*-j[0-9]*) PARALLEL_JOBS=$$$$(echo "$$$$MAKEFLAGS" | sed -n 's/.*-j\([0-9]\+\).*/\1/p') ;; \
-		*-j*) PARALLEL_JOBS=$$$$(nproc) ;; \
-	esac; \
-	all_pids=""; \
-	cleanup() { [ -n "$$$$all_pids" ] && kill $$$$all_pids 2>/dev/null || true; exit 1; }; \
-	trap cleanup INT TERM; \
-	set -e; \
-	if [ "$$$$PARALLEL_JOBS" -gt 1 ]; then \
-		pids=""; \
-		count=0; \
-		for f in $$($(1)_TXTS); do \
-			base=$$$${f%.txt}; \
-			./run_manytimes.sh -m "$$(MODEL_NAME)" "$$$$f" "$$(OUTPUT_DIR)/$$$${base}.out" $(RUNS) & \
-			pid=$$$$!; \
-			pids="$$$$pids $$$$pid"; \
-			all_pids="$$$$all_pids $$$$pid"; \
-			count=$$$$((count + 1)); \
-			if [ $$$$count -ge $$$$PARALLEL_JOBS ]; then \
-				wait $$$$pids || cleanup; \
-				pids=""; \
-				count=0; \
-			fi; \
-		done; \
-		[ -n "$$$$pids" ] && wait $$$$pids; \
-	else \
-		for f in $$($(1)_TXTS); do \
-			base=$$$${f%.txt}; \
-			./run_manytimes.sh -m "$$(MODEL_NAME)" "$$$$f" "$$(OUTPUT_DIR)/$$$${base}.out" $(RUNS); \
-		done; \
-	fi
+	@set -e; \
+	for f in $$($(1)_TXTS); do \
+		base=$$$${f%.txt}; \
+		./run_manytimes.sh -m "$$(MODEL_NAME)" "$$$$f" "$$(OUTPUT_DIR)/$$$${base}.out" $(RUNS); \
+	done
 endef
 
 # Expand the template for all models in MODEL_LIST

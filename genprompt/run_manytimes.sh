@@ -29,7 +29,9 @@ done
 # Shift to get positional arguments after options
 shift $((OPTIND-1))
 
-OLLAMA_CMD="ollama run $MODEL"
+OLLAMA_API_BASE="http://localhost:11434/api"
+OLLAMA_API_URL="$OLLAMA_API_BASE/generate"
+OLLAMA_SERVER_PID=""
 
 # Check required arguments
 if [ $# -lt 3 ]; then
@@ -84,6 +86,39 @@ if [ "$FORCE" = true ]; then
     echo "  Force mode      : ON (regenerating all files)"
 fi
 echo "----------------------------------------"
+
+ensure_ollama_server() {
+    if curl -sf "$OLLAMA_API_BASE/tags" >/dev/null; then
+        return 0
+    fi
+
+    echo "Ollama server not running. Starting 'ollama serve' with OLLAMA_NUM_PARALLEL=4..."
+    OLLAMA_NUM_PARALLEL=4 ollama serve > /tmp/ollama-serve.log 2>&1 &
+    OLLAMA_SERVER_PID=$!
+
+    for _ in {1..30}; do
+        if curl -sf "$OLLAMA_API_BASE/tags" >/dev/null; then
+            return 0
+        fi
+        sleep 1
+    done
+
+    echo "Error: Ollama server did not become ready in time."
+    if [ -n "$OLLAMA_SERVER_PID" ]; then
+        kill "$OLLAMA_SERVER_PID" 2>/dev/null || true
+    fi
+    exit 1
+}
+
+cleanup_ollama_server() {
+    if [ -n "$OLLAMA_SERVER_PID" ]; then
+        kill "$OLLAMA_SERVER_PID" 2>/dev/null || true
+    fi
+}
+
+trap cleanup_ollama_server EXIT
+
+ensure_ollama_server
 
 # Find starting point: check existing output files
 start_from=0
@@ -142,6 +177,28 @@ fi
 
 fi  # End of if [ "$FORCE" = false ]
 
+REQUEST_JSON=$(MODEL="$MODEL" INPUT_FILE="$INPUT_FILE" python3 - <<'PY'
+import json
+import os
+
+model = os.environ.get("MODEL", "")
+input_file = os.environ.get("INPUT_FILE", "")
+with open(input_file, "r", encoding="utf-8") as f:
+    prompt = f.read()
+
+print(json.dumps({
+    "model": model,
+    "prompt": prompt,
+    "stream": False,
+    "options": {
+        "temperature": 0.0,
+        "num_ctx": 4096,
+        "keep_alive": 0
+    }
+}))
+PY
+)
+
 for ((i=start_from; i<N; i++)); do
     num=$(printf "%02d" "$i")
     output_file="${OUTPUT_PREFIX}${num}"
@@ -151,14 +208,26 @@ for ((i=start_from; i<N; i++)); do
 
     echo "[${current}/${N}] Generating ${output_file}..."
 
-    # Current setting: stderr is NOT redirected
-    # ollama progress bars, loading animations, etc. will appear on the terminal screen
-    $OLLAMA_CMD < "$INPUT_FILE" > "$output_file"
+    if ! response_json=$(curl -sSf -X POST "$OLLAMA_API_URL" \
+        -H 'Content-Type: application/json' \
+        -d "$REQUEST_JSON"); then
+        echo "Error: Ollama API request failed"
+        exit 1
+    fi
 
-    # === Optional: ways to handle stderr ===
-    # 1. Suppress all stderr (no progress bars):    $OLLAMA_CMD < "$INPUT_FILE" > "$output_file" 2>/dev/null
-    # 2. Save stderr to file:                       $OLLAMA_CMD < "$INPUT_FILE" > "$output_file" 2>"${output_file}.err"
-    # 3. Capture everything:                        $OLLAMA_CMD < "$INPUT_FILE" &> "${output_file}.full"
+    printf '%s' "$response_json" | python3 - <<'PY' > "$output_file"
+import json
+import sys
+
+try:
+    data = json.load(sys.stdin)
+except json.JSONDecodeError as e:
+    sys.stderr.write(f"Error: failed to parse Ollama response JSON: {e}\n")
+    sys.exit(1)
+
+response = data.get("response", "")
+sys.stdout.write(response)
+PY
 
 done
 

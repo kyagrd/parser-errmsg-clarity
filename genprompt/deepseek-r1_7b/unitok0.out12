@@ -1,0 +1,30 @@
+Thinking...
+Okay, I'm trying to fix this syntax error in the given code. Let's see what the original code looks like:
+
+if (x > 0) 《 a = 1; 》 else b = 2; 》
+
+Hmm, I know that using angle brackets like << or >> for code inside comments is not standard. The user mentioned using only the error message and without relying on pre-trained knowledge, so I should base this solely on the syntax issue.
+
+The code has '《' and '》' which are probably meant to be used as comments but aren't valid syntax in Python. In Python, single-line comments start with #, so replacing those angle brackets with '#' makes sense.
+
+Looking at the structure: if (x > 0) is followed by a =1; inside << >>, then else b=2;. Wait, that's not right because after the first comment, there's an extra 'else' and another line. So maybe the formatting was off.
+
+I think the code should be written with proper indentation and using single-line comments correctly. So replacing 《 and 》 with # should fix it.
+
+So the corrected code would look like:
+
+if (x > 0):
+    a = 1
+else:
+    b = 2
+
+This way, each condition has its corresponding code on the next line with proper indentation.
+...done thinking.
+
+```
+if (x > 0):
+    a = 1
+else:
+    b = 2
+```
+
