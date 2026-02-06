@@ -1,8 +1,10 @@
  Here is the corrected code:
 
 ```
-if (x > 0) [ a = 1; ] else [ b = 2; ]
+if (x > 0) {
+    a = 1;
+    c = 3;
+} else {
+    b = 2;
+}
 ```
-
-In the original code, there was an extra closing bracket `]` after the else clause which caused the syntax error. I removed it and added another one to close the else statement properly.
-

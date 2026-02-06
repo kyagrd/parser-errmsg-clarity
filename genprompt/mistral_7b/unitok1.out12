@@ -1,12 +1,10 @@
- Here's the corrected version of your code:
+ Here is the corrected code:
 
 ```
 if (x > 0) {
     a = 1;
+    c = 3;
 } else {
     b = 2;
 }
 ```
-
-The issue in your original code was that you were missing curly braces to properly define the scope for both if and else blocks. In C, C++, Java, JavaScript, Python, and many other programming languages, it's important to use curly braces even with a single line inside the blocks to avoid such syntax errors.
-

@@ -1,12 +1,8 @@
-Here is the corrected code:
-
 ```
 if (x > 0) {
   a = 1;
+  c = 3;
 } else {
   b = 2;
 }
 ```
-
-In JavaScript, you cannot use indentation to define blocks of code like in some other languages. The correct way to define blocks is using curly braces `{}`.
-

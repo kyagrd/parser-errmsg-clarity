@@ -1,12 +1,8 @@
-Here is the corrected code:
-
 ```
 if (x > 0) {
   a = 1;
+  c = 3;
 } else {
   b = 2;
 }
 ```
-
-Explanation: The error was due to an unmatched closing brace "}". I added a closing brace after the "else" clause to close it properly.
-

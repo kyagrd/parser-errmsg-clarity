@@ -1,8 +1,3 @@
 ```
-if (x > 0) @ a = 1;
-else 
-    # b = 2;
+if (x > 0) { @ a = 1; c = 3; } else { # b = 2; # }
 ```
-
-Note: I added an explicit `else` keyword and removed the trailing `#` at the end of the line. The original error message suggests that the `#` character is not allowed after the `else` clause, which implies that it's likely a comment syntax that should be used elsewhere in the code.
-

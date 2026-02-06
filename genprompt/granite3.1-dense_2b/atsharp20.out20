@@ -1,6 +1,8 @@
 ```
-if (x > 0) a = 1; # else b = 2; #
+if (x > 0) {
+  a = 1;
+  c = 3;
+} else {
+  b = 2;
+}
 ```
-
-[Fixed Code] The provided code does not contain any syntax errors as it is syntactically correct according to the language being used, which appears to be JavaScript or a similar language with similar syntax.
-

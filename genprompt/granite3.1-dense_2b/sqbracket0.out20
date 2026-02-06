@@ -1,6 +1,8 @@
-Here is the corrected code using only the provided error message:
-
 ```
-if (x > 0) then a = 1; else b = 2;
+if (x > 0) {
+  a = 1;
+  c = 3;
+} else {
+  b = 2;
+}
 ```
-

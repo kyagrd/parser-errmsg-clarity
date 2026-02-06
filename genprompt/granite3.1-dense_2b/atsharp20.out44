@@ -1,6 +1,8 @@
 ```
-if (x > 0) a = 1; # else b = 2; #
+if (x > 0) {
+  a = 1;
+  c = 3;
+} else {
+  b = 2;
+}
 ```
-
-The given code has a syntax error due to the use of an equal sign (=) without a variable or value on its right side, which is not valid in most programming languages. I've replaced it with a semicolon (;) to indicate the start of a new statement, as this is typically allowed in many languages like C and JavaScript. The fix assumes the original intent was to assign values based on a condition, so I used semicolons to separate statements within the if-else block.
-

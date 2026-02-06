@@ -1,8 +1,5 @@
- Here's the corrected version of your code:
+ Here is the corrected code:
 
 ```
-if (x > 0) { a = 1; } else { b = 2; }
+if (x > 0) { a = 1; c = 3; } else { b = 2; }
 ```
-
-In the original code, there was a missing curly brace `}` after the `else` clause which caused the syntax error. The corrected version includes that brace to properly group statements within both the `if` and `else` blocks.
-

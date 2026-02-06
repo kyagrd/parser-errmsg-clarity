@@ -1,11 +1,4 @@
  ```
-if (x > 0) @ a = 1; # else b = 2
+if (x > 0) @ a = 1; c = 3
+else b = 2
 ```
-
-To fix the syntax error, we need to separate the `else` statement and its associated code block:
-
-```
-if (x > 0) @ a = 1;
-# else b = 2;
-```
-

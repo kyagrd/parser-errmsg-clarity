@@ -1,5 +1,10 @@
- ```
-if (x > 0) { a = 1; } else { b = 2; }
-```
-The issue was with missing curly braces to enclose the else statement and its body.
+ Here is the corrected code:
 
+```
+if (x > 0) {
+    a = 1;
+    c = 3;
+} else {
+    b = 2;
+};
+```

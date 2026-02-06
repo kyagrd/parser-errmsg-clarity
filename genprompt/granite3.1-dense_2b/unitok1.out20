@@ -1,12 +1,8 @@
-Here's the corrected code with the syntax error fixed:
-
 ```
 if (x > 0) {
   a = 1;
+  c = 3;
 } else {
   b = 2;
 }
 ```
-
-The issue was that the closing brace "}" was missing after the if-else statement, and the curly braces were placed outside the correct scope. The corrected code now has proper indentation and bracing to maintain valid syntax.
-

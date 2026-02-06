@@ -1,8 +1,10 @@
- Here's the corrected code:
+ Here is the corrected code:
 
 ```
-if (x > 0) { a = 1; } else { b = 2; }
+if (x > 0) {
+    a = 1;
+    c = 3;
+} else {
+    b = 2;
+}
 ```
-
-The issue in your original code was missing curly braces `{}` to define the scope of the if-else block, and semicolons after each statement inside the if and else blocks are not necessary unless they are followed by another statement on the same line.
-

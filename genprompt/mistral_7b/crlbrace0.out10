@@ -1,8 +1,10 @@
- Here's the corrected version of your code:
+ Here is the corrected code:
 
 ```
-if (x > 0) { a = 1; } else { b = 2; }
+if (x > 0) {
+    a = 1;
+    c = 3;
+} else {
+    b = 2;
+};
 ```
-
-In this correction, I enclosed the `else` statement and its content in curly braces to ensure it is correctly paired with the `if` block.
-

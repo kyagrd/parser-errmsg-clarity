@@ -1,5 +1,10 @@
- ```
-if (x > 0) [ a = 1; ] else b = 2
-```
-In this corrected version, the closing `]` bracket was removed after the `else` clause. The code should be indented properly for good readability.
+ Here is the corrected code:
 
+```
+if (x > 0) {
+    a = 1;
+    c = 3;
+} else {
+    b = 2;
+}
+```

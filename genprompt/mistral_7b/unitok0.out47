@@ -1,11 +1,10 @@
- Here's the corrected code:
+ Here is the corrected code:
 
 ```
-if (x > 0)
+if (x > 0) {
     a = 1;
-else
+    c = 3;
+} else {
     b = 2;
+}
 ```
-
-I removed the extraneous semicolons that were causing the syntax error in your original code. In C and C-like languages, semicolons are used to end statements, but they should not appear before the opening brace or after the closing brace of a block of code.
-

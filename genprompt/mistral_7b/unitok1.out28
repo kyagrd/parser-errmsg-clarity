@@ -1,8 +1,10 @@
- Here's the corrected version of your code, fixing the syntax error:
+ Here is the corrected code:
 
 ```
-if (x > 0) { a = 1; } else { b = 2; }
+if (x > 0) {
+    a = 1;
+    c = 3;
+} else {
+    b = 2;
+}
 ```
-
-The key change is using curly braces `{}` to properly enclose the blocks within both `if` and `else` statements. This allows for multiple lines of code within each block, resolving the unexpected '》' error.
-

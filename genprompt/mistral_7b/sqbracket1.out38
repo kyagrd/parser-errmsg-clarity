@@ -1,8 +1,10 @@
  Here is the corrected code:
 
 ```
-if (x > 0) [ a = 1; ] else [ b = 2; ];
+if (x > 0) {
+    a = 1;
+    c = 3;
+} else {
+    b = 2;
+}
 ```
-
-I added braces `[]` to enclose the statements in each branch of the if-else statement, as it's required to have proper syntax.
-

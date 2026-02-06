@@ -1,10 +1,8 @@
-The syntax error is due to the missing closing delimiter for the multi-line string in JavaScript. Here's the corrected code:
-
-```javascript
+```
 if (x > 0) {
   a = 1;
+  c = 3;
 } else {
   b = 2;
 }
 ```
-

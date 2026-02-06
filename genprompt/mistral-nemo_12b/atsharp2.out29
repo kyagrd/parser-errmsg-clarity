@@ -1,3 +1,1 @@
-```if (x > 0) @ a = 1 else b = 2```
-Note: The corrected code assumes that `else` is used to denote alternative conditions in this language, which seems logical based on the error message. However, without knowing the exact syntax rules of this language, it's an educated guess.
-
+```if (x > 0) { a = 1; c = 3; } else { b = 2; }```

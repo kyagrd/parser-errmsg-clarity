@@ -1,5 +1,10 @@
- ```
-if (x > 0) { a = 1; } else { b = 2; }
-```
-In this case, I corrected the syntax error by adding curly braces `{}` to enclose both the conditional expression and the `else` statement, as well as fixing the indentation. This ensures that the code is correctly structured and should compile without errors.
+ Here is the corrected code:
 
+```
+if (x > 0) {
+    a = 1;
+    c = 3;
+} else {
+    b = 2;
+};
+```

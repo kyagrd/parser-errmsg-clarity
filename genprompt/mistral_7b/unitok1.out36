@@ -1,8 +1,10 @@
- Here's the corrected version of your code:
+ Here is the corrected code:
 
 ```
-if (x > 0) { a = 1; } else { b = 2; }
+if (x > 0) {
+    a = 1;
+    c = 3;
+} else {
+    b = 2;
+}
 ```
-
-In your original code, you forgot to wrap the condition and its actions inside curly braces `{}`. This fixes the unexpected symbol '》' error by replacing it with the correct syntax for if-else statements in C++ or similar languages.
-

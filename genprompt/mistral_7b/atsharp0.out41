@@ -1,8 +1,7 @@
  Here is the corrected version of your code:
 
 ```
-if (x > 0) @ a = 1; else b = 2;
+if (x > 0) { a = 1; c = 3; } else { b = 2; }
 ```
 
-In your original code, you had multiple statements on the same line for an `if` condition, which is not allowed in this context. I combined the conditions into a single statement.
-
+The issue in your original code was that you were missing curly braces `{}` to enclose the statements within the `if` and `else` blocks, and also there was an extra semicolon after the `a = 1; c = 3;` line which is not needed.

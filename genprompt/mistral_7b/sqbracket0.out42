@@ -1,8 +1,10 @@
- Here's the corrected syntax for your code:
+ Here is the corrected code:
 
 ```
-if (x > 0) { a = 1; } else { b = 2; }
+if (x > 0) {
+    a = 1;
+    c = 3;
+} else {
+    b = 2;
+};
 ```
-
-The issue was that the curly braces `{}` were missing, which enclose the statements that belong to the if-else block.
-

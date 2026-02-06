@@ -1,8 +1,10 @@
- Here is the corrected version of your code:
+ Here is the corrected code:
 
 ```
-if (x > 0) [ a = 1; ] else [ b = 2; ];
+if (x > 0) {
+    a = 1;
+    c = 3;
+} else {
+    b = 2;
+}
 ```
-
-I've added square brackets around `b = 2;` to match the pairing with `[ a = 1; ];`. This way, both conditional statements have corresponding closing brackets.
-

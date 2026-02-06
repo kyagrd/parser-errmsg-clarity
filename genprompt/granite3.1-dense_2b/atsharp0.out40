@@ -1,6 +1,8 @@
 ```
 if (x > 0) {
-  a = 1; // else b = 2; // This line has an extra semicolon, which will cause a syntax error. Remove it.
+  a = 1;
+  c = 3;
+} else {
+  b = 2;
 }
 ```
-

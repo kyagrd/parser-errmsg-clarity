@@ -1,10 +1,4 @@
  ```
-if (x > 0) @ a = 1; # else b = 2
+if (x > 0) @ a = 1; c = 3
+else b = 2
 ```
-
-For this code to be corrected and adhere to the given error message, the '#' after 'else' should be removed:
-
-```
-if (x > 0) @ a = 1; else b = 2;
-```
-

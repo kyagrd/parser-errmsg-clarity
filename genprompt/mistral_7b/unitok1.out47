@@ -1,8 +1,10 @@
  Here is the corrected code:
 
 ```
-if (x > 0) { a = 1 } else { b = 2 };
+if (x > 0) {
+    a = 1;
+    c = 3;
+} else {
+    b = 2;
+}
 ```
-
-The issue with your original code was that it didn't have proper curly braces for if-else blocks, and also it used unrecognized symbols '》'. In the corrected version, I've replaced those symbols with standard curly braces `{}`, and the code should now work correctly.
-

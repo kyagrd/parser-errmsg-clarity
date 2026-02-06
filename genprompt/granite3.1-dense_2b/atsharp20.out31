@@ -1,9 +1,8 @@
 ```
-if (x > 0) @a = 1; # else b = 2; #
+if (x > 0) {
+  a = 1;
+  c = 3;
+} else {
+  b = 2;
+}
 ```
-
-[Fixed Code]
-```
-if (x > 0) { a = 1; } # else { b = 2; } #
-```
-

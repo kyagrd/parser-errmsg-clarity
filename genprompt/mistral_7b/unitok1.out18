@@ -1,5 +1,10 @@
- ```
-if (x > 0) { a = 1; } else { b = 2; }
-```
-In the corrected code, I replaced the incorrect syntax for if-else statements with proper curly braces to enclose the blocks of code that should execute depending on the condition.
+ Here is the corrected code:
 
+```
+if (x > 0) {
+    a = 1;
+    c = 3;
+} else {
+    b = 2;
+}
+```

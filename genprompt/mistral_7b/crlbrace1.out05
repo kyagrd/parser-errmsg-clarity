@@ -1,8 +1,5 @@
  Here is the corrected code:
 
 ```
-if (x > 0) { a = 1; } else { b = 2; }
+if (x > 0) { a = 1; c = 3; } else { b = 2; }
 ```
-
-In your original code, there was a missing `{` for the else clause and an extra `}` which caused the error. The corrected code includes braces around both the if statement and the else statement to ensure they are properly matched.
-

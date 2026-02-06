@@ -1,8 +1,5 @@
- Here's the corrected version of your code:
+ Here is the corrected code:
 
 ```
-if (x > 0) { a = 1; } else { b = 2; }
+if (x > 0) { a = 1; c = 3; } else { b = 2; }
 ```
-
-The issue was that you were missing braces for the `else` clause, and also there was an extra closing brace at the end. By enclosing both parts of the if-else statement in curly braces, we ensure they are correctly matched.
-

@@ -1,8 +1,10 @@
- Here's the corrected version of your code, fixing the syntax error:
+ Here is the corrected code:
 
-```python
-if (x > 0) { a = 1; } else { b = 2; }
 ```
-
-In your original code, you forgot to include curly braces for the `else` statement, which is causing the syntax error. The corrected version now includes them.
-
+if (x > 0) {
+    a = 1;
+    c = 3;
+} else {
+    b = 2;
+};
+```

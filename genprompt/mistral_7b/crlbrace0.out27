@@ -1,6 +1,10 @@
- ```
-if (x > 0) { a = 1; } else { b = 2; }
+ Here is the corrected code:
+
 ```
-
-The issue was that there was no opening curly brace after the `else` keyword and no closing curly brace at the end of the `if` statement. I added both to fix the syntax error.
-
+if (x > 0) {
+    a = 1;
+    c = 3;
+} else {
+    b = 2;
+};
+```

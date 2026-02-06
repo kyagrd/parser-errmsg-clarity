@@ -1,8 +1,10 @@
  Here is the corrected code:
 
 ```
-if (x > 0) { a = 1; } else { b = 2; }
+if (x > 0) {
+    a = 1;
+    c = 3;
+} else {
+    b = 2;
+}
 ```
-
-I added braces `{}` around the if-else statement to fix the syntax error. The `a = 1;` and `b = 2;` statements should be inside the braces for proper indentation, but they are not necessary for the syntax to be correct.
-

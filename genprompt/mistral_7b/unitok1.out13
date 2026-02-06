@@ -1,8 +1,10 @@
- Here's the corrected version of your code:
+ Here is the corrected code:
 
 ```
-if (x > 0) { a = 1; } else { b = 2; }
+if (x > 0) {
+    a = 1;
+    c = 3;
+} else {
+    b = 2;
+}
 ```
-
-In the original code, you were missing curly braces ({}) to enclose the statements for each branch of the `if` statement. The corrected code now has these braces, which properly enclose the statements within each branch.
-

@@ -1,8 +1,10 @@
- Here is the corrected code with the syntax error fixed:
+ Here is the corrected code:
 
 ```
-if (x > 0) { a = 1 } else { b = 2 };
+if (x > 0) {
+    a = 1;
+    c = 3;
+} else {
+    b = 2;
+}
 ```
-
-In the original code, I replaced the unexpected '》' character and added curly braces to correct the indentation and grouping of the statements within the `if` and `else` clauses. Additionally, semicolons were added to ensure proper termination of each statement in C-like languages such as JavaScript and Java.
-

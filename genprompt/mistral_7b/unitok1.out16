@@ -1,8 +1,10 @@
- Here is the corrected code with the syntax error fixed:
+ Here is the corrected code:
 
 ```
-if (x > 0) { a = 1; } else { b = 2; }
+if (x > 0) {
+    a = 1;
+    c = 3;
+} else {
+    b = 2;
+}
 ```
-
-The issue was that you needed curly braces {} to enclose the statements within the if and else clauses, since both if and else can have multiple statements. The '》' symbol was an unexpected token, which indicates it might be a typo or incorrect character. By wrapping the statements in curly braces, we ensure proper syntax for multi-line or compound if-else statements in many programming languages.
-

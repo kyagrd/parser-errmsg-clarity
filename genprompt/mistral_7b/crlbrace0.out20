@@ -1,8 +1,10 @@
- Here's the corrected version of your code with the syntax error fixed:
+ Here is the corrected code:
 
 ```
-if (x > 0) { a = 1; } else { b = 2; }
+if (x > 0) {
+    a = 1;
+    c = 3;
+} else {
+    b = 2;
+};
 ```
-
-The issue was that you forgot to include braces `{}` for the `else` statement, making it difficult for the compiler to understand where the code block for the `else` condition should start and end. Now the corrected version has proper bracing, and it should work as expected!
-

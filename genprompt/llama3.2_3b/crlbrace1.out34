@@ -1,6 +1,3 @@
-```bash
-if (x > 0) { a = 1; } else b = 2;
 ```
-
-Note: I added a semicolon after "else" to fix the syntax error. In programming, it's essential to use semicolons correctly to avoid syntax errors.
-
+if (x > 0) { a = 1; c = 3; } else { b = 2; }
+```

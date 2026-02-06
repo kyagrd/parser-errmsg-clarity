@@ -1,8 +1,5 @@
  Here is the corrected code:
 
 ```
-if (x > 0) { a = 1; } else { b = 2; }
+if (x > 0) { a = 1; c = 3; } else { b = 2; }
 ```
-
-I added curly braces to the else statement to enclose the code that should execute when the condition is false. This is necessary because you also need braces for the if block, and this way both blocks are properly nested.
-

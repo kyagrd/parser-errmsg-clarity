@@ -1,8 +1,10 @@
  Here is the corrected code:
 
 ```
-if (x > 0) { a = 1; } else { b = 2; }
+if (x > 0) {
+    a = 1;
+    c = 3;
+} else {
+    b = 2;
+}
 ```
-
-I've enclosed both parts of the if-else statement in curly braces to fix the syntax error.
-

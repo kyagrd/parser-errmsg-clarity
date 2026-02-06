@@ -1,10 +1,4 @@
  ```
-if (x > 0) @ a = 1; # else b = 2
+if (x > 0) @ a = 1; c = 3
+else b = 2
 ```
-
-The '#' symbol is causing the syntax error as it is not a valid symbol in the context of the if statement. To fix this, simply remove the '#' symbol:
-
-```
-if (x > 0) @ a = 1; else b = 2;
-```
-

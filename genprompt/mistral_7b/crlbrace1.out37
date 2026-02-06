@@ -1,9 +1,5 @@
- ```
-if (x > 0) { a = 1; } else { b = 2; }
+ Here is the corrected code:
+
 ```
-
-Here's how I fixed the error:
-
-* Removed the extra '}' after `else` statement.
-* Added curly braces for the `else` block to make it a proper block scope.
-
+if (x > 0) { a = 1; c = 3; } else { b = 2; }
+```

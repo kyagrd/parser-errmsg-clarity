@@ -1,11 +1,10 @@
  Here is the corrected code:
 
 ```
-if (x > 0)
+if (x > 0) {
     a = 1;
-else
+    c = 3;
+} else {
     b = 2;
+};
 ```
-
-I removed the extra semicolon at the end of the `if` statement and added one at the end of the `else` block. This should make it syntactically correct in most programming languages.
-

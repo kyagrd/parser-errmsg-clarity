@@ -1,8 +1,10 @@
- Here is the corrected syntax for your code:
+ Here is the corrected code:
 
 ```
-if (x > 0) { a = 1; } else { b = 2; }
+if (x > 0) {
+    a = 1;
+    c = 3;
+} else {
+    b = 2;
+};
 ```
-
-In this corrected version, I added opening and closing curly braces to enclose the statements within each conditional branch. This should resolve the syntax error.
-

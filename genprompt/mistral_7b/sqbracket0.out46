@@ -1,11 +1,10 @@
- Here's the corrected version of your code:
+ Here is the corrected code:
 
 ```
-if (x > 0)
+if (x > 0) {
     a = 1;
-else
+    c = 3;
+} else {
     b = 2;
+};
 ```
-
-The problem in your original code was that the `{` and `}` braces for each if-else block were missing. I added them to make it work correctly.
-

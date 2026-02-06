@@ -1,12 +1,10 @@
- Here's the corrected version of your code:
+ Here is the corrected code:
 
 ```
 if (x > 0) {
-  a = 1;
+    a = 1;
+    c = 3;
 } else {
-  b = 2;
+    b = 2;
 }
 ```
-
-I added curly braces to correctly group multiple statements in the `if` and `else` blocks. This will help avoid further syntax errors.
-

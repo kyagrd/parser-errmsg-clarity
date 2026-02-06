@@ -1,5 +1,10 @@
- ```
-if (x > 0) { a = 1; } else { b = 2; }
-```
-In this fix, I've used curly braces `{}` to enclose the statements within the if and else clauses to make them blocks of code instead of single statements. This solves the error caused by using the `》` symbol, which is not a valid syntax in most programming languages for closing blocks or statements.
+ Here is the corrected code:
 
+```
+if (x > 0) {
+    a = 1;
+    c = 3;
+} else {
+    b = 2;
+}
+```

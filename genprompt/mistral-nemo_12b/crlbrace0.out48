@@ -1,8 +1,8 @@
 ```python
-if (x > 0):
-    a = 1
-else:
-    b = 2
+if (x > 0) {
+    a = 1;
+    c = 3;
+} else {
+    b = 2;
+}
 ```
-The error in the original code was that there was no `:` after the closing parenthesis of the conditional statement, and the second condition had no opening bracket `{`. The corrected version includes the missing `:` after the closing parenthesis and adds an opening bracket `{` before the second condition.
-

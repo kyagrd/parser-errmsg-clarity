@@ -1,11 +1,10 @@
- Here's the corrected version of your code with the syntax error fixed:
+ Here is the corrected code:
 
 ```
-if (x > 0)
+if (x > 0) {
     a = 1;
-else
+    c = 3;
+} else {
     b = 2;
+};
 ```
-
-In this corrected version, I removed the extra semicolon after `a = 1;`, and ensured that the opening curly bracket is followed by the assignment for `b` (which was on a new line), and closed with a matching closing curly brace.
-

@@ -1,12 +1,8 @@
-Here is the corrected code:
-
 ```
 if (x > 0) {
-    a = 1;
+  a = 1;
+  c = 3;
 } else {
-    b = 2;
+  b = 2;
 }
 ```
-
-This fixes the syntax error by properly closing the `else` clause within the curly braces {} that belong to the if statement.
-

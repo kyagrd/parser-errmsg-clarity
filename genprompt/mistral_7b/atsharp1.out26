@@ -1,8 +1,10 @@
- Here is the corrected version of your code, with the removed unnecessary comments and hashes:
+ Here's the corrected code:
 
 ```
-if (x > 0) @ a = 1; else b = 2;
+if (x > 0) {
+    @a = 1;
+    c = 3;
+} else {
+    b = 2;
+}
 ```
-
-However, I'd like to mention that this code may not be valid depending on the programming language you are using. This example is assuming a syntax closer to SQL or shell scripting languages. If it is for another language, such as C++ or Python, the corrected version would look different.
-

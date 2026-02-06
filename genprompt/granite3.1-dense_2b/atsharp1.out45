@@ -1,8 +1,8 @@
 ```
 if (x > 0) {
-  a = 1; // else statement closed here
+  a = 1;
+  c = 3;
 } else {
-  b = 2; // this 'else' statement is now correctly indented
+  b = 2;
 }
 ```
-

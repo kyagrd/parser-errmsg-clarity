@@ -1,6 +1,4 @@
  ```
-if (x > 0) @ a = 1; #else b = 2
+if (x > 0) @ a = 1; c = 3
+else b = 2
 ```
-
-The issue is with the comments. The `#` should not be placed after the `else` clause, it should be at the start of the line following the if statement. I moved the `#` symbol to the correct position in the code above.
-

@@ -1,8 +1,7 @@
- Here's the corrected version of your code:
+ Here is the corrected version of your code:
 
 ```
-if (x > 0) { a = 1; } else { b = 2; }
+if (x > 0) { a = 1; c = 3; } else { b = 2; }
 ```
 
-The initial version was missing curly braces `{}` to enclose the actions for both `if` and `else` conditions. This ensures proper grouping of statements within each block, which helps avoid syntax errors.
-
+The issue in your original code was that you were missing curly braces `{}` to enclose the statements within the `if` and `else` blocks, and also there was an extra semicolon after the `a = 1; c = 3;` line which is not needed.

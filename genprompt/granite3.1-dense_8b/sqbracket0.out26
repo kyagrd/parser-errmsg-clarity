@@ -1,12 +1,8 @@
-Here is the corrected code based on the syntax error message provided:
-
 ```
 if (x > 0) {
     a = 1;
+    c = 3;
 } else {
     b = 2;
 }
 ```
-
-This error typically occurs when an 'else' statement is not properly closed or misaligned. In this case, I've added proper braces and indentation to correct the syntax.
-

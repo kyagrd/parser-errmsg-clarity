@@ -6,13 +6,15 @@ YMLS := $(wildcard *.yml)
 # List of TXT files to generate
 TXTS := $(YMLS:.yml=.txt)
 
-RUNS := 25
+RUNS := 100
 # RUNS := 50
 
 #	gemma3:12b 
 #	gemma3:27b-it-qat 
 #	gpt-oss:20b 
 #	qwen3:4b  # this model ignores output formatting instructions very often
+#	qwen3:8b  # this model ignores output formatting instructions very often
+#	qwen3:14b  # this model ignores output formatting instructions very often
 
 # Model list and target name mapping (replace ':' with '_' for target names)
 MODEL_LIST := \
@@ -20,6 +22,7 @@ MODEL_LIST := \
 	codegemma:7b-instruct \
 	gemma3:1b \
 	gemma3:4b \
+	gemma3:12b \
 	gemma3:12b-it-qat \
 	granite3.1-dense:2b \
 	granite3.1-dense:8b \
@@ -32,8 +35,6 @@ MODEL_LIST := \
 	qwen2.5:7b \
 	qwen2.5-coder:7b \
 	qwen2.5-coder:7b-instruct \
-	qwen3:8b \
-	qwen3:14b
 
 MODEL_TARGETS := $(subst :,_,$(MODEL_LIST))
 

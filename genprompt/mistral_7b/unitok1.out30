@@ -1,8 +1,10 @@
  Here is the corrected code:
 
 ```
-if (x > 0) { a = 1 } else { b = 2 };
+if (x > 0) {
+    a = 1;
+    c = 3;
+} else {
+    b = 2;
+}
 ```
-
-In this corrected version, I replaced the unexpected `》` with curly braces `{}` and ensured that both branches of the if-else statement are wrapped inside these braces. Additionally, I changed the single quotes surrounding `a = 1;` to open curly braces as well to maintain proper syntax for code blocks.
-

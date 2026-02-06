@@ -1,4 +1,1 @@
-```python
-if (x > 0): a = 1; elif b = 2;
-```
-
+```if (x > 0) { a = 1; c = 3; } else { b = 2; }```

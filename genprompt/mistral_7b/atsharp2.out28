@@ -1,10 +1,4 @@
  ```
-if (x > 0) @ a = 1; # else b = 2;
+if (x > 0) @ a = 1; c = 3
+else b = 2
 ```
-
-The '#' symbol should be removed from before 'else', as it is causing the syntax error by being interpreted as a comment starting point, but there is no closing comment symbol (#). Hence, the corrected code should look like this:
-
-```
-if (x > 0) @ a = 1; else b = 2;
-```
-

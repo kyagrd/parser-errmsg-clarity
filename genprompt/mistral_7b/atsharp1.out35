@@ -1,8 +1,10 @@
- Here is the corrected code:
+ Here's the corrected code:
 
 ```
-if (x > 0) @ a = 1; else b = 2;
+if (x > 0) {
+    @a = 1;
+    c = 3;
+} else {
+    b = 2;
+}
 ```
-
-In your original code, the semicolon after `else` was causing an issue as it was treating the following line starting with `#` as a new statement. I removed the semicolon and the `#` to resolve the error.
-

@@ -1,8 +1,10 @@
- Here is the corrected version of your code:
+ Here is the corrected code:
 
 ```
-if (x > 0) [ a = 1; ] else [ b = 2; ];
+if (x > 0) {
+    a = 1;
+    c = 3;
+} else {
+    b = 2;
+}
 ```
-
-In your original code, the semicolon after the `else` clause was causing the error since it closed the if statement prematurely. I removed the extra semicolon and added brackets around the statements associated with each branch of the `if-else` statement to resolve the issue.
-

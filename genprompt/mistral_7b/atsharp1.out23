@@ -1,8 +1,10 @@
- Here is the corrected code:
+ Here's the corrected code:
 
 ```
-if (x > 0) @ a = 1; else b = 2;
+if (x > 0) {
+    @a = 1;
+    c = 3;
+} else {
+    b = 2;
+}
 ```
-
-In the original code, there was an unexpected '#' after the 'else' clause which caused a syntax error. I removed the '#' symbol to fix the issue.
-

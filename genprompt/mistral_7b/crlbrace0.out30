@@ -1,9 +1,10 @@
- ```
-if (x > 0) { a = 1; } else { b = 2; }
-```
-I added curly braces around the if-else statement and also added curly braces for the `else` block to make it syntactically correct in many programming languages such as C, Java, C++, and JavaScript. The correct code is now:
+ Here is the corrected code:
 
 ```
-if (x > 0) { a = 1; } else { b = 2; }
+if (x > 0) {
+    a = 1;
+    c = 3;
+} else {
+    b = 2;
+};
 ```
-

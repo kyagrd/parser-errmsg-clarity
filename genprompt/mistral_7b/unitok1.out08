@@ -1,8 +1,10 @@
- Here's the corrected code with the missing curly braces:
+ Here is the corrected code:
 
 ```
-if (x > 0) { a = 1; } else { b = 2; }
+if (x > 0) {
+    a = 1;
+    c = 3;
+} else {
+    b = 2;
+}
 ```
-
-I added curly braces around the if-else statement, as it is required in C, C++, Java, and other similar programming languages to properly group statements for the condition.
-

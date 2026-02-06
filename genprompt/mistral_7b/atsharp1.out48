@@ -1,9 +1,10 @@
- Here's the corrected code with the syntax error addressed:
+ Here's the corrected code:
 
 ```
-if (x > 0) @ a = 1;
-#else b = 2;
+if (x > 0) {
+    @a = 1;
+    c = 3;
+} else {
+    b = 2;
+}
 ```
-
-By separating the `#else` directive and its corresponding statement, the if-else block is properly formed. The hash symbol (#) can be used to define comments in some programming languages like Bash but should not appear within conditional statements.
-

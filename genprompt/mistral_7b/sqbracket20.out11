@@ -1,8 +1,5 @@
- Here is the fixed code:
-
-```
-if (x > 0) [ a = 1; ] else b = 2;
+ ```
+if (x > 0) [ a = 1; c = 3; ] else b = 2
 ```
 
-I removed the extra closing square bracket at the end of the line.
-
+The issue is that there's an extra `]` at the end of the code, which should be removed.

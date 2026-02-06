@@ -1,8 +1,7 @@
 ```python
 if (x > 0):
     a = 1
+    c = 3
 else:
     b = 2
 ```
-Note: The code provided seems to be in a language different from Python. However, based on the error message "syntax error", I have fixed the syntax error assuming it's Python code. If it's not Python, please provide the correct language for accurate fixing.
-

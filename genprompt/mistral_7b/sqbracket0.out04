@@ -1,8 +1,10 @@
- Here's the corrected version of your code, fixing the syntax error:
+ Here is the corrected code:
 
 ```
-if (x > 0) { a = 1; } else { b = 2; }
+if (x > 0) {
+    a = 1;
+    c = 3;
+} else {
+    b = 2;
+};
 ```
-
-The original issue was that you were missing curly braces `{}` to enclose the statements for both `if` and `else`. This allows for proper grouping of code within these conditions.
-
